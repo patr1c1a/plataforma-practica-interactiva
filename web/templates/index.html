@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Plataforma de Ejercicios</title>
+
+    <!-- HTMX desde CDN -->
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+
+    <h1>Ejercicios disponibles</h1>
+
+    <button
+        hx-get="/exercises"
+        hx-trigger="click"
+        hx-target="#exercise-list"
+        hx-swap="innerHTML"
+    >
+        Cargar ejercicios
+    </button>
+
+    <div id="exercise-list"></div>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+{% for category, functions in exercises.items() %}
+    <h2>{{ category }}</h2>
+    <ul>
+        {% for function in functions %}
+            <li>{{ function }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
