@@ -1,0 +1,28 @@
+<h2>Ejercicio</h2>
+
+<p><strong>Categoría:</strong> {{ category }}</p>
+<p><strong>Función:</strong> {{ function_name }}</p>
+
+<h3>Enunciado</h3>
+
+<pre style="background:#f4f4f4; padding:10px; white-space:pre-wrap;">
+{{ docstring }}
+</pre>
+
+<h3>Código</h3>
+
+<form>
+    <textarea
+        id="code"
+        name="code"
+        rows="12"
+        cols="80"
+    >{{ signature }}
+    </textarea>
+
+    <br><br>
+
+    <button type="button" disabled>
+        Ejecutar (próximamente)
+    </button>
+</form>

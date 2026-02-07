@@ -2,7 +2,16 @@
     <h2>{{ category }}</h2>
     <ul>
         {% for function in functions %}
-            <li>{{ function }}</li>
+            <li>
+                <a
+                    href="#"
+                    hx-get="/exercises/{{ category }}/{{ function }}"
+                    hx-target="#main-content"
+                    hx-swap="innerHTML"
+                >
+                    {{ function }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% endfor %}

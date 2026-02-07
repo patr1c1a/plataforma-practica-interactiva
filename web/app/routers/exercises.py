@@ -37,5 +37,46 @@ def list_exercises(request: Request):
             },
         )
 
-    # Caso contrario, devuelv JSON
+    # Caso contrario, devuelve JSON
     return exercises
+
+
+@router.get("/exercises/{category}/{function_name}")
+def exercise_detail(request: Request, category: str, function_name: str):
+    base_path = Path("content/python/ESP/src")
+    file_path = base_path / f"{category}.py"
+
+    if not file_path.exists():
+        return HTMLResponse(status_code=404, content="Categoría no encontrada")
+
+    with open(file_path, "r", encoding="utf-8") as file:
+        source_code = file.read()
+
+    tree = ast.parse(source_code)
+
+    function_node = None
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == function_name:
+            function_node = node
+            break
+
+    if function_node is None:
+        return HTMLResponse(status_code=404, content="Función no encontrada")
+
+    # Obtener docstring (enunciado)
+    docstring = ast.get_docstring(function_node)
+
+    # Obtener firma de la función
+    args = [arg.arg for arg in function_node.args.args]
+    signature = f"def {function_name}({', '.join(args)}):"
+
+    return templates.TemplateResponse(
+        "fragments/exercise_detail.html",
+        {
+            "request": request,
+            "category": category,
+            "function_name": function_name,
+            "docstring": docstring,
+            "signature": signature,
+        },
+    )
