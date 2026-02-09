@@ -1,0 +1,17 @@
+
+{% if result.status == "pass" %}
+    <h3 style="color: green;">✅ Todos los tests pasaron</h3>
+{% elif result.status == "fail" %}
+    <h3 style="color: red;">❌ Hay tests fallidos</h3>
+{% elif result.status == "timeout" %}
+    <h3 style="color: orange;">⏱️ La ejecución excedió el tiempo límite</h3>
+{% else %}
+    <h3 style="color: darkred;">⚠️ Error al ejecutar el código</h3>
+{% endif %}
+
+<details>
+    <summary>Ver salida completa</summary>
+    <pre style="white-space: pre-wrap;">
+{{ result.raw_output }}
+    </pre>
+</details>

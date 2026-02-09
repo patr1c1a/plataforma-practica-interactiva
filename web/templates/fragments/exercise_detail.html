@@ -11,7 +11,11 @@
 
 <h3>Código</h3>
 
-<form>
+<form
+    hx-post="/exercises/{{ category }}/{{ function_name }}/run"
+    hx-target="#result"
+    hx-swap="innerHTML"
+>
     <textarea
         id="code"
         name="code"
@@ -22,7 +26,11 @@
 
     <br><br>
 
-    <button type="button" disabled>
-        Ejecutar (próximamente)
+    <button type="submit">
+        Ejecutar
     </button>
 </form>
+
+<h3>Resultado</h3>
+<div id="result"></div>
+

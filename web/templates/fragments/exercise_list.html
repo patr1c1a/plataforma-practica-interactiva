@@ -4,10 +4,11 @@
         {% for function in functions %}
             <li>
                 <a
-                    href="#"
+                    href="/exercises/{{ category }}/{{ function }}"
                     hx-get="/exercises/{{ category }}/{{ function }}"
                     hx-target="#main-content"
                     hx-swap="innerHTML"
+                    hx-push-url="/exercises/{{ category }}/{{ function }}"
                 >
                     {{ function }}
                 </a>

@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
+from web.app.services.execution import run_tests
 import ast
 
 router = APIRouter()
@@ -80,3 +81,26 @@ def exercise_detail(request: Request, category: str, function_name: str):
             "signature": signature,
         },
     )
+
+
+@router.post("/exercises/{category}/{function_name}/run")
+def run_exercise(
+    request: Request,
+    category: str,
+    function_name: str,
+    code: str = Form(...)
+):
+    result = run_tests(
+    category=category,
+    function_name=function_name,
+    user_code=code,
+    )
+
+    return templates.TemplateResponse(
+        "fragments/execution_result.html",
+        {
+            "request": request,
+            "result": result,
+        },
+    )
+
