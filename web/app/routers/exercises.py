@@ -1,3 +1,4 @@
+from urllib import request
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -28,18 +29,29 @@ def list_exercises(request: Request):
 
         exercises[category] = functions
 
-    # Si el request viene de HTMX, devuelve HTML
-    if request.headers.get("hx-request") == "true":
-        return templates.TemplateResponse(
-            "fragments/exercise_list.html",
-            {
-                "request": request,
-                "exercises": exercises,
-            },
-        )
+    request_from_htmx = request.headers.get("hx-request") == "true"
 
-    # Caso contrario, devuelve JSON
-    return exercises
+    template_context = {
+        "request": request,
+        "exercise_groups": exercises,
+        "problem_description": None,
+    }
+
+    # Si la request viene de HTMX, devuelve el fragmento
+    if request_from_htmx:
+        fragment_response = templates.TemplateResponse(
+            "fragments/exercise_list.html",
+            template_context,
+        )
+        return fragment_response
+    
+    # Si es request normal, devuelve página completa
+    whole_page_response = templates.TemplateResponse(
+        "index.html",
+        template_context,
+    )
+
+    return whole_page_response
 
 
 @router.get("/exercises/{category}/{function_name}")
@@ -65,22 +77,38 @@ def exercise_detail(request: Request, category: str, function_name: str):
         return HTMLResponse(status_code=404, content="Función no encontrada")
 
     # Obtener docstring (enunciado)
-    docstring = ast.get_docstring(function_node)
+    problem_description = ast.get_docstring(function_node)
 
     # Obtener firma de la función
     args = [arg.arg for arg in function_node.args.args]
     signature = f"def {function_name}({', '.join(args)}):"
 
-    return templates.TemplateResponse(
-        "fragments/exercise_detail.html",
-        {
-            "request": request,
-            "category": category,
-            "function_name": function_name,
-            "docstring": docstring,
-            "signature": signature,
-        },
+    request_from_htmx = request.headers.get("hx-request") == "true"
+
+    template_context = {
+        "request": request,
+        "category_name": category,
+        "function_name": function_name,
+        "problem_description": problem_description,
+        "function_signature": signature,
+        "exercise_groups": None,
+    }
+
+    # Si es request HTMX retorna solo fragmento
+    if request_from_htmx:
+        fragment_response = templates.TemplateResponse(
+            "fragments/exercise_detail.html",
+            template_context,
+        )
+        return fragment_response
+
+    #  Si es request normal, devuelve página completa
+    whole_page_response = templates.TemplateResponse(
+        "index.html",
+        template_context,
     )
+
+    return whole_page_response
 
 
 @router.post("/exercises/{category}/{function_name}/run")

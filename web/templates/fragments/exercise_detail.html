@@ -1,18 +1,18 @@
 <h2>Ejercicio</h2>
 
-<p><strong>Categoría:</strong> {{ category }}</p>
+<p><strong>Categoría:</strong> {{ category_name }}</p>
 <p><strong>Función:</strong> {{ function_name }}</p>
 
 <h3>Enunciado</h3>
 
 <pre style="background:#f4f4f4; padding:10px; white-space:pre-wrap;">
-{{ docstring }}
+{{ problem_description }}
 </pre>
 
 <h3>Código</h3>
 
 <form
-    hx-post="/exercises/{{ category }}/{{ function_name }}/run"
+    hx-post="/exercises/{{ category_name }}/{{ function_name }}/run"
     hx-target="#result"
     hx-swap="innerHTML"
 >
@@ -21,7 +21,7 @@
         name="code"
         rows="12"
         cols="80"
-    >{{ signature }}
+    >{{ function_signature }}
     </textarea>
 
     <br><br>
@@ -33,4 +33,3 @@
 
 <h3>Resultado</h3>
 <div id="result"></div>
-

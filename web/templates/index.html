@@ -28,8 +28,15 @@
     <hr>
 
     <div id="main-content">
-        <p>Seleccioná un ejercicio para comenzar.</p>
+        {% if problem_description %}
+            {% include "fragments/exercise_detail.html" %}
+        {% elif exercise_groups %}
+            {% include "fragments/exercise_list.html" %}
+        {% else %}
+            <p>Seleccioná un ejercicio para comenzar.</p>
+        {% endif %}
     </div>
+
 
 </body>
 </html>

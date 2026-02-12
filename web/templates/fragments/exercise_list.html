@@ -1,16 +1,16 @@
-{% for category, functions in exercises.items() %}
-    <h2>{{ category }}</h2>
+{% for category_name, function_names in exercise_groups.items() %}
+    <h2>{{ category_name }}</h2>
     <ul>
-        {% for function in functions %}
+        {% for function_name in function_names %}
             <li>
                 <a
-                    href="/exercises/{{ category }}/{{ function }}"
-                    hx-get="/exercises/{{ category }}/{{ function }}"
+                    href="/exercises/{{ category_name }}/{{ function_name }}"
+                    hx-get="/exercises/{{ category_name }}/{{ function_name }}"
                     hx-target="#main-content"
                     hx-swap="innerHTML"
-                    hx-push-url="/exercises/{{ category }}/{{ function }}"
+                    hx-push-url="/exercises/{{ category_name }}/{{ function_name }}"
                 >
-                    {{ function }}
+                    {{ function_name }}
                 </a>
             </li>
         {% endfor %}
