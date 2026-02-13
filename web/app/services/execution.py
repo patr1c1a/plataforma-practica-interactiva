@@ -16,7 +16,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
     with tempfile.TemporaryDirectory(dir=Path("runtime/tmp")) as tmp_dir:
         tmp_path = Path(tmp_dir)
 
-        # Replicar estructura offline
+        # Same structure as the CLI version
         tmp_src = tmp_path / "src"
         tmp_tests = tmp_path / "tests"
         tmp_src.mkdir()
@@ -25,11 +25,11 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         shutil.copy(src_file, tmp_src / src_file.name)
         shutil.copy(test_file, tmp_tests / test_file.name)
 
-        # Leer código original
+        # Read code
         exercise_path = tmp_src / src_file.name
         original_code = exercise_path.read_text(encoding="utf-8")
 
-        # Reemplazar solo el cuerpo de la función
+        # Replace the function body
         updated_code = _replace_function_body(
             original_code,
             function_name,
@@ -38,7 +38,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
 
         exercise_path.write_text(updated_code, encoding="utf-8")
 
-        # Ejecutar tests desde la raíz (igual que offline)
+        # Run tests from root
         try:
             result = subprocess.run(
                 [

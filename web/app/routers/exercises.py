@@ -37,7 +37,7 @@ def list_exercises(request: Request):
         "problem_description": None,
     }
 
-    # Si la request viene de HTMX, devuelve el fragmento
+    # If it's an HTMX request, return only the fragment
     if request_from_htmx:
         fragment_response = templates.TemplateResponse(
             "fragments/exercise_list.html",
@@ -45,7 +45,7 @@ def list_exercises(request: Request):
         )
         return fragment_response
     
-    # Si es request normal, devuelve página completa
+    # If it's a normal request, return the whole page
     whole_page_response = templates.TemplateResponse(
         "index.html",
         template_context,
@@ -76,10 +76,10 @@ def exercise_detail(request: Request, category: str, function_name: str):
     if function_node is None:
         return HTMLResponse(status_code=404, content="Función no encontrada")
 
-    # Obtener docstring (enunciado)
+    # Get docstring (problem description)
     problem_description = ast.get_docstring(function_node)
 
-    # Obtener firma de la función
+    # Get function signature
     args = [arg.arg for arg in function_node.args.args]
     signature = f"def {function_name}({', '.join(args)}):"
 
@@ -94,7 +94,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "exercise_groups": None,
     }
 
-    # Si es request HTMX retorna solo fragmento
+    # If it's an HTMX request, return only the fragment
     if request_from_htmx:
         fragment_response = templates.TemplateResponse(
             "fragments/exercise_detail.html",
@@ -102,7 +102,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
         )
         return fragment_response
 
-    #  Si es request normal, devuelve página completa
+    # If it's a normal request, return the whole page
     whole_page_response = templates.TemplateResponse(
         "index.html",
         template_context,
