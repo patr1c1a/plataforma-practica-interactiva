@@ -1,5 +1,6 @@
-
-{% if result.status == "pass" %}
+{% if result.status == "syntax_error" %}
+    <h3 style="color: darkred;">⚠️ Error de sintaxis</h3>
+{% elif result.status == "pass" %}
     <h3 style="color: green;">✅ Todos los tests pasaron</h3>
 {% elif result.status == "fail" %}
     <h3 style="color: red;">❌ Hay tests fallidos</h3>

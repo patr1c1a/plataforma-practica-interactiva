@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 import tempfile
+import ast
 from pathlib import Path
 
 
@@ -11,8 +12,24 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
     test_file = base_content / "tests" / f"tests_{category}.py"
 
     if not src_file.exists() or not test_file.exists():
-        return "Error: categoría o tests no encontrados."
+        return {
+            "status": "error",
+            "raw_output": "Error interno: categoría o archivo de tests no encontrados.",
+        }
 
+    try:
+        ast.parse(user_code)
+    except SyntaxError as syntax_error:
+        formatted_error_message = (
+            f"Error de sintaxis en la línea {syntax_error.lineno}:\n"
+            f"{syntax_error.msg}"
+        )
+
+        return {
+            "status": "syntax_error",
+            "raw_output": formatted_error_message,
+        }
+    
     with tempfile.TemporaryDirectory(dir=Path("runtime/tmp")) as tmp_dir:
         tmp_path = Path(tmp_dir)
 
