@@ -47,11 +47,17 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         original_code = exercise_path.read_text(encoding="utf-8")
 
         # Replace the function body
-        updated_code = _replace_function_body(
-            original_code,
-            function_name,
-            user_code,
-        )
+        try:
+            updated_code = _replace_function_definition(
+                original_module_code=original_code,
+                target_function_name=function_name,
+                user_submitted_code=user_code,
+            )
+        except ValueError as value_error:
+            return {
+                "status": "error",
+                "raw_output": str(value_error),
+            }
 
         exercise_path.write_text(updated_code, encoding="utf-8")
 
@@ -93,27 +99,35 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         }
 
 
+def _replace_function_definition(
+    original_module_code: str,
+    target_function_name: str,
+    user_submitted_code: str,
+) -> str:
+    original_module_ast = ast.parse(original_module_code)
+    user_submitted_ast = ast.parse(user_submitted_code)
 
-def _replace_function_body(original_code: str, function_name: str, user_code: str) -> str:
-    lines = original_code.splitlines()
-    new_lines = []
+    user_function_definitions = [
+        node
+        for node in user_submitted_ast.body
+        if isinstance(node, ast.FunctionDef)
+    ]
 
-    inside_target = False
-    indent = ""
+    if not user_function_definitions:
+        raise ValueError("El código enviado no contiene una definición de función válida.")
 
-    for line in lines:
-        if line.startswith(f"def {function_name}"):
-            inside_target = True
-            indent = line[:len(line) - len(line.lstrip())]
-            new_lines.append(user_code)
-            continue
+    user_function_node = user_function_definitions[0]
 
-        if inside_target:
-            if line.startswith(indent) and line.strip() != "":
-                continue
-            else:
-                inside_target = False
+    updated_module_body = []
 
-        new_lines.append(line)
+    for node in original_module_ast.body:
+        if isinstance(node, ast.FunctionDef) and node.name == target_function_name:
+            updated_module_body.append(user_function_node)
+        else:
+            updated_module_body.append(node)
 
-    return "\n".join(new_lines)
+    original_module_ast.body = updated_module_body
+
+    updated_module_code = ast.unparse(original_module_ast)
+
+    return updated_module_code
