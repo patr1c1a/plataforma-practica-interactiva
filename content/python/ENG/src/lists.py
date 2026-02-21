@@ -341,7 +341,8 @@ def find_destination(tickets, cities, ticket_number):
     and the destination country can be calculated using the city name.
     If ticket_number is not found within the tickets in the list, it returns None.
     If the city name can't be found in the cities list, it returns None.
-    Suggestion: use the find_country() function above.
+    Suggestion: break the problem into two steps: first identify the city associated with the ticket number, then
+    determine the corresponding country.
     Example:
         find_destination(tickets=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
                          cities=[("Buenos Aires", "Argentina"), ("Glasgow", "Scotland"), ("Liverpool", "England"),

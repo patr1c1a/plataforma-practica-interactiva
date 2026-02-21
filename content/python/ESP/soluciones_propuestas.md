@@ -1805,7 +1805,8 @@ def buscar_destino(boletos, ciudades, numero_boleto):
     lista con datos de ciudades (de cada una se tiene el nombre de ciudad y país donde está ubicada). Además, recibe un
     número de boleto. De acuerdo el número de boleto ubicará la ciudad destino y, de acuerdo a la ciudad destino,
     retornará el país al que pertenece. Si el número de boleto no se encuentra en la lista, retornará None.
-    Sugerencia: utilizar la función buscar_pais() desarrollada anteriormente.
+    Sugerencia: separar el problema en dos pasos: primero identificar la ciudad asociada al número de boleto, y luego
+    determinar el país correspondiente.
     Ejemplo:
         buscar_destino(boletos=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
                        ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), ("Liverpool", "Inglaterra"), 
