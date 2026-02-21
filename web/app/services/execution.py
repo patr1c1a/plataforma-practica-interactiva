@@ -16,9 +16,29 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
             "status": "error",
             "raw_output": "Error interno: categoría o archivo de tests no encontrados.",
         }
+    
+    maximum_allowed_code_length = 10_000
+
+    if len(user_code) > maximum_allowed_code_length:
+        return {
+            "status": "error",
+            "raw_output": "El código excede el tamaño máximo permitido.",
+        }
 
     try:
         ast.parse(user_code)
+
+        parsed_user_ast = ast.parse(user_code)
+        import_statements = [
+            node for node in ast.walk(parsed_user_ast)
+            if isinstance(node, (ast.Import, ast.ImportFrom))
+        ]
+
+        if import_statements:
+            return {
+                "status": "error",
+                "raw_output": "No está permitido importar módulos externos.",
+            }
     except SyntaxError as syntax_error:
         formatted_error_message = (
             f"Error de sintaxis en la línea {syntax_error.lineno}:\n"
@@ -86,15 +106,23 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
 
         raw_output = result.stdout + "\n" + result.stderr
 
-        if "FAILED" in raw_output:
-            status = "fail"
-        elif "OK" in raw_output:
-            status = "pass"
+        if result.returncode == 0:
+            execution_status = "pass"
+
+        elif "AssertionError" in raw_output:
+            execution_status = "fail"
+
+        elif "ImportError" in raw_output:
+            execution_status = "error"
+
+        elif "Traceback" in raw_output:
+            execution_status = "runtime_error"
+
         else:
-            status = "error"
+            execution_status = "error"
 
         return {
-            "status": status,
+            "status": execution_status,
             "raw_output": raw_output,
         }
 

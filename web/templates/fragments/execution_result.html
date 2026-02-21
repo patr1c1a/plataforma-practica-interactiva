@@ -6,6 +6,8 @@
     <h3 style="color: red;">❌ Hay tests fallidos</h3>
 {% elif result.status == "timeout" %}
     <h3 style="color: orange;">⏱️ La ejecución excedió el tiempo límite</h3>
+{% elif result.status == "runtime_error" %}
+    <h3 style="color: darkred;">💥 Error en tiempo de ejecución</h3>
 {% else %}
     <h3 style="color: darkred;">⚠️ Error al ejecutar el código</h3>
 {% endif %}
