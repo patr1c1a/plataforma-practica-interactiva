@@ -121,8 +121,36 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         else:
             execution_status = "error"
 
+
+        failed_test_cases = []
+
+        if execution_status == "fail":
+            output_lines = raw_output.splitlines()
+
+            for line in output_lines:
+                if line.strip().startswith("AssertionError:"):
+                    error_content = line.strip().replace("AssertionError:", "").strip()
+
+                    parts = error_content.split(" : ")
+
+                    comparison_part = parts[0]
+                    context_part = parts[1] if len(parts) > 1 else ""
+
+                    if "!=" in comparison_part:
+                        actual_value, expected_value = comparison_part.split("!=")
+                        formatted_failure = (
+                            f"{context_part}\n"
+                            f"Esperado: {expected_value.strip()}\n"
+                            f"Recibido: {actual_value.strip()}"
+                        )
+                    else:
+                        formatted_failure = error_content
+
+                    failed_test_cases.append(formatted_failure)
+
         return {
             "status": execution_status,
+            "failed_cases": failed_test_cases,
             "raw_output": raw_output,
         }
 

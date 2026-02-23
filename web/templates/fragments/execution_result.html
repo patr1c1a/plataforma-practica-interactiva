@@ -4,6 +4,13 @@
     <h3 style="color: green;">✅ Todos los tests pasaron</h3>
 {% elif result.status == "fail" %}
     <h3 style="color: red;">❌ Hay tests fallidos</h3>
+    <ul>
+        {% for failure in result.failed_cases %}
+            <li>
+                <pre style="white-space: pre-wrap;">{{ failure }}</pre>
+            </li>
+        {% endfor %}
+    </ul>
 {% elif result.status == "timeout" %}
     <h3 style="color: orange;">⏱️ La ejecución excedió el tiempo límite</h3>
 {% elif result.status == "runtime_error" %}
@@ -15,6 +22,6 @@
 <details>
     <summary>Ver salida completa</summary>
     <pre style="white-space: pre-wrap;">
-{{ result.raw_output }}
+        {{ result.raw_output }}
     </pre>
 </details>
