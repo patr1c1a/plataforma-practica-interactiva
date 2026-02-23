@@ -1127,7 +1127,7 @@ def caesar_cipher(s, n):
         </pre>
     </summary>
     <pre>
-    alphabet = "abcdefghijklmnñopqrstuvwxyz"
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
     cipher = ""
     for character in s:
         if character in alphabet:

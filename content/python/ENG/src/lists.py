@@ -55,7 +55,7 @@ def no_duplicates(might_have_duplicates):
     Examples:
         no_duplicates(might_have_duplicates=[3, False, "a", 1, 1, 2, 4, False, 4]) -> [3, "a", 2]
         no_duplicates([1, 1, 1]) -> []
-    -Paremeter:
+    -Parameter:
         might_have_duplicates (list; elements: multiple types): list that may or may not have duplicate elements.
     -Returns:
         (list; elements: multiple types) A new list with the elements from might_have_duplicates that are unique (have
@@ -128,16 +128,16 @@ def missing_numbers(nums):
 
 def how_many_are_smaller(nums):
     """
-    Returns a new list where each element j represents how many elements in nums are smaller than nums[i].
+    Returns a new list where each element i represents how many elements in nums are smaller than nums[i].
     Example:
         how_many_are_smaller(nums=[6, 3, 3, 4, 2]) -> [4, 1, 1, 3, 0]
-        (Since i=0 stores number 6 and there are four other elements in nums that are smaller than 6: 3, 3, 4, 1.
+        (i=0 stores number 6 and there are four other elements in nums that are smaller than 6: 3, 3, 4, 1.
         i=1 stores number 3 and there is one smaller element: 2. The same happens with i=2. i=3 stores 4 and there are
         three smaller elements: 3, 3, 2. And for i=4, which stores number 2, there are no smaller elements).
     -Parameters:
         nums (list; elements: numeric): list with numbers.
     -Returns:
-        (list; elements: numeric) A new list where each element j represents the number of elements smaller than
+        (list; elements: numeric) A new list where each element i represents the number of elements smaller than
         nums[i].
     """
     pass
@@ -150,7 +150,7 @@ def two_largest(nums):
     Example:
         two_largest(nums=[5, 3, 6, 2, 8]) -> (8, 6)
     -Parameter:
-        nums (list; elements: numeric): list with numbers. len(numeros) >=2
+        nums (list; elements: numeric): list with numbers. len(numeros) >= 2
     -Returns:
         (tuple; 2 numeric elements) A tuple with the two largest numbers in nums, where the element at index 0 is
         greater or equal to the element at index 1.
@@ -225,9 +225,9 @@ def add_every_nth(nums, n):
     If n is greater than len(nums), returns 0.
     Suggestion: avoid using sum().
     Examples:
-        add_every_n_numbers(nums=[5, 2, 1, 6, 4, 9, 3, 7, 8], n=3) -> 18
+        add_every_nth(nums=[5, 2, 1, 6, 4, 9, 3, 7, 8], n=3) -> 18
         (Since 1+9+8=18).
-        add_every_n_numbers(nums=[1.5, 2, -3, 4], n=5) -> 0
+        add_every_nth(nums=[1.5, 2, -3, 4], n=5) -> 0
     -Parameters:
         nums (list; elements: numeric): list with numbers.
         n (int): step. Greater than 0.

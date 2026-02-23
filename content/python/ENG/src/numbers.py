@@ -156,7 +156,7 @@ def is_pronic(number):
         is_pronic(number=56) -> True
         (56 can be expressed as 7*8).
     -Parameter:
-        numbero (int): number to evaluate. Greater than 0.
+        number (int): number to evaluate. Greater than 0.
     -Returns:
         (bool) True if number is pronic, False if it's not.
     """
@@ -206,6 +206,7 @@ def sum_first_n_fibonacci(n):
 def greatest_divisor(number):
     """
     Finds the greatest integer divisor of a number (except for the number itself).
+    If number is 1, returns 0.
     Example:
         greatest_divisor(number=182) -> 91
     -Parameters:
@@ -220,12 +221,12 @@ def euclidean_gcd(m, n):
     """
     Finds the greatest common divisor of m and n using the Euclidean algorithm.
     Euclidean algorithm: dividing m by n (both integer numbers), we get a quotient q and a remainder r. The greatest
-    common divisor of m and n is the same as for n and r. n can't be 0.
+    common divisor of m and n is the same as for n and r.
     Example:
         euclidean_gcd(m=60, n=24) -> 12
     -Parameters:
         m (int): positive number.
-        n (int): positive number, greater than 0.
+        n (int): non-negative number.
     -Returns:
         (int) Greatest common divisor of m and n.
     """

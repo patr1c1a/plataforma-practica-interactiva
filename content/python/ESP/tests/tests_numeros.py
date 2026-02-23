@@ -177,7 +177,7 @@ class TestsFuncionesNumeros(unittest.TestCase):
         pruebas = {
             "Argumento usado: n=6": [suma_primeros_n_fibonacci(6), 12],
             "Argumento usado: n=2": [suma_primeros_n_fibonacci(2), 1],
-            "Argumento usado: n=3": [suma_primeros_n_fibonacci(15), 986],
+            "Argumento usado: n=15": [suma_primeros_n_fibonacci(15), 986],
         }
         for prueba, (a, b) in pruebas.items():
             with self.subTest(prueba=prueba):

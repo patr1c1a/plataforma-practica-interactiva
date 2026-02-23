@@ -189,7 +189,8 @@ def mayor_valor(ocurrencias):
 def epoca_de_siembra(vegetales, mes):
     """
     Dado un diccionario conteniendo los meses de siembra de diversos vegetales y el nombre de un mes, retorna qué
-    vegetales pueden sembrarse en ese mes.
+    vegetales pueden sembrarse en ese mes. La lista retornada conserva el orden en que los vegetales aparecen como
+    claves en el diccionario.
     Ejemplo:
         epoca_de_siembra(vegetales={"espinaca": ["febrero","marzo"],
                                     "ajo": ["febrero","marzo","abril"],
@@ -201,7 +202,8 @@ def epoca_de_siembra(vegetales, mes):
         diversos vegetales y los valores son listas con los meses en que cada vegetal puede sembrarse. 
         mes (str): el mes para el cual se busca saber qué vegetales pueden sembrarse.
     -Valor retornado:
-        (list; elementos: str) Lista con los vegetales que pueden sembrarse en el mes.
+        (list; elementos: str) Lista con los vegetales que pueden sembrarse en el mes, respetando el orden en que los
+        vegetales aparecen como claves en el diccionario.
     """
     pass
 
@@ -266,7 +268,7 @@ def eliminar_socio(socios, nombre_socio):
         socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): diccionario con los datos de los
         socios del club. Las claves son todos números positivos mayores que cero. Los nombres de socios no se repiten
         en los valores del diccionario.
-        socio (str): nombre y apellido del socio a eliminar.
+        nombre_socio (str): nombre y apellido del socio a eliminar.
     -Valor retornado:
         (dict; clave: int; valor: list, con 3 elementos: str, int, bool) Diccionario de socios del cual se ha eliminado
         el socio, en caso de existir.
@@ -307,7 +309,7 @@ def numero_telefonico(telefono):
     M, N, O = 6
     P, Q, R, S = 7
     T, U, V = 8
-    W, X, Y, Z = 10
+    W, X, Y, Z = 9
     Ejemplo:
         numero_telefonico(telefono="(325)444-TEST") -> "(325)444-8378"
     -Parámetro:

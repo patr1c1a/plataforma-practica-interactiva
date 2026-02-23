@@ -143,7 +143,7 @@ def porcentaje_digitos_pares(numero):
     -Parámetro:
         numero (int): número cuyos dígitos se evaluarán. Positivo.
     -Valor retornado:
-        (int) Porcentaje de dígitos pares en numero (de 0 a 100).
+        (float) Porcentaje de dígitos pares en numero (de 0 a 100).
     """
     pass
 
@@ -186,11 +186,7 @@ def factorial(numero):
     -Valor retornado:
         (int) El factorial de numero.
     """
-    resultado = 1
-    if numero >= 0:
-        for i in range(1, numero + 1):
-            resultado *= i
-    return resultado
+    pass
 
 
 def suma_primeros_n_fibonacci(n):
@@ -224,12 +220,12 @@ def mcd_euclides(m, n):
     """
     Calcula el máximo común divisor entre m y n usando el algoritmo de Euclides.
     Método de Euclides: al dividir m por n (números enteros), se obtiene un cociente q y un residuo r. Se ha demostrado
-    que el máximo común divisor de m y n es el mismo que el de n y r. n no puede ser 0.
+    que el máximo común divisor de m y n es el mismo que el de n y r.
     Ejemplo:
         mcd_euclides(m=60, n=24) -> 12
     -Parámetros:
         m (int): número positivo.
-        n (int): número positivo distinto de cero.
+        n (int): número entero no negativo.
     -Valor retornado:
         (int) Mayor divisor común entre m y n.
     """

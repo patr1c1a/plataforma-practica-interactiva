@@ -53,7 +53,7 @@ def count_unique_vowels(s):
     """
     Counts vowels in a given string.
     Vowels in the English language are: a, e, i, o, u.
-    Each vowel must be accounted for only once, be it upper or lowe case.
+    Each vowel must be accounted for only once, be it upper or lower case.
     Suggestion: avoid using count().
     Example:
         count_unique_vowels(s="This is an Example Sentence") -> 3
@@ -133,7 +133,7 @@ def classify_numerical_string(s):
     Examples:
          classify_numerical_string(s="123456") -> "246$36"
          classify_numerical_string(s="2222") -> "2222$"
-    -Paremeter:
+    -Parameter:
         s (str): numerical string that will be processed. The string will only contain numerical digits.
     -Returns:
         (str) A concatenation of characters in s that are multiples of 2 (in their numerical representation), followed

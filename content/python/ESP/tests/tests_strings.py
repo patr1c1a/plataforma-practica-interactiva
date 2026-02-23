@@ -436,6 +436,10 @@ class TestsFuncionesStrings(unittest.TestCase):
                 convertir_a_titulo("ESTO ES UNA FRASE"),
                 "Esto Es Una Frase",
             ],
+            'Argumento usado: cadena="Esto Es Una Frase"': [
+                convertir_a_titulo("Esto Es Una Frase"),
+                "Esto Es Una Frase",
+            ],
             'Argumento usado: cadena="palabra"': [
                 convertir_a_titulo("palabra"),
                 "Palabra",

@@ -155,7 +155,7 @@ class TestsNumberFunctions(unittest.TestCase):
         test_cases = {
             "Argument used: number=4": [factorial(4), 24],
             "Argument used: number=0": [factorial(0), 1],
-            "Argument used: 1": [factorial(1), 1],
+            "Argument used: number=1": [factorial(1), 1],
         }
         for test_case, (a, b) in test_cases.items():
             with self.subTest(test_case=test_case):
@@ -165,7 +165,7 @@ class TestsNumberFunctions(unittest.TestCase):
         test_cases = {
             "Argument used: n=6": [sum_first_n_fibonacci(6), 12],
             "Argument used: n=2": [sum_first_n_fibonacci(2), 1],
-            "Argument used: n=3": [sum_first_n_fibonacci(15), 986],
+            "Argument used: n=15": [sum_first_n_fibonacci(15), 986],
         }
         for test_case, (a, b) in test_cases.items():
             with self.subTest(test_case=test_case):

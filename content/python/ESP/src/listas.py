@@ -33,12 +33,11 @@ def mayor_elemento(strings):
 def mayor_ganancia(precios):
     """
     Dada una lista donde cada elemento representa el precio de las acciones de una empresa en un día determinado,
-    retorna la mayor ganancia obtenida si se compra en el día de menor precio y se vende el día en que el precio
-    es mayor. La lista contendrá al menos dos elementos.
+    retorna la mayor ganancia posible, considerando que se compra al precio más bajo registrado y se vende al precio
+    más alto registrado. La lista contendrá al menos dos elementos.
     Ejemplo:
         mayor_ganancia(precios=[70, 53, 15, 23, 41, 30]) -> 55
-        (Si los precios son [70, 53, 15, 23, 41, 30] la mayor ganancia se obtiene comprando a 15 y vendiendo a 70,
-        entonces: 70-15=55).
+        (Si los precios son [70, 53, 15, 23, 41, 30] la diferencia entre el mayor y el menor precio es 70-15=55).
     -Parámetro:
         precios (list; elementos: numéricos): lista con los precios de las acciones en cada día. len(precios) >= 2.
     -Valor retornado:
@@ -130,13 +129,13 @@ def cuantos_numeros_menores(numeros):
     Dada una lista con números, por cada numeros[i] indica cuántos números en la lista son menores que él.
     Ejemplo:
         cuantos_numeros_menores(numeros=[6, 3, 3, 4, 2]) -> [4, 1, 1, 3, 0]
-        (Ya que i=0 almacena el número 6 y hay otros cuatro elementos en nums que son menores que 6: 3, 3, 4, 1.
+        (i=0 almacena el número 6 y hay otros cuatro elementos en nums que son menores que 6: 3, 3, 4, 1.
         i=1 almacena el número 3 y hay un elemento menor: 2. Lo mismo sucede con i=2. i=3 almacena el 4 y hay tres
         elementos menores: 3, 3, 2. Y para i=4, que almacena el número 2, no hay elementos menores).
     -Parámetros:
         numeros (list; elementos: numéricos): lista de números.
     -Valor retornado:
-        (list; elementos: numéricos) Una nueva lista donde cada elemento j es la cantidad de elementos menores que
+        (list; elementos: numéricos) Una nueva lista donde cada elemento i es la cantidad de elementos menores que
         numeros[i] existentes en numeros.
     """
     pass
@@ -181,9 +180,9 @@ def jugada_uno(mano, carta_descubierta):
 
 def descartar_ocurrencias_extra(numeros, n):
     """
-    Dada una lista y un número n retorna una nueva lista donde, si un elemento aparece más de n veces en numeros, se 
-    descartan las ocurrencias sobrantes, dejando solo las primeras n. El resto de los elementos seguirán apareciendo
-    en el mismo orden relativo.
+    Dada una lista numeros y un número n retorna una nueva lista donde, si un elemento aparece más de n veces en
+    numeros, se descartan las ocurrencias sobrantes, dejando solo las primeras n. El resto de los elementos
+    seguirán apareciendo en el mismo orden relativo.
     Ejemplos:
         descartar_ocurrencias_extra(numeros=[1, 2, 3, 2, 3, 3], n=1) -> [1, 2, 3]
         descartar_ocurrencias_extra(numeros=[1, 2, 3, 2, 3, 3], n=3) -> [1, 2, 3, 2, 3, 3]
@@ -192,7 +191,7 @@ def descartar_ocurrencias_extra(numeros, n):
         n (int): cantidad de ocurrencias máximas que pueden aparecer de cada elemento.
     -Valor retornado:
         (list; elementos: int) Una nueva lista donde los elementos sean los mismos y en el mismo orden que en numeros,
-        exceptuando las ocurrencias de n.
+        descartando las ocurrencias que excedan el máximo permitido.
     """
     pass
 
@@ -261,7 +260,7 @@ def desanidar(listas):
     Ejemplos:
         desanidar(listas=[[1, 0, 4], ["a", "b"], [True, False, True, True]])
         -> [1, 0, 4, "a", "b", True, False, True, True]
-        desanidar(listas[[], ["a", "b"]]) -> ["a", "b"]
+        desanidar(listas=[[], ["a", "b"]]) -> ["a", "b"]
     -Parámetro:
         listas (list; elementos: list, con elementos heterogéneos): una lista que contiene listas como elementos (los
         elementos de éstas pueden ser de cualquier tipo).

@@ -186,7 +186,7 @@ def highest_value(occurrences):
 def sowing_season(vegetables, month):
     """
     Given a dictionary with sowing months of a series of vegetables, and a specific month, returns which vegetables can
-    be sown in that month.
+    be sown in that month. The returned list preserves the order in which vegetables appear as dictionary keys.
     Example:
         sowing_season(vegetables={"spinach": ["february", "march"],
                                   "garlic": ["february", "march", "april"],
@@ -198,7 +198,8 @@ def sowing_season(vegetables, month):
         values are lists with the months in which each vegetable can be sown.
         month (str): month to find which vegetables can be sown.
     -Returns:
-        (list; elements: str) List with vegetables that can be sown in the given month.
+        (list; elements: str) List with vegetables that can be sown in the given month, preserving the order in which
+        vegetables appear as dictionary keys.
     """
     pass
 
@@ -302,7 +303,7 @@ def phone_number(phone):
     M, N, O = 6
     P, Q, R, S = 7
     T, U, V = 8
-    W, X, Y, Z = 10
+    W, X, Y, Z = 9
     Example:
         phone_number(phone="(325)444-TEST") -> "(325)444-8378"
     -Parameter:

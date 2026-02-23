@@ -382,8 +382,8 @@ class TestsStringFunctions(unittest.TestCase):
 
     def test_title_case(self):
         test_cases = {
-            'Argument used: s="This is an example sentence"': [
-                title_case("This is an example sentence"),
+            'Argument used: s="this is an example sentence"': [
+                title_case("this is an example sentence"),
                 "This Is An Example Sentence",
             ],
             'Argument used: s="THIS IS AN EXAMPLE SENTENCE"': [
@@ -440,15 +440,15 @@ class TestsStringFunctions(unittest.TestCase):
         test_cases = {
             'Arguments used: s="this is an example sentence", n=2': [
                 caesar_cipher("this is an example sentence", 2),
-                "vjku ku co gacñrng ugovgoeg",
+                "vjku ku cp gzcorng ugpvgpeg",
             ],
             'Arguments used: s="abc123 xyz987!", n=4': [
                 caesar_cipher("abc123 xyz987!", 4),
-                "efg123 cde987!",
+                "efg123 bcd987!",
             ],
             'Arguments used: s="this is an example sentence", n=6': [
                 caesar_cipher("this is an example sentence", 6),
-                "anñy ñy gs kegrvqk yksaksik",
+                "znoy oy gt kdgsvrk yktzktik",
             ],
             'Arguments used: s="123", n=8': [caesar_cipher("123", 8), "123"],
             'Arguments used: s="this is an example sentence", n=26': [

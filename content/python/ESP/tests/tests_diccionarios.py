@@ -634,8 +634,8 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
                 "(325)444-8378",
             ],
             'Argumento usado: telefono="435-224-7613"': [
-                numero_telefonico("(325)444-TEST"),
-                "(325)444-8378",
+                numero_telefonico("435-224-7613"),
+                "435-224-7613",
             ],
             'Argumento usado: telefono="54212456"': [
                 numero_telefonico("54212456"),

@@ -642,8 +642,8 @@ class TestsSetDictionaryFunctions(unittest.TestCase):
                 "(325)444-8378",
             ],
             'Argument used: phone="435-224-7613"': [
-                phone_number("(325)444-TEST"),
-                "(325)444-8378",
+                phone_number("435-224-7613"),
+                "435-224-7613",
             ],
             'Argument used: phone="54212456"': [phone_number("54212456"), "54212456"],
             'Argument used: phone="0800-TEST"': [
