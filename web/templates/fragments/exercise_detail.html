@@ -15,14 +15,9 @@
     hx-post="/exercises/{{ category_name }}/{{ function_name }}/run"
     hx-target="#result"
     hx-swap="innerHTML"
+    onsubmit="if (document.getElementById('code-editor')._editorInstance) { document.getElementById('code-editor')._editorInstance.save(); }"
 >
-    <textarea
-        id="code"
-        name="code"
-        rows="12"
-        cols="80"
-    >{{ function_signature }}
-    </textarea>
+<textarea id="code-editor" name="code">{{ function_signature }}</textarea>
 
     <br><br>
 

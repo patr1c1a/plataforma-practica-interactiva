@@ -8,6 +8,13 @@
     
     <!-- HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+    <!-- CodeMirror from CDN -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
 </head>
 
 <body>
@@ -37,6 +44,44 @@
         {% endif %}
     </div>
 
+    <script>
+    function initializeCodeEditor() {
+        const textarea = document.getElementById("code-editor");
+
+        if (!textarea) return;
+
+        if (textarea.dataset.editorInitialized === "true") return;
+
+        const editor = CodeMirror.fromTextArea(textarea, {
+            mode: "python",
+            lineNumbers: true,
+            indentUnit: 4,
+            tabSize: 4,
+            indentWithTabs: false,
+            lineWrapping: false,
+            extraKeys: {
+                Tab: function(cm) {
+                    cm.replaceSelection("    ", "end");
+                }
+            }
+        });
+
+        textarea.dataset.editorInitialized = "true";
+        textarea._editorInstance = editor;
+
+        const totalLines = editor.lineCount();
+        editor.setCursor({ line: totalLines - 1, ch: 4 });
+        editor.focus();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeCodeEditor();
+    });
+
+    document.body.addEventListener("htmx:afterSwap", function() {
+        initializeCodeEditor();
+    });
+    </script>
 
 </body>
 </html>

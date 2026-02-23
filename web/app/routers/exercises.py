@@ -81,7 +81,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
 
     # Get function signature
     args = [arg.arg for arg in function_node.args.args]
-    signature = f"def {function_name}({', '.join(args)}):"
+    function_signature = f"def {function_name}({', '.join(args)}):\n    "
 
     request_from_htmx = request.headers.get("hx-request") == "true"
 
@@ -90,7 +90,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "category_name": category,
         "function_name": function_name,
         "problem_description": problem_description,
-        "function_signature": signature,
+        "function_signature": function_signature,
         "exercise_groups": None,
     }
 
