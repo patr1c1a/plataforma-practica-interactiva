@@ -66,6 +66,17 @@
             }
         });
 
+        const storageKey = textarea.dataset.storageKey;
+        const savedCode = sessionStorage.getItem(storageKey);
+
+        if (savedCode) {
+            editor.setValue(savedCode);
+        }
+
+        editor.on("change", function(cm) {
+            sessionStorage.setItem(storageKey, cm.getValue());
+        });
+
         textarea.dataset.editorInitialized = "true";
         textarea._editorInstance = editor;
 

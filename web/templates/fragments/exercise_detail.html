@@ -17,7 +17,11 @@
     hx-swap="innerHTML"
     onsubmit="if (document.getElementById('code-editor')._editorInstance) { document.getElementById('code-editor')._editorInstance.save(); }"
 >
-<textarea id="code-editor" name="code">{{ function_signature }}</textarea>
+<textarea
+    id="code-editor"
+    name="code"
+    data-storage-key="exercise-{{ category_name }}-{{ function_name }}"
+>{{ function_signature }}</textarea>
 
     <br><br>
 
