@@ -21,15 +21,11 @@
 
         applyTheme(themeToApply);
 
-        if (!toggleButton.dataset.listenerAttached) {
-            toggleButton.addEventListener("click", function () {
-                const currentTheme = document.documentElement.getAttribute("data-theme");
-                const newTheme = currentTheme === "dark" ? "light" : "dark";
-                applyTheme(newTheme);
-            });
-
-            toggleButton.dataset.listenerAttached = "true";
-        }
+        toggleButton.addEventListener("click", function () {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            applyTheme(newTheme);
+        });
     }
 
     function applyTheme(theme) {
@@ -59,18 +55,14 @@
 
         if (!dropdown || !toggle) return;
 
-        if (!toggle.dataset.listenerAttached) {
-            toggle.addEventListener("click", function (event) {
-                event.stopPropagation();
-                dropdown.classList.toggle("open");
-            });
+        toggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            dropdown.classList.toggle("open");
+        });
 
-            document.addEventListener("click", function () {
-                dropdown.classList.remove("open");
-            });
-
-            toggle.dataset.listenerAttached = "true";
-        }
+        document.addEventListener("click", function () {
+            dropdown.classList.remove("open");
+        });
     }
 
     /* =========================
@@ -109,11 +101,11 @@
 
         const form = textarea.closest("form");
         if (form) {
-        form.addEventListener("submit", function () {
-            editor.save();
-        });
+            form.addEventListener("submit", function () {
+                editor.save();
+            });
         }
-        
+
         textarea._editorInstance = editor;
         activeCodeEditor = editor;
 
