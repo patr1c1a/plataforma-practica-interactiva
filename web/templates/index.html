@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Plataforma de Ejercicios</title>
@@ -9,16 +10,15 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 
     <script src="/static/js/app.js" defer></script>
-    
+
     <!-- HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
     <!-- CodeMirror from CDN -->
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
 
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
@@ -29,39 +29,39 @@
         <div class="header-content">
 
             <a href="/" class="brand-link">
-            <div class="header-left">
-                <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
-                <div class="header-title">
-                <strong>Programación Desde Cero</strong>
-                <span>Patricia E. Miguel</span>
+                <div class="header-left">
+                    <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
+                    <div class="header-title">
+                        <strong>Programación Desde Cero</strong>
+                        <span>Patricia E. Miguel</span>
+                    </div>
                 </div>
-            </div>
             </a>
 
             <nav class="header-navigation">
-            <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank" class="nav-link">
-                Curso
-            </a>
+                <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+                    class="nav-link">
+                    Curso
+                </a>
 
-            <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios"
-                target="_blank"
-                class="nav-link">
-                GitHub
-            </a>
+                <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios" target="_blank"
+                    class="nav-link">
+                    GitHub
+                </a>
 
-            <div class="dropdown">
-                <button class="dropdown-toggle">Más ▾</button>
-                <div class="dropdown-menu">
-                <a href="https://www.patriciaemiguel.com" target="_blank">Blog</a>
-                <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank">YouTube</a>
-                <a href="https://www.instagram.com/programaciondesdecero" target="_blank">Instagram</a>
-                <a href="https://www.facebook.com/ProgramacionDesdeCer0" target="_blank">Facebook</a>
-                <a href="https://www.tiktok.com/@programaciondesdecero" target="_blank">TikTok</a>
-                <a href="https://x.com/Programacion_0" target="_blank">X</a>
+                <div class="dropdown">
+                    <button class="dropdown-toggle">Más ▾</button>
+                    <div class="dropdown-menu">
+                        <a href="https://www.patriciaemiguel.com" target="_blank">Blog</a>
+                        <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank">YouTube</a>
+                        <a href="https://www.instagram.com/programaciondesdecero" target="_blank">Instagram</a>
+                        <a href="https://www.facebook.com/ProgramacionDesdeCer0" target="_blank">Facebook</a>
+                        <a href="https://www.tiktok.com/@programaciondesdecero" target="_blank">TikTok</a>
+                        <a href="https://x.com/Programacion_0" target="_blank">X</a>
+                    </div>
                 </div>
-            </div>
 
-            <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <button id="theme-toggle" class="theme-toggle">🌙</button>
             </nav>
 
         </div>
@@ -69,29 +69,71 @@
 
     <div class="container">
 
-        <h1>Ejercicios disponibles</h1>
+        {% if problem_description %}
+        {% include "fragments/exercise_detail.html" %}
 
-        <button
-            hx-get="/exercises"
-            hx-trigger="click"
-            hx-target="#main-content"
-            hx-swap="innerHTML"
-            hx-push-url="/exercises"
-        >
-            Cargar ejercicios
-        </button>
+        {% else %}
 
-        <hr>
+        <section class="hero">
+            <h1>Plataforma de práctica de algoritmia básica</h1>
+            <p class="hero-subtitle">
+                Continuación práctica del curso gratuito de Programación Desde Cero.
+            </p>
+            <div class="hero-actions">
+                <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+                    class="button-secondary">
+                    Ver curso
+                </a>
 
-        <div id="main-content">
-            {% if problem_description %}
-                {% include "fragments/exercise_detail.html" %}
-            {% elif exercise_groups %}
-                {% include "fragments/exercise_list.html" %}
-            {% else %}
-                <p>Seleccioná un ejercicio para comenzar.</p>
-            {% endif %}
-        </div>
+                <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios/tree/main/content/python/ESP"
+                    target="_blank" class="button-secondary">
+                    Versión offline
+                </a>
+            </div>
+        </section>
+
+        <section class="platform-explanation">
+            <div class="card">
+                <h2>¿Cómo está pensada esta plataforma?</h2>
+                <p>
+                    Los ejercicios están organizados con dificultad incremental.
+                    Se enfocan en fundamentos y razonamiento algorítmico,
+                    no en herramientas avanzadas del lenguaje.
+                </p>
+                <p>
+                    No intenta competir con plataformas de entrevistas técnicas.
+                    El objetivo es consolidar bases sólidas.
+                </p>
+                <p>
+                    En la era de la IA, comprender código y detectar errores
+                    sigue siendo una habilidad esencial.
+                </p>
+            </div>
+        </section>
+
+        <section class="categories-section">
+            <h2>Categorías</h2>
+
+            <div class="categories-grid">
+                {% for category in category_cards %}
+                <a href="/exercises/{{ category.slug }}" hx-get="/exercises/{{ category.slug }}"
+                    hx-target="#main-content" hx-swap="innerHTML" hx-push-url="/exercises/{{ category.slug }}"
+                    class="category-card">
+                    <h3>{{ category.title }}</h3>
+                    <p>{{ category.count }} ejercicios</p>
+                    <div class="progress-placeholder">
+                        Progreso próximamente
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% endif %}
+
+        <div id="main-content"></div>
+
     </div>
 </body>
+
 </html>

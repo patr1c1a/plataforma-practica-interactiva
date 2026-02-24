@@ -1,18 +1,20 @@
 {% for category_name, function_names in exercise_groups.items() %}
-    <h2>{{ category_name }}</h2>
-    <ul>
+<section class="exercise-list-section">
+    <h2>{{ category_titles.get(category_name, category_name|capitalize) }}</h2>
+    <div class="exercise-grid">
         {% for function_name in function_names %}
-            <li>
-                <a
-                    href="/exercises/{{ category_name }}/{{ function_name }}"
-                    hx-get="/exercises/{{ category_name }}/{{ function_name }}"
-                    hx-target="#main-content"
-                    hx-swap="innerHTML"
-                    hx-push-url="/exercises/{{ category_name }}/{{ function_name }}"
-                >
-                    {{ function_name }}
-                </a>
-            </li>
+        <a
+            href="/exercises/{{ category_name }}/{{ function_name }}"
+            hx-get="/exercises/{{ category_name }}/{{ function_name }}"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            hx-push-url="/exercises/{{ category_name }}/{{ function_name }}"
+            class="exercise-card"
+        >
+            <h3>{{ function_name }}</h3>
+            <p>Resolver ejercicio</p>
+        </a>
         {% endfor %}
-    </ul>
+    </div>
+</section>
 {% endfor %}

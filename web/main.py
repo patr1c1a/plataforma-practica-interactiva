@@ -6,6 +6,11 @@ from fastapi.requests import Request
 from fastapi.staticfiles import StaticFiles
 from web.app.routers.health import router as health_router
 from web.app.routers.exercises import router as exercises_router
+from web.app.services.exercise_catalog import (
+    get_exercise_groups,
+    CATEGORY_TITLES,
+    get_ordered_category_cards,
+)
 
 app = FastAPI()
 
@@ -26,9 +31,18 @@ app.include_router(exercises_router)
 
 @app.get("/")
 def index(request: Request):
+    exercise_groups = get_exercise_groups()
+    category_cards = get_ordered_category_cards(exercise_groups)
+
     return templates.TemplateResponse(
         "index.html",
-        {"request": request},
+        {
+            "request": request,
+            "exercise_groups": exercise_groups,
+            "category_cards": category_cards,
+            "category_titles": CATEGORY_TITLES,
+            "problem_description": None,
+        },
     )
 
 @app.get("/favicon.ico")

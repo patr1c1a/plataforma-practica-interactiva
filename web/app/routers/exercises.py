@@ -1,9 +1,14 @@
-from urllib import request
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 from web.app.services.execution import run_tests
+from web.app.services.exercise_catalog import (
+    CATEGORY_TITLES,
+    get_exercise_groups,
+    get_category_functions,
+    get_ordered_category_cards,
+)
 import ast
 
 router = APIRouter()
@@ -12,28 +17,16 @@ templates = Jinja2Templates(directory="web/templates")
 
 @router.get("/exercises")
 def list_exercises(request: Request):
-    base_path = Path("content/python/ESP/src")
-    exercises = {}
-
-    for file_path in base_path.glob("*.py"):
-        category = file_path.stem
-
-        with open(file_path, "r", encoding="utf-8") as file:
-            tree = ast.parse(file.read())
-
-        functions = [
-            node.name
-            for node in tree.body
-            if isinstance(node, ast.FunctionDef)
-        ]
-
-        exercises[category] = functions
+    exercises = get_exercise_groups()
+    category_cards = get_ordered_category_cards(exercises)
 
     request_from_htmx = request.headers.get("hx-request") == "true"
 
     template_context = {
         "request": request,
         "exercise_groups": exercises,
+        "category_cards": category_cards,
+        "category_titles": CATEGORY_TITLES,
         "problem_description": None,
     }
 
@@ -54,13 +47,50 @@ def list_exercises(request: Request):
     return whole_page_response
 
 
+@router.get("/exercises/{category}")
+def list_category_exercises(request: Request, category: str):
+    functions = get_category_functions(category)
+    if functions is None:
+        return HTMLResponse(status_code=404, content="Categoria no encontrada")
+
+    all_exercises = get_exercise_groups()
+    category_cards = get_ordered_category_cards(all_exercises)
+    exercises = {category: functions}
+
+    request_from_htmx = request.headers.get("hx-request") == "true"
+
+    template_context = {
+        "request": request,
+        "exercise_groups": exercises,
+        "category_cards": category_cards,
+        "category_titles": CATEGORY_TITLES,
+        "problem_description": None,
+    }
+
+    if request_from_htmx:
+        fragment_response = templates.TemplateResponse(
+            "fragments/exercise_list.html",
+            template_context,
+        )
+        return fragment_response
+
+    whole_page_response = templates.TemplateResponse(
+        "index.html",
+        template_context,
+    )
+
+    return whole_page_response
+
+
 @router.get("/exercises/{category}/{function_name}")
 def exercise_detail(request: Request, category: str, function_name: str):
+    all_exercises = get_exercise_groups()
+    category_cards = get_ordered_category_cards(all_exercises)
     base_path = Path("content/python/ESP/src")
     file_path = base_path / f"{category}.py"
 
     if not file_path.exists():
-        return HTMLResponse(status_code=404, content="Categoría no encontrada")
+        return HTMLResponse(status_code=404, content="Categoria no encontrada")
 
     with open(file_path, "r", encoding="utf-8") as file:
         source_code = file.read()
@@ -74,7 +104,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
             break
 
     if function_node is None:
-        return HTMLResponse(status_code=404, content="Función no encontrada")
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
 
     # Get docstring (problem description)
     problem_description = ast.get_docstring(function_node)
@@ -92,6 +122,8 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "problem_description": problem_description,
         "function_signature": function_signature,
         "exercise_groups": None,
+        "category_cards": category_cards,
+        "category_titles": CATEGORY_TITLES,
     }
 
     # If it's an HTMX request, return only the fragment
