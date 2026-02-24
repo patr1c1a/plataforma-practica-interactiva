@@ -7,6 +7,8 @@
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/static/css/styles.css">
+
+    <script src="/static/js/app.js" defer></script>
     
     <!-- HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
@@ -90,109 +92,6 @@
                 <p>Seleccioná un ejercicio para comenzar.</p>
             {% endif %}
         </div>
-
-        <script>
-        let activeCodeEditor = null;
-        function initializeCodeEditor() {
-            const textarea = document.getElementById("code-editor");
-
-            if (!textarea) return;
-
-            if (textarea.dataset.editorInitialized === "true") return;
-
-            const currentTheme = document.documentElement.getAttribute("data-theme");
-            const codeMirrorTheme = currentTheme === "dark" ? "material-darker" : "default";
-
-            const editor = CodeMirror.fromTextArea(textarea, {
-                mode: "python",
-                lineNumbers: true,
-                indentUnit: 4,
-                tabSize: 4,
-                indentWithTabs: false,
-                lineWrapping: false,
-                theme: codeMirrorTheme,
-                extraKeys: {
-                    Tab: function(cm) {
-                        cm.replaceSelection("    ", "end");
-                    }
-                }
-            });
-
-            const storageKey = textarea.dataset.storageKey;
-            const savedCode = sessionStorage.getItem(storageKey);
-
-            if (savedCode) {
-                editor.setValue(savedCode);
-            }
-
-            editor.on("change", function(cm) {
-                sessionStorage.setItem(storageKey, cm.getValue());
-            });
-
-            textarea.dataset.editorInitialized = "true";
-            activeCodeEditor = editor;
-
-            const totalLines = editor.lineCount();
-            editor.setCursor({ line: totalLines - 1, ch: 4 });
-            editor.focus();
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            initializeCodeEditor();
-        });
-
-        document.body.addEventListener("htmx:afterSwap", function() {
-            initializeCodeEditor();
-        });
-        </script>
-
     </div>
-    <script>
-    (function () {
-    const rootElement = document.documentElement;
-    const toggleButton = document.getElementById("theme-toggle");
-
-    const storedTheme = localStorage.getItem("preferred-theme");
-
-    if (storedTheme) {
-        applyTheme(storedTheme);
-    } else {
-        applyTheme("dark");
-    }
-
-    toggleButton.addEventListener("click", function () {
-        const currentTheme = rootElement.getAttribute("data-theme");
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-        applyTheme(newTheme);
-    });
-
-    function applyTheme(theme) {
-        rootElement.setAttribute("data-theme", theme);
-        localStorage.setItem("preferred-theme", theme);
-        toggleButton.textContent = theme === "dark" ? "🌙" : "☀";
-
-        if (activeCodeEditor) {
-            const newEditorTheme = theme === "dark" ? "material-darker" : "default";
-            activeCodeEditor.setOption("theme", newEditorTheme);
-        }
-    }
-    })();
-    </script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const dropdown = document.querySelector(".dropdown");
-    const toggle = document.querySelector(".dropdown-toggle");
-
-    toggle.addEventListener("click", function(event) {
-        event.stopPropagation();
-        dropdown.classList.toggle("open");
-    });
-
-    document.addEventListener("click", function() {
-        dropdown.classList.remove("open");
-    });
-    });
-    </script>
 </body>
 </html>
