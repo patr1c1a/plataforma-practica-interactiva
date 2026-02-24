@@ -59,10 +59,6 @@
             event.stopPropagation();
             dropdown.classList.toggle("open");
         });
-
-        document.addEventListener("click", function () {
-            dropdown.classList.remove("open");
-        });
     }
 
     /* =========================
@@ -132,6 +128,11 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         initializeApplication();
+
+        document.addEventListener("click", function () {
+            const dropdown = document.querySelector(".dropdown");
+            if (dropdown) dropdown.classList.remove("open");
+        });
     });
 
     document.body.addEventListener("htmx:afterSwap", function (event) {
