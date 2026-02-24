@@ -122,3 +122,89 @@ header {
   white-space: pre-wrap;
   color: var(--text-primary);
 }
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.brand-link:hover {
+  background-color: var(--surface-elevated);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.brand-link:active {
+  transform: translateY(0);
+}
+
+.brand-link:hover .header-title strong {
+  color: var(--accent);
+}
+
+.header-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: var(--surface-elevated);
+  text-decoration: none;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-width: 160px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+
+.dropdown-menu a {
+  padding: 0.6rem 0.8rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--surface-elevated);
+}
+
+.dropdown.open .dropdown-menu {
+  display: flex;
+}

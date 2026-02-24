@@ -24,17 +24,45 @@
 
 <body>
     <header>
-    <div class="header-content">
-        <div class="header-left">
-        <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
-        <div class="header-title">
-            <strong>Programación Desde Cero</strong>
-            <span>Patricia E. Miguel</span>
-        </div>
-        </div>
+        <div class="header-content">
 
-        <button id="theme-toggle" class="theme-toggle">🌙</button>
-    </div>
+            <a href="/" class="brand-link">
+            <div class="header-left">
+                <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
+                <div class="header-title">
+                <strong>Programación Desde Cero</strong>
+                <span>Patricia E. Miguel</span>
+                </div>
+            </div>
+            </a>
+
+            <nav class="header-navigation">
+            <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank" class="nav-link">
+                Curso
+            </a>
+
+            <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios"
+                target="_blank"
+                class="nav-link">
+                GitHub
+            </a>
+
+            <div class="dropdown">
+                <button class="dropdown-toggle">Más ▾</button>
+                <div class="dropdown-menu">
+                <a href="https://www.patriciaemiguel.com" target="_blank">Blog</a>
+                <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank">YouTube</a>
+                <a href="https://www.instagram.com/programaciondesdecero" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/ProgramacionDesdeCer0" target="_blank">Facebook</a>
+                <a href="https://www.tiktok.com/@programaciondesdecero" target="_blank">TikTok</a>
+                <a href="https://x.com/Programacion_0" target="_blank">X</a>
+                </div>
+            </div>
+
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
+            </nav>
+
+        </div>
     </header>
 
     <div class="container">
@@ -124,12 +152,6 @@
     const rootElement = document.documentElement;
     const toggleButton = document.getElementById("theme-toggle");
 
-    function applyTheme(theme) {
-        rootElement.setAttribute("data-theme", theme);
-        localStorage.setItem("preferred-theme", theme);
-        toggleButton.textContent = theme === "dark" ? "🌙" : "☀";
-    }
-
     const storedTheme = localStorage.getItem("preferred-theme");
 
     if (storedTheme) {
@@ -155,6 +177,22 @@
         }
     }
     })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const dropdown = document.querySelector(".dropdown");
+    const toggle = document.querySelector(".dropdown-toggle");
+
+    toggle.addEventListener("click", function(event) {
+        event.stopPropagation();
+        dropdown.classList.toggle("open");
+    });
+
+    document.addEventListener("click", function() {
+        dropdown.classList.remove("open");
+    });
+    });
     </script>
 </body>
 </html>
