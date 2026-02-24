@@ -5,6 +5,8 @@
     <title>Plataforma de Ejercicios</title>
 
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
     
     <!-- HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
@@ -13,86 +15,146 @@
     <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
 
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
 </head>
 
 <body>
+    <header>
+    <div class="header-content">
+        <div class="header-left">
+        <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
+        <div class="header-title">
+            <strong>Programación Desde Cero</strong>
+            <span>Patricia E. Miguel</span>
+        </div>
+        </div>
 
-    <h1>Ejercicios disponibles</h1>
-
-    <button
-        hx-get="/exercises"
-        hx-trigger="click"
-        hx-target="#main-content"
-        hx-swap="innerHTML"
-        hx-push-url="/exercises"
-    >
-        Cargar ejercicios
-    </button>
-
-
-    <hr>
-
-    <div id="main-content">
-        {% if problem_description %}
-            {% include "fragments/exercise_detail.html" %}
-        {% elif exercise_groups %}
-            {% include "fragments/exercise_list.html" %}
-        {% else %}
-            <p>Seleccioná un ejercicio para comenzar.</p>
-        {% endif %}
+        <button id="theme-toggle" class="theme-toggle">🌙</button>
     </div>
+    </header>
 
-    <script>
-    function initializeCodeEditor() {
-        const textarea = document.getElementById("code-editor");
+    <div class="container">
 
-        if (!textarea) return;
+        <h1>Ejercicios disponibles</h1>
 
-        if (textarea.dataset.editorInitialized === "true") return;
+        <button
+            hx-get="/exercises"
+            hx-trigger="click"
+            hx-target="#main-content"
+            hx-swap="innerHTML"
+            hx-push-url="/exercises"
+        >
+            Cargar ejercicios
+        </button>
 
-        const editor = CodeMirror.fromTextArea(textarea, {
-            mode: "python",
-            lineNumbers: true,
-            indentUnit: 4,
-            tabSize: 4,
-            indentWithTabs: false,
-            lineWrapping: false,
-            extraKeys: {
-                Tab: function(cm) {
-                    cm.replaceSelection("    ", "end");
+        <hr>
+
+        <div id="main-content">
+            {% if problem_description %}
+                {% include "fragments/exercise_detail.html" %}
+            {% elif exercise_groups %}
+                {% include "fragments/exercise_list.html" %}
+            {% else %}
+                <p>Seleccioná un ejercicio para comenzar.</p>
+            {% endif %}
+        </div>
+
+        <script>
+        let activeCodeEditor = null;
+        function initializeCodeEditor() {
+            const textarea = document.getElementById("code-editor");
+
+            if (!textarea) return;
+
+            if (textarea.dataset.editorInitialized === "true") return;
+
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const codeMirrorTheme = currentTheme === "dark" ? "material-darker" : "default";
+
+            const editor = CodeMirror.fromTextArea(textarea, {
+                mode: "python",
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: false,
+                theme: codeMirrorTheme,
+                extraKeys: {
+                    Tab: function(cm) {
+                        cm.replaceSelection("    ", "end");
+                    }
                 }
+            });
+
+            const storageKey = textarea.dataset.storageKey;
+            const savedCode = sessionStorage.getItem(storageKey);
+
+            if (savedCode) {
+                editor.setValue(savedCode);
             }
-        });
 
-        const storageKey = textarea.dataset.storageKey;
-        const savedCode = sessionStorage.getItem(storageKey);
+            editor.on("change", function(cm) {
+                sessionStorage.setItem(storageKey, cm.getValue());
+            });
 
-        if (savedCode) {
-            editor.setValue(savedCode);
+            textarea.dataset.editorInitialized = "true";
+            activeCodeEditor = editor;
+
+            const totalLines = editor.lineCount();
+            editor.setCursor({ line: totalLines - 1, ch: 4 });
+            editor.focus();
         }
 
-        editor.on("change", function(cm) {
-            sessionStorage.setItem(storageKey, cm.getValue());
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeCodeEditor();
         });
 
-        textarea.dataset.editorInitialized = "true";
-        textarea._editorInstance = editor;
+        document.body.addEventListener("htmx:afterSwap", function() {
+            initializeCodeEditor();
+        });
+        </script>
 
-        const totalLines = editor.lineCount();
-        editor.setCursor({ line: totalLines - 1, ch: 4 });
-        editor.focus();
+    </div>
+    <script>
+    (function () {
+    const rootElement = document.documentElement;
+    const toggleButton = document.getElementById("theme-toggle");
+
+    function applyTheme(theme) {
+        rootElement.setAttribute("data-theme", theme);
+        localStorage.setItem("preferred-theme", theme);
+        toggleButton.textContent = theme === "dark" ? "🌙" : "☀";
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        initializeCodeEditor();
+    const storedTheme = localStorage.getItem("preferred-theme");
+
+    if (storedTheme) {
+        applyTheme(storedTheme);
+    } else {
+        applyTheme("dark");
+    }
+
+    toggleButton.addEventListener("click", function () {
+        const currentTheme = rootElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        applyTheme(newTheme);
     });
 
-    document.body.addEventListener("htmx:afterSwap", function() {
-        initializeCodeEditor();
-    });
+    function applyTheme(theme) {
+        rootElement.setAttribute("data-theme", theme);
+        localStorage.setItem("preferred-theme", theme);
+        toggleButton.textContent = theme === "dark" ? "🌙" : "☀";
+
+        if (activeCodeEditor) {
+            const newEditorTheme = theme === "dark" ? "material-darker" : "default";
+            activeCodeEditor.setOption("theme", newEditorTheme);
+        }
+    }
+    })();
     </script>
-
 </body>
 </html>
