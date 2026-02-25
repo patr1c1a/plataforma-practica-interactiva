@@ -69,7 +69,10 @@
 
     <div class="container">
 
-        {% if problem_description %}
+        {% if view == "exercise_list" %}
+        {% include "fragments/exercise_list.html" %}
+
+        {% elif problem_description %}
         {% include "fragments/exercise_detail.html" %}
 
         {% else %}
@@ -116,9 +119,7 @@
 
             <div class="categories-grid">
                 {% for category in category_cards %}
-                <a href="/exercises/{{ category.slug }}" hx-get="/exercises/{{ category.slug }}"
-                    hx-target="#main-content" hx-swap="innerHTML" hx-push-url="/exercises/{{ category.slug }}"
-                    class="category-card">
+                <a href="/exercises/{{ category.slug }}" class="category-card">
                     <h3>{{ category.title }}</h3>
                     <p>{{ category.count }} ejercicios</p>
                     <div class="progress-placeholder">
@@ -130,8 +131,6 @@
         </section>
 
         {% endif %}
-
-        <div id="main-content"></div>
 
     </div>
 </body>

@@ -5,16 +5,32 @@
         {% for function_name in function_names %}
         <a
             href="/exercises/{{ category_name }}/{{ function_name }}"
-            hx-get="/exercises/{{ category_name }}/{{ function_name }}"
-            hx-target="#main-content"
-            hx-swap="innerHTML"
-            hx-push-url="/exercises/{{ category_name }}/{{ function_name }}"
             class="exercise-card"
         >
-            <h3>{{ function_name }}</h3>
+            <h3>{{ function_name.replace('_', ' ')|capitalize }}</h3>
             <p>Resolver ejercicio</p>
         </a>
         {% endfor %}
     </div>
 </section>
 {% endfor %}
+
+{% if current_category %}
+<section class="other-categories-section">
+    <hr class="section-divider">
+    <h3>Otras categorías</h3>
+    <div class="categories-grid">
+        {% for category in category_cards %}
+        {% if category.slug != current_category %}
+        <a href="/exercises/{{ category.slug }}" class="category-card">
+            <h3>{{ category.title }}</h3>
+            <p>{{ category.count }} ejercicios</p>
+            <div class="progress-placeholder">
+                Progreso proximamente
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

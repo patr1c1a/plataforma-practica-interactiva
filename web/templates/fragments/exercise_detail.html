@@ -1,7 +1,7 @@
 <h2>Ejercicio</h2>
 
-<p><strong>Categoría:</strong> {{ category_name }}</p>
-<p><strong>Función:</strong> {{ function_name }}</p>
+<p><strong>Categoría:</strong> {{ category_titles.get(category_name, category_name|capitalize) }}</p>
+<p><strong>Título:</strong> {{ function_name.replace('_', ' ')|capitalize }}</p>
 
 <h3>Enunciado</h3>
 

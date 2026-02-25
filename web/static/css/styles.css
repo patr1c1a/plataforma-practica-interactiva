@@ -312,6 +312,21 @@ header {
   font-size: 0.92rem;
 }
 
+.other-categories-section {
+  margin-top: 2.5rem;
+}
+
+.section-divider {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 0 0 1.5rem;
+}
+
+.other-categories-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
 @media (max-width: 720px) {
   .categories-grid {
     grid-template-columns: 1fr;

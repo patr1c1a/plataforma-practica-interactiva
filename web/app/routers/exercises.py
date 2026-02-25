@@ -28,6 +28,8 @@ def list_exercises(request: Request):
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "problem_description": None,
+        "view": "exercise_list",
+        "current_category": None,
     }
 
     # If it's an HTMX request, return only the fragment
@@ -65,6 +67,8 @@ def list_category_exercises(request: Request, category: str):
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "problem_description": None,
+        "view": "exercise_list",
+        "current_category": category,
     }
 
     if request_from_htmx:
@@ -124,6 +128,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "exercise_groups": None,
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
+        "view": "exercise_detail",
     }
 
     # If it's an HTMX request, return only the fragment

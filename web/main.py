@@ -42,6 +42,7 @@ def index(request: Request):
             "category_cards": category_cards,
             "category_titles": CATEGORY_TITLES,
             "problem_description": None,
+            "view": "home",
         },
     )
 
