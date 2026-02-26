@@ -14,6 +14,22 @@ import ast
 router = APIRouter()
 templates = Jinja2Templates(directory="web/templates")
 
+def render_with_optional_fragment(
+    request: Request,
+    full_template: str,
+    fragment_template: str,
+    context: dict,
+):
+    """
+    If it's an HTMX request, return only the fragment.
+    If it's a normal request, return the whole page.
+    """
+    request_from_htmx = request.headers.get("hx-request") == "true"
+
+    if request_from_htmx:
+        return templates.TemplateResponse(fragment_template, context)
+
+    return templates.TemplateResponse(full_template, context)
 
 @router.get("/exercises")
 def list_exercises(request: Request):
@@ -32,21 +48,12 @@ def list_exercises(request: Request):
         "current_category": None,
     }
 
-    # If it's an HTMX request, return only the fragment
-    if request_from_htmx:
-        fragment_response = templates.TemplateResponse(
-            "fragments/exercise_list.html",
-            template_context,
-        )
-        return fragment_response
-    
-    # If it's a normal request, return the whole page
-    whole_page_response = templates.TemplateResponse(
-        "index.html",
-        template_context,
-    )
-
-    return whole_page_response
+    return render_with_optional_fragment(
+        request=request,
+        full_template="index.html",
+        fragment_template="fragments/exercise_list.html",
+        context=template_context,
+    )   
 
 
 @router.get("/exercises/{category}")
@@ -71,19 +78,12 @@ def list_category_exercises(request: Request, category: str):
         "current_category": category,
     }
 
-    if request_from_htmx:
-        fragment_response = templates.TemplateResponse(
-            "fragments/exercise_list.html",
-            template_context,
-        )
-        return fragment_response
-
-    whole_page_response = templates.TemplateResponse(
-        "index.html",
-        template_context,
+    return render_with_optional_fragment(
+        request=request,
+        full_template="index.html",
+        fragment_template="fragments/exercise_list.html",
+        context=template_context,
     )
-
-    return whole_page_response
 
 
 @router.get("/exercises/{category}/{function_name}")
@@ -131,21 +131,12 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "view": "exercise_detail",
     }
 
-    # If it's an HTMX request, return only the fragment
-    if request_from_htmx:
-        fragment_response = templates.TemplateResponse(
-            "fragments/exercise_detail.html",
-            template_context,
-        )
-        return fragment_response
-
-    # If it's a normal request, return the whole page
-    whole_page_response = templates.TemplateResponse(
-        "index.html",
-        template_context,
+    return render_with_optional_fragment(
+        request=request,
+        full_template="index.html",
+        fragment_template="fragments/exercise_list.html",
+        context=template_context,
     )
-
-    return whole_page_response
 
 
 @router.post("/exercises/{category}/{function_name}/run")
