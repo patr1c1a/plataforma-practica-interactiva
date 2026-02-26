@@ -4,6 +4,8 @@ import tempfile
 import ast
 from pathlib import Path
 
+RUNTIME_TMP_DIRECTORY = Path("runtime/tmp")
+RUNTIME_TMP_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
 def run_tests(category: str, function_name: str, user_code: str) -> str:
     base_content = Path("content/python/ESP")
@@ -16,7 +18,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
             "status": "error",
             "raw_output": "Error interno: categoría o archivo de tests no encontrados.",
         }
-    
+
     maximum_allowed_code_length = 10_000
 
     if len(user_code) > maximum_allowed_code_length:
@@ -30,7 +32,8 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
 
         parsed_user_ast = ast.parse(user_code)
         import_statements = [
-            node for node in ast.walk(parsed_user_ast)
+            node
+            for node in ast.walk(parsed_user_ast)
             if isinstance(node, (ast.Import, ast.ImportFrom))
         ]
 
@@ -49,8 +52,8 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
             "status": "syntax_error",
             "raw_output": formatted_error_message,
         }
-    
-    with tempfile.TemporaryDirectory(dir=Path("runtime/tmp")) as tmp_dir:
+
+    with tempfile.TemporaryDirectory(dir=RUNTIME_TMP_DIRECTORY) as tmp_dir:
         tmp_path = Path(tmp_dir)
 
         # Same structure as the CLI version
@@ -82,6 +85,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         exercise_path.write_text(updated_code, encoding="utf-8")
 
         # Run tests from root
+        timeout_seconds = 10
         try:
             result = subprocess.run(
                 [
@@ -96,7 +100,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
                 cwd=tmp_path,
                 capture_output=True,
                 text=True,
-                timeout=10,
+                timeout=timeout_seconds,
             )
         except subprocess.TimeoutExpired:
             return {
@@ -120,7 +124,6 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
 
         else:
             execution_status = "error"
-
 
         failed_test_cases = []
 
@@ -164,13 +167,13 @@ def _replace_function_definition(
     user_submitted_ast = ast.parse(user_submitted_code)
 
     user_function_definitions = [
-        node
-        for node in user_submitted_ast.body
-        if isinstance(node, ast.FunctionDef)
+        node for node in user_submitted_ast.body if isinstance(node, ast.FunctionDef)
     ]
 
     if not user_function_definitions:
-        raise ValueError("El código enviado no contiene una definición de función válida.")
+        raise ValueError(
+            "El código enviado no contiene una definición de función válida."
+        )
 
     user_function_node = user_function_definitions[0]
 

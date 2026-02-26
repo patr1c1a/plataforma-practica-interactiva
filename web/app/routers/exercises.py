@@ -14,6 +14,7 @@ import ast
 router = APIRouter()
 templates = Jinja2Templates(directory="web/templates")
 
+
 def render_with_optional_fragment(
     request: Request,
     full_template: str,
@@ -30,6 +31,7 @@ def render_with_optional_fragment(
         return templates.TemplateResponse(fragment_template, context)
 
     return templates.TemplateResponse(full_template, context)
+
 
 @router.get("/exercises")
 def list_exercises(request: Request):
@@ -53,7 +55,7 @@ def list_exercises(request: Request):
         full_template="index.html",
         fragment_template="fragments/exercise_list.html",
         context=template_context,
-    )   
+    )
 
 
 @router.get("/exercises/{category}")
@@ -141,15 +143,12 @@ def exercise_detail(request: Request, category: str, function_name: str):
 
 @router.post("/exercises/{category}/{function_name}/run")
 def run_exercise(
-    request: Request,
-    category: str,
-    function_name: str,
-    code: str = Form(...)
+    request: Request, category: str, function_name: str, code: str = Form(...)
 ):
     result = run_tests(
-    category=category,
-    function_name=function_name,
-    user_code=code,
+        category=category,
+        function_name=function_name,
+        user_code=code,
     )
 
     return templates.TemplateResponse(
@@ -159,4 +158,3 @@ def run_exercise(
             "result": result,
         },
     )
-

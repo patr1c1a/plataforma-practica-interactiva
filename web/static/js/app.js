@@ -6,6 +6,8 @@
         initializeTheme();
         initializeDropdown();
         initializeCodeEditor();
+        updateExerciseVisualState();
+        updateCategoryProgress();
     }
 
     /* =========================
@@ -95,13 +97,6 @@
             }
         });
 
-        const form = textarea.closest("form");
-        if (form) {
-            form.addEventListener("submit", function () {
-                editor.save();
-            });
-        }
-
         textarea._editorInstance = editor;
         activeCodeEditor = editor;
 
@@ -123,6 +118,123 @@
     }
 
     /* =========================
+        PROGRESS
+    ========================= */
+
+    const PROGRESS_STORAGE_KEY = "platform-progress-v1";
+
+    function loadProgress() {
+        const raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+    }
+
+    function saveProgress(progressData) {
+        localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progressData));
+    }
+
+    function markExerciseAttempted(category, exercise) {
+        const progress = loadProgress();
+
+        if (!progress[category]) {
+            progress[category] = {};
+        }
+
+        if (!progress[category][exercise]) {
+            progress[category][exercise] = {
+                attempted: true,
+                completed: false
+            };
+        } else {
+            progress[category][exercise].attempted = true;
+
+            // Explicitly preserve completed state
+            if (progress[category][exercise].completed !== true) {
+                progress[category][exercise].completed = false;
+            }
+        }
+
+        saveProgress(progress);
+    }
+
+    function markExerciseCompleted(category, exercise) {
+        const progress = loadProgress();
+
+        if (!progress[category]) {
+            progress[category] = {};
+        }
+
+        if (!progress[category][exercise]) {
+            progress[category][exercise] = {
+                attempted: true,
+                completed: true
+            };
+        } else {
+            progress[category][exercise].attempted = true;
+            progress[category][exercise].completed = true; // Never revert
+        }
+
+        saveProgress(progress);
+    }
+
+    function updateExerciseVisualState() {
+        const progress = loadProgress();
+
+        document.querySelectorAll(".exercise-card").forEach(card => {
+            const url = card.getAttribute("href");
+            if (!url) return;
+
+            const match = url.match(/exercises\/([^\/]+)\/([^\/]+)/);
+            if (!match) return;
+
+            const category = match[1];
+            const exercise = match[2];
+
+            const state = progress[category]?.[exercise];
+
+            let indicator = card.querySelector(".exercise-status");
+
+            if (!indicator) {
+                indicator = document.createElement("span");
+                indicator.className = "exercise-status";
+                card.prepend(indicator);
+            }
+
+            if (!state) {
+                indicator.className = "exercise-status not-attempted";
+            } else if (state.completed) {
+                indicator.className = "exercise-status completed";
+            } else if (state.attempted) {
+                indicator.className = "exercise-status attempted";
+            }
+        });
+    }
+
+    function updateCategoryProgress() {
+        const progress = loadProgress();
+
+        document.querySelectorAll(".category-card").forEach(card => {
+            const url = card.getAttribute("href");
+            if (!url) return;
+
+            const match = url.match(/exercises\/([^\/]+)/);
+            if (!match) return;
+
+            const category = match[1];
+
+            const totalExercises = parseInt(card.dataset.count || "0");
+            const completed = progress[category]
+                ? Object.values(progress[category]).filter(e => e.completed).length
+                : 0;
+
+            const progressElement = card.querySelector(".progress-placeholder");
+
+            if (progressElement) {
+                progressElement.textContent = `${completed}/${totalExercises} completados`;
+            }
+        });
+    }
+
+    /* =========================
        HTMX HOOKS
     ========================== */
 
@@ -135,14 +247,51 @@
         });
     });
 
+    document.body.addEventListener("htmx:historyRestore", function () {
+        initializeApplication();
+    });
+
     document.body.addEventListener("htmx:afterSwap", function (event) {
         if (event.target.id === "main-content") {
             initializeCodeEditor();
         }
+
+        if (event.target.id === "result") {
+            const resultElement = event.target;
+            const statusContainer = resultElement.querySelector("#execution-status");
+
+            if (!statusContainer) return;
+
+            const categoryMatch = window.location.pathname.match(/exercises\/([^\/]+)\/([^\/]+)/);
+            if (!categoryMatch) return;
+
+            const category = categoryMatch[1];
+            const exercise = categoryMatch[2];
+
+            const status = statusContainer.dataset.status;
+
+            // Always mark as attempted
+            markExerciseAttempted(category, exercise);
+
+            // Only mark as completed if pass
+            if (status === "pass") {
+                markExerciseCompleted(category, exercise);
+            }
+
+            updateExerciseVisualState();
+            updateCategoryProgress();
+        }
     });
 
-    document.body.addEventListener("htmx:historyRestore", function () {
-        initializeApplication();
+    document.body.addEventListener("htmx:configRequest", function (event) {
+        const textarea = document.getElementById("code-editor");
+
+        if (!textarea || !textarea._editorInstance) return;
+
+        const editor = textarea._editorInstance;
+        const currentCode = editor.getValue();
+
+        event.detail.parameters["code"] = currentCode;
     });
 
 })();

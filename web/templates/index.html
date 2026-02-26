@@ -119,7 +119,7 @@
 
             <div class="categories-grid">
                 {% for category in category_cards %}
-                <a href="/exercises/{{ category.slug }}" class="category-card">
+                <a href="/exercises/{{ category.slug }}" class="category-card" data-count="{{ category.count }}">
                     <h3>{{ category.title }}</h3>
                     <p>{{ category.count }} ejercicios</p>
                     <div class="progress-placeholder">

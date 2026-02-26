@@ -332,3 +332,23 @@ header {
     grid-template-columns: 1fr;
   }
 }
+
+.exercise-status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.exercise-status.not-attempted {
+  background-color: var(--text-secondary);
+}
+
+.exercise-status.attempted {
+  background-color: var(--warning);
+}
+
+.exercise-status.completed {
+  background-color: var(--success);
+}

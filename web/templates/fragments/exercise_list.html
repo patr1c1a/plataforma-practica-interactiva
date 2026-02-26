@@ -3,10 +3,9 @@
     <h2>{{ category_titles.get(category_name, category_name|capitalize) }}</h2>
     <div class="exercise-grid">
         {% for function_name in function_names %}
-        <a
-            href="/exercises/{{ category_name }}/{{ function_name }}"
-            class="exercise-card"
-        >
+        <a href="/exercises/{{ category_name }}/{{ function_name }}"
+            class="exercise-card">
+            <span class="exercise-status not-attempted"></span>
             <h3>{{ function_name.replace('_', ' ')|capitalize }}</h3>
             <p>Resolver ejercicio</p>
         </a>
