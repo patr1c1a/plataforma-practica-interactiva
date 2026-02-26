@@ -8,6 +8,7 @@
         initializeCodeEditor();
         updateExerciseVisualState();
         updateCategoryProgress();
+        initializeProgressPanel();
     }
 
     /* =========================
@@ -231,6 +232,96 @@
             if (progressElement) {
                 progressElement.textContent = `${completed}/${totalExercises} completados`;
             }
+        });
+    }
+
+    function initializeProgressPanel() {
+        const panel = document.getElementById("progress-panel");
+        const button = document.getElementById("progress-button");
+
+        if (!panel || !button) return;
+
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            panel.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", function () {
+            panel.classList.add("hidden");
+        });
+
+        initializeExport();
+        initializeImport();
+        initializeReset();
+    }
+
+    function initializeExport() {
+        const exportButton = document.getElementById("export-progress");
+        if (!exportButton) return;
+
+        exportButton.addEventListener("click", function () {
+            const progress = loadProgress();
+
+            const exportData = {
+                version: 1,
+                exportedAt: new Date().toISOString(),
+                progress: progress
+            };
+
+            const blob = new Blob(
+                [JSON.stringify(exportData, null, 2)],
+                { type: "application/json" }
+            );
+
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "progreso-plataforma.json";
+            a.click();
+
+            URL.revokeObjectURL(url);
+        });
+    }
+
+    function initializeImport() {
+        const input = document.getElementById("import-progress");
+        if (!input) return;
+
+        input.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+
+                    if (!parsed.version || !parsed.progress) {
+                        return;
+                    }
+
+                    saveProgress(parsed.progress);
+                    updateExerciseVisualState();
+                    updateCategoryProgress();
+                } catch {
+                    return;
+                }
+            };
+
+            reader.readAsText(file);
+        });
+    }
+
+    function initializeReset() {
+        const resetButton = document.getElementById("reset-progress");
+        if (!resetButton) return;
+
+        resetButton.addEventListener("click", function () {
+            localStorage.removeItem(PROGRESS_STORAGE_KEY);
+            updateExerciseVisualState();
+            updateCategoryProgress();
         });
     }
 
