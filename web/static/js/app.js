@@ -4,7 +4,7 @@
 
     function initializeApplication() {
         initializeTheme();
-        initializeDropdown();
+        initializeDropdowns();
         initializeCodeEditor();
         updateExerciseVisualState();
         updateCategoryProgress();
@@ -52,15 +52,28 @@
        DROPDOWN
     ========================== */
 
-    function initializeDropdown() {
-        const dropdown = document.querySelector(".dropdown");
-        const toggle = document.querySelector(".dropdown-toggle");
+    function initializeDropdowns() {
+        const dropdowns = document.querySelectorAll(".dropdown");
 
-        if (!dropdown || !toggle) return;
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector(".dropdown-toggle");
+            if (!toggle) return;
 
-        toggle.addEventListener("click", function (event) {
-            event.stopPropagation();
-            dropdown.classList.toggle("open");
+            toggle.addEventListener("click", function (event) {
+                event.stopPropagation();
+
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) {
+                        d.classList.remove("open");
+                    }
+                });
+
+                dropdown.classList.toggle("open");
+            });
+        });
+
+        document.addEventListener("click", function () {
+            dropdowns.forEach(d => d.classList.remove("open"));
         });
     }
 

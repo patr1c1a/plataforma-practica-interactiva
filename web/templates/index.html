@@ -61,24 +61,24 @@
                     </div>
                 </div>
 
-                <div class="progress-wrapper">
-                    <button id="progress-button">Progreso</button>
+                <div class="dropdown progress-dropdown">
+                    <button id="progress-button" class="dropdown-toggle">
+                        Progreso ▾
+                    </button>
 
-                    <div id="progress-panel" class="progress-panel hidden">
-                        <div class="progress-panel-content">
-                            <h3>Progreso</h3>
+                    <div id="progress-panel" class="dropdown-menu">
+                        <button id="export-progress" class="dropdown-item">
+                            Exportar progreso
+                        </button>
 
-                            <button id="export-progress">Exportar progreso</button>
+                        <label class="dropdown-item import-label">
+                            Importar progreso
+                            <input type="file" id="import-progress" accept="application/json">
+                        </label>
 
-                            <label class="import-label">
-                                Importar progreso
-                                <input type="file" id="import-progress" accept="application/json">
-                            </label>
-
-                            <button id="reset-progress" class="danger-button">
-                                Reiniciar progreso
-                            </button>
-                        </div>
+                        <button id="reset-progress" class="dropdown-item danger-item">
+                            Reiniciar progreso
+                        </button>
                     </div>
                 </div>
 

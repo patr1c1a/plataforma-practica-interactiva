@@ -368,31 +368,6 @@ header {
   opacity: 0.9;
 }
 
-.progress-wrapper {
-  position: relative;
-}
-
-.progress-panel {
-  position: absolute;
-  top: 110%;
-  right: 0;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.2rem;
-  width: 260px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  z-index: 200;
-}
-
-.progress-panel.hidden {
-  display: none;
-}
-
-.progress-panel-content h3 {
-  margin-top: 0;
-}
-
 .import-label {
   display: block;
   margin: 0.8rem 0;
@@ -403,6 +378,25 @@ header {
   display: none;
 }
 
-.danger-button {
-  background-color: var(--error);
+.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.dropdown-item:hover {
+  background-color: var(--surface-elevated);
+}
+
+.danger-item {
+  color: var(--error);
+}
+
+.import-label input {
+  display: none;
 }
