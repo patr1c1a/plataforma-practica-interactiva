@@ -332,6 +332,9 @@
         if (!resetButton) return;
 
         resetButton.addEventListener("click", function () {
+            const confirmed = confirm("¿Estás seguro de que querés borrar todo el progreso?");
+            if (!confirmed) return;
+
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
             updateExerciseVisualState();
             updateCategoryProgress();
