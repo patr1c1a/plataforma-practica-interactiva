@@ -240,11 +240,17 @@
                 ? Object.values(progress[category]).filter(e => e.completed).length
                 : 0;
 
-            const progressElement = card.querySelector(".progress-placeholder");
+            const progressContainer = card.querySelector(".category-progress-bar");
+            const progressText = card.querySelector(".category-progress-text");
 
-            if (progressElement) {
-                progressElement.textContent = `${completed}/${totalExercises} completados`;
-            }
+            if (!progressContainer || !progressText) return;
+
+            const percentage = totalExercises > 0
+                ? Math.round((completed / totalExercises) * 100)
+                : 0;
+
+            progressContainer.style.width = `${percentage}%`;
+            progressText.textContent = `${completed}/${totalExercises} completados`;
         });
     }
 

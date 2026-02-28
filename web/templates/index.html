@@ -143,8 +143,11 @@
                 <a href="/exercises/{{ category.slug }}" class="category-card" data-count="{{ category.count }}">
                     <h3>{{ category.title }}</h3>
                     <p>{{ category.count }} ejercicios</p>
-                    <div class="progress-placeholder">
-                        Progreso próximamente
+                    <div class="category-progress">
+                        <div class="category-progress-bar"></div>
+                    </div>
+                    <div class="category-progress-text">
+                        0/{{ category.count }} completados
                     </div>
                 </a>
                 {% endfor %}
