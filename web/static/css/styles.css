@@ -463,7 +463,9 @@ header {
 }
 
 .sidebar-exercise-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 0.4rem 0.4rem;
   font-size: 0.9rem;
   text-decoration: none;
@@ -479,6 +481,26 @@ header {
 .sidebar-exercise-link.active {
   background-color: var(--primary);
   color: white;
+}
+
+.sidebar-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-status.not-attempted {
+  background-color: var(--border);
+}
+
+.sidebar-status.attempted {
+  background-color: var(--warning);
+}
+
+.sidebar-status.completed {
+  background-color: var(--success);
 }
 
 @media (max-width: 900px) {

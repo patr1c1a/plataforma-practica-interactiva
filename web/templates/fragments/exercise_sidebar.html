@@ -10,9 +10,12 @@
 
         <div class="sidebar-exercises">
             {% for function_name in function_names %}
-            <a href="/exercises/{{ category_name }}/{{ function_name }}"
-               class="sidebar-exercise-link
-               {% if category_name == current_category and function_name == current_exercise %}active{% endif %}">
+            <a href="/exercises/{{ category_name }}/{{ function_name }}" class="sidebar-exercise-link
+                {% if category_name == current_category and function_name == current_exercise %}active{% endif %}"
+                data-category="{{ category_name }}" data-exercise="{{ function_name }}">
+
+                <span class="sidebar-status not-attempted"></span>
+
                 {{ function_name.replace('_',' ')|capitalize }}
             </a>
             {% endfor %}

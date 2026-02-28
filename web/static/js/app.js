@@ -6,10 +6,15 @@
         initializeTheme();
         initializeDropdowns();
         initializeCodeEditor();
-        updateExerciseVisualState();
-        updateCategoryProgress();
         initializeProgressPanel();
         initializeSidebar();
+        updateProgressUI();
+    }
+
+    function updateProgressUI() {
+        updateExerciseVisualState();
+        updateCategoryProgress();
+        updateSidebarProgress();
     }
 
     /* =========================
@@ -323,8 +328,7 @@
                     }
 
                     saveProgress(parsed.progress);
-                    updateExerciseVisualState();
-                    updateCategoryProgress();
+                    updateProgressUI();
                 } catch {
                     return;
                 }
@@ -343,10 +347,13 @@
             if (!confirmed) return;
 
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
-            updateExerciseVisualState();
-            updateCategoryProgress();
+            updateProgressUI();
         });
     }
+
+    /* =========================
+       SIDEBAR
+    ========================== */
 
     function initializeSidebar() {
         const categories = document.querySelectorAll(".sidebar-category");
@@ -357,6 +364,28 @@
             toggle.addEventListener("click", function () {
                 category.classList.toggle("open");
             });
+        });
+    }
+
+    function updateSidebarProgress() {
+        const progress = loadProgress();
+
+        document.querySelectorAll(".sidebar-exercise-link").forEach(link => {
+            const category = link.dataset.category;
+            const exercise = link.dataset.exercise;
+
+            const state = progress[category]?.[exercise];
+            const indicator = link.querySelector(".sidebar-status");
+
+            if (!indicator) return;
+
+            if (!state) {
+                indicator.className = "sidebar-status not-attempted";
+            } else if (state.completed) {
+                indicator.className = "sidebar-status completed";
+            } else if (state.attempted) {
+                indicator.className = "sidebar-status attempted";
+            }
         });
     }
 
@@ -404,8 +433,7 @@
                 markExerciseCompleted(category, exercise);
             }
 
-            updateExerciseVisualState();
-            updateCategoryProgress();
+            updateProgressUI();
         }
     });
 
