@@ -98,7 +98,7 @@ def days_in_month(month, year):
     """
     Determines how many days are there in a given month, from a given year (the case where the month is February in a
     leap year must be considered).
-    Suggestion: use the leap_year() function defined above.
+    Suggestion: break the problem into steps, using an algorithm to determine if a year is a leap year.
     Example:
         days_in_month(month=11, year=1981) -> 30
     -Parameters:
@@ -220,8 +220,7 @@ def greatest_divisor(number):
 def euclidean_gcd(m, n):
     """
     Finds the greatest common divisor of m and n using the Euclidean algorithm.
-    Euclidean algorithm: dividing m by n (both integer numbers), we get a quotient q and a remainder r. The greatest
-    common divisor of m and n is the same as for n and r.
+    Euclidean algorithm: dividing m by n (both integer numbers), we get a quotient q and a remainder r. The greatest common divisor of m and n is the same as for n and r.
     Example:
         euclidean_gcd(m=60, n=24) -> 12
     -Parameters:
@@ -235,9 +234,8 @@ def euclidean_gcd(m, n):
 
 def get_month(consecutive_day, year):
     """
-    Finds the month number, given the number of days gone by since January 1st in a particular year (taking into
-    account that it could be a leap year).
-    Suggestion: use function days_in_month() defined above.
+    Finds the month number, given the number of days gone by since January 1st in a particular year (taking into account that it could be a leap year).
+    Suggestion: break the problem into steps, using an algorithm to get how many days are there in a month.
     Example:
         get_month(consecutive_day=200, year=1969) -> 7
         (the 60th consecutive day in a leap year represents February 29, while in a non-leap
@@ -256,7 +254,7 @@ def is_disarium(number):
     Finds if a number is a "disarium" number.
     A disarium number is a number in which the sum of the digits to the power of their respective position (starting
     from position 1 on the left), is equal to the number itself.
-    Suggestion: use function digit_count() defined above.
+    Suggestion: break the problem into steps, using an algorithm to count digits in a number.
     Example:
         is_disarium(number=518) -> True
         (518 is a disarium number, since 5**1=5, 1**2=1, 8**3=512, and 5+1+512=518).
