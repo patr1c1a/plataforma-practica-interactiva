@@ -15,6 +15,7 @@
         updateExerciseVisualState();
         updateCategoryProgress();
         updateSidebarProgress();
+        updateSidebarCategoryProgress();
     }
 
     /* =========================
@@ -386,6 +387,31 @@
             } else if (state.attempted) {
                 indicator.className = "sidebar-status attempted";
             }
+        });
+    }
+
+    function updateSidebarCategoryProgress() {
+        const progress = loadProgress();
+
+        document.querySelectorAll(".sidebar-category").forEach(categoryBlock => {
+            const category = categoryBlock.dataset.category;
+            const total = parseInt(categoryBlock.dataset.count || "0");
+
+            const completed = progress[category]
+                ? Object.values(progress[category]).filter(e => e.completed).length
+                : 0;
+
+            const percentage = total > 0
+                ? Math.round((completed / total) * 100)
+                : 0;
+
+            const bar = categoryBlock.querySelector(".sidebar-category-progress-bar");
+            const text = categoryBlock.querySelector(".sidebar-category-text");
+
+            if (!bar || !text) return;
+
+            bar.style.width = `${percentage}%`;
+            text.textContent = `${completed}/${total}`;
         });
     }
 

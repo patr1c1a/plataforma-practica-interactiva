@@ -2,10 +2,22 @@
 
     {% for category_name, function_names in exercise_groups.items() %}
 
-    <div class="sidebar-category {% if category_name == current_category %}open{% endif %}">
+    <div class="sidebar-category {% if category_name == current_category %}open{% endif %}"
+        data-category="{{ category_name }}" data-count="{{ function_names|length }}">
 
         <button class="sidebar-category-toggle">
-            {{ category_titles.get(category_name, category_name|capitalize) }}
+            <div class="sidebar-category-header">
+                <span>
+                    {{ category_titles.get(category_name, category_name|capitalize) }}
+                </span>
+                <span class="sidebar-category-text">
+                    0/{{ function_names|length }}
+                </span>
+            </div>
+
+            <div class="sidebar-category-progress">
+                <div class="sidebar-category-progress-bar"></div>
+            </div>
         </button>
 
         <div class="sidebar-exercises">

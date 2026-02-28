@@ -453,13 +453,41 @@ header {
   color: var(--primary);
 }
 
+.sidebar-category.open .sidebar-exercises {
+  display: block;
+}
+
+.sidebar-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.sidebar-category-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.sidebar-category-progress {
+  width: 100%;
+  height: 4px;
+  background-color: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.sidebar-category-progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--success);
+  transition: width 0.4s ease;
+}
+
 .sidebar-exercises {
   display: none;
   padding-left: 0.8rem;
-}
-
-.sidebar-category.open .sidebar-exercises {
-  display: block;
 }
 
 .sidebar-exercise-link {
