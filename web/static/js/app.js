@@ -9,6 +9,7 @@
         updateExerciseVisualState();
         updateCategoryProgress();
         initializeProgressPanel();
+        initializeSidebar();
     }
 
     /* =========================
@@ -344,6 +345,18 @@
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
             updateExerciseVisualState();
             updateCategoryProgress();
+        });
+    }
+
+    function initializeSidebar() {
+        const categories = document.querySelectorAll(".sidebar-category");
+
+        categories.forEach(category => {
+            const toggle = category.querySelector(".sidebar-category-toggle");
+
+            toggle.addEventListener("click", function () {
+                category.classList.toggle("open");
+            });
         });
     }
 

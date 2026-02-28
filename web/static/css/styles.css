@@ -417,3 +417,82 @@ header {
 .import-label input {
   display: none;
 }
+
+.exercise-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.exercise-sidebar {
+  position: sticky;
+  top: 100px;
+}
+
+.exercise-main {
+  min-width: 0;
+}
+
+.sidebar-category {
+  margin-bottom: 1rem;
+}
+
+.sidebar-category-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-weight: 600;
+  padding: 0.6rem 0.4rem;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.sidebar-category-toggle:hover {
+  color: var(--primary);
+}
+
+.sidebar-exercises {
+  display: none;
+  padding-left: 0.8rem;
+}
+
+.sidebar-category.open .sidebar-exercises {
+  display: block;
+}
+
+.sidebar-exercise-link {
+  display: block;
+  padding: 0.4rem 0.4rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  border-radius: 6px;
+}
+
+.sidebar-exercise-link:hover {
+  background-color: var(--surface-elevated);
+  color: var(--text-primary);
+}
+
+.sidebar-exercise-link.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .exercise-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-sidebar {
+    order: 2;
+    position: static;
+  }
+
+  .exercise-main {
+    order: 1;
+  }
+}
+

@@ -28,14 +28,20 @@ def get_exercise_groups() -> dict[str, list[str]]:
             tree = ast.parse(file.read())
 
         functions = [
-            node.name
-            for node in tree.body
-            if isinstance(node, ast.FunctionDef)
+            node.name for node in tree.body if isinstance(node, ast.FunctionDef)
         ]
 
         exercises[category] = functions
 
-    return exercises
+    ordered_exercises: dict[str, list[str]] = {}
+
+    ordered_keys = [key for key in ORDERED_CATEGORIES if key in exercises]
+    remaining_keys = sorted(key for key in exercises if key not in ORDERED_CATEGORIES)
+
+    for key in ordered_keys + remaining_keys:
+        ordered_exercises[key] = exercises[key]
+
+    return ordered_exercises
 
 
 def get_category_functions(category: str) -> list[str] | None:
@@ -46,18 +52,16 @@ def get_category_functions(category: str) -> list[str] | None:
     with open(file_path, "r", encoding="utf-8") as file:
         tree = ast.parse(file.read())
 
-    return [
-        node.name
-        for node in tree.body
-        if isinstance(node, ast.FunctionDef)
-    ]
+    return [node.name for node in tree.body if isinstance(node, ast.FunctionDef)]
 
 
 def get_category_title(category: str) -> str:
     return CATEGORY_TITLES.get(category, category.capitalize())
 
 
-def get_ordered_category_cards(exercises: dict[str, list[str]]) -> list[dict[str, str | int]]:
+def get_ordered_category_cards(
+    exercises: dict[str, list[str]],
+) -> list[dict[str, str | int]]:
     ordered_keys = [key for key in ORDERED_CATEGORIES if key in exercises]
     remaining_keys = sorted(key for key in exercises if key not in ORDERED_CATEGORIES)
 

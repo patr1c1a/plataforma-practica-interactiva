@@ -38,8 +38,6 @@ def list_exercises(request: Request):
     exercises = get_exercise_groups()
     category_cards = get_ordered_category_cards(exercises)
 
-    request_from_htmx = request.headers.get("hx-request") == "true"
-
     template_context = {
         "request": request,
         "exercise_groups": exercises,
@@ -53,7 +51,7 @@ def list_exercises(request: Request):
     return render_with_optional_fragment(
         request=request,
         full_template="index.html",
-        fragment_template="fragments/exercise_list.html",
+        fragment_template="fragments/exercise_detail.html",
         context=template_context,
     )
 
@@ -66,13 +64,10 @@ def list_category_exercises(request: Request, category: str):
 
     all_exercises = get_exercise_groups()
     category_cards = get_ordered_category_cards(all_exercises)
-    exercises = {category: functions}
-
-    request_from_htmx = request.headers.get("hx-request") == "true"
 
     template_context = {
         "request": request,
-        "exercise_groups": exercises,
+        "exercise_groups": all_exercises,
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "problem_description": None,
@@ -83,7 +78,7 @@ def list_category_exercises(request: Request, category: str):
     return render_with_optional_fragment(
         request=request,
         full_template="index.html",
-        fragment_template="fragments/exercise_list.html",
+        fragment_template="fragments/exercise_detail.html",
         context=template_context,
     )
 
@@ -119,15 +114,15 @@ def exercise_detail(request: Request, category: str, function_name: str):
     args = [arg.arg for arg in function_node.args.args]
     function_signature = f"def {function_name}({', '.join(args)}):\n    "
 
-    request_from_htmx = request.headers.get("hx-request") == "true"
-
     template_context = {
         "request": request,
         "category_name": category,
         "function_name": function_name,
         "problem_description": problem_description,
         "function_signature": function_signature,
-        "exercise_groups": None,
+        "exercise_groups": all_exercises,
+        "current_category": category,
+        "current_exercise": function_name,
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "view": "exercise_detail",
@@ -136,7 +131,7 @@ def exercise_detail(request: Request, category: str, function_name: str):
     return render_with_optional_fragment(
         request=request,
         full_template="index.html",
-        fragment_template="fragments/exercise_list.html",
+        fragment_template="fragments/exercise_detail.html",
         context=template_context,
     )
 

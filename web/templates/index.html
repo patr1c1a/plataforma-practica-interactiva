@@ -94,7 +94,18 @@
         {% include "fragments/exercise_list.html" %}
 
         {% elif problem_description %}
-        {% include "fragments/exercise_detail.html" %}
+
+        <div class="exercise-layout">
+
+            <aside class="exercise-sidebar">
+                {% include "fragments/exercise_sidebar.html" %}
+            </aside>
+
+            <main class="exercise-main">
+                {% include "fragments/exercise_detail.html" %}
+            </main>
+
+        </div>
 
         {% else %}
 

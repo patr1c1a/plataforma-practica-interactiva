@@ -1,0 +1,25 @@
+<div class="sidebar-navigation">
+
+    {% for category_name, function_names in exercise_groups.items() %}
+
+    <div class="sidebar-category {% if category_name == current_category %}open{% endif %}">
+
+        <button class="sidebar-category-toggle">
+            {{ category_titles.get(category_name, category_name|capitalize) }}
+        </button>
+
+        <div class="sidebar-exercises">
+            {% for function_name in function_names %}
+            <a href="/exercises/{{ category_name }}/{{ function_name }}"
+               class="sidebar-exercise-link
+               {% if category_name == current_category and function_name == current_exercise %}active{% endif %}">
+                {{ function_name.replace('_',' ')|capitalize }}
+            </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
