@@ -282,7 +282,7 @@ header {
 .category-progress-bar {
   height: 100%;
   width: 0%;
-  background-color: var(--success);
+  background-color: var(--border);
   transition: width 0.4s ease;
 }
 
@@ -481,8 +481,23 @@ header {
 .sidebar-category-progress-bar {
   height: 100%;
   width: 0%;
-  background-color: var(--success);
+  background-color: var(--border);
   transition: width 0.4s ease;
+}
+
+.category-progress-bar.progress-zero,
+.sidebar-category-progress-bar.progress-zero {
+  background-color: var(--border);
+}
+
+.category-progress-bar.progress-partial,
+.sidebar-category-progress-bar.progress-partial {
+  background-color: var(--accent);
+}
+
+.category-progress-bar.progress-complete,
+.sidebar-category-progress-bar.progress-complete {
+  background-color: var(--success);
 }
 
 .sidebar-exercises {

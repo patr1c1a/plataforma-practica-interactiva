@@ -257,8 +257,27 @@
                 : 0;
 
             progressContainer.style.width = `${percentage}%`;
+            applyProgressBarColor(progressContainer, percentage);
             progressText.textContent = `${completed}/${totalExercises} completados`;
         });
+    }
+
+    function applyProgressBarColor(barElement, percentage) {
+        if (!barElement) return;
+
+        barElement.classList.remove("progress-zero", "progress-partial", "progress-complete");
+
+        if (percentage <= 0) {
+            barElement.classList.add("progress-zero");
+            return;
+        }
+
+        if (percentage >= 100) {
+            barElement.classList.add("progress-complete");
+            return;
+        }
+
+        barElement.classList.add("progress-partial");
     }
 
     function initializeProgressPanel() {
@@ -411,6 +430,7 @@
             if (!bar || !text) return;
 
             bar.style.width = `${percentage}%`;
+            applyProgressBarColor(bar, percentage);
             text.textContent = `${completed}/${total}`;
         });
     }
