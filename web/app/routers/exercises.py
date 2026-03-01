@@ -64,10 +64,11 @@ def list_category_exercises(request: Request, category: str):
 
     all_exercises = get_exercise_groups()
     category_cards = get_ordered_category_cards(all_exercises)
+    selected_category_exercises = {category: functions}
 
     template_context = {
         "request": request,
-        "exercise_groups": all_exercises,
+        "exercise_groups": selected_category_exercises,
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "problem_description": None,
