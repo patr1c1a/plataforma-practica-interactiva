@@ -30,10 +30,10 @@
 
             <a href="/" class="brand-link">
                 <div class="header-left">
-                    <img src="/static/logo.png" alt="Programación Desde Cero" height="40">
+                    <img src="/static/logo.png" alt="Programaci&oacute;n Desde Cero" height="40">
                     <div class="header-title">
                         <strong>Plataforma interactiva</strong>
-                        <span>Para practicar programación desde cero</span>
+                        <span>Para practicar programaci&oacute;n desde cero</span>
                     </div>
                 </div>
             </a>
@@ -45,7 +45,7 @@
                 </a>
 
                 <div class="dropdown">
-                    <button class="dropdown-toggle">Más ▾</button>
+                    <button class="dropdown-toggle">M&aacute;s &#9662;</button>
                     <div class="dropdown-menu">
                         <a href="https://www.patriciaemiguel.com" target="_blank">Blog</a>
                         <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank">YouTube</a>
@@ -58,7 +58,7 @@
 
                 <div class="dropdown progress-dropdown">
                     <button id="progress-button" class="dropdown-toggle">
-                        Progreso ▾
+                        Progreso &#9662;
                     </button>
 
                     <div id="progress-panel" class="dropdown-menu">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                <button id="theme-toggle" class="theme-toggle">🌙</button>
+                <button id="theme-toggle" class="theme-toggle">&#127769;</button>
             </nav>
 
         </div>
@@ -102,70 +102,11 @@
 
         </div>
 
+        {% elif view == "offline" %}
+        {% include "fragments/offline_guide.html" %}
+
         {% else %}
-
-        <section class="hero">
-            <h1>Plataforma de práctica de algoritmia básica</h1>
-            <p class="hero-subtitle">
-                Continuación práctica del curso gratuito de Programación Desde Cero.
-            </p>
-            <div class="hero-actions">
-                <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
-                    class="button-secondary">
-                    Ver curso
-                </a>
-
-                <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios/tree/main/content/python/ESP"
-                    target="_blank" class="button-secondary">
-                    Versión offline
-                </a>
-            </div>
-        </section>
-
-        <section class="platform-explanation">
-            <div class="card">
-                <h2>¿Cómo está pensada esta plataforma?</h2>
-                <p>
-                    Esta es una plataforma de ejercicios de programación de nivel inicial, organizada por categorías y con dificultad incremental.
-                    
-                    Está pensada para quienes ya conocen los fundamentos básicos de programación en Python —por ejemplo, quienes completaron el <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank">curso gratuito de introducción</a> del canal Programación Desde Cero— y quieren practicar razonamiento algorítmico de forma estructurada.
-                </p>
-                <p>
-                    Los ejercicios pueden resolverse en el orden sugerido o en cualquier otro. El foco está puesto en comprender el problema, diseñar el algoritmo y analizar los errores que aparecen al ejecutar los tests, no en utilizar herramientas avanzadas del lenguaje.
-                </p>
-                <p>
-                    En la era de la IA, comprender código y detectar errores sigue siendo una habilidad esencial.
-                </p>
-            </div>
-        </section>
-
-        <section class="categories-section">
-            <h2>Categorías</h2>
-
-            <div class="categories-grid">
-                {% for category in category_cards %}
-                <a href="/exercises/{{ category.slug }}" class="category-card" data-count="{{ category.count }}">
-                    <h3>{{ category.title }}</h3>
-                    <p>{{ category.count }} ejercicios</p>
-                    <div class="category-progress">
-                        <div class="category-progress-bar"></div>
-                    </div>
-                    <div class="category-progress-text">
-                        0/{{ category.count }} completados
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-        </section>
-
-        <section class="home-repository-link">
-            <p>
-                Repositorio del proyecto:
-                <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios" target="_blank">
-                    GitHub
-                </a>
-            </p>
-        </section>
+        {% include "fragments/home_content.html" %}
 
         {% endif %}
 

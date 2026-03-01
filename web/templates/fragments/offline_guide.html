@@ -1,0 +1,62 @@
+<section class="offline-guide">
+    <h1>Versi&oacute;n offline</h1>
+    <p>
+        Esta versi&oacute;n permite practicar los ejercicios localmente, sin depender de la interfaz web, usando
+        cualquier IDE o editor de texto para resolver los ejercicios.
+    </p>
+
+    <h2>1. Descargar contenido offline</h2>
+    <div class="offline-actions">
+        <a href="{{ offline_download_esp_url }}" class="button-secondary">Descargar en espa&ntilde;ol</a>
+        <a href="{{ offline_download_eng_url }}" class="button-secondary">Descargar en ingl&eacute;s</a>
+        <a href="{{ offline_repo_url }}" target="_blank" class="button-secondary">Ver en GitHub</a>
+    </div>
+
+    <h2>2. En la terminal, entrar a ESP o ENG</h2>
+    <pre><code>cd ESP</code></pre>
+    <br />
+    <pre><code>cd ENG</code></pre>
+
+    <h2>3. Resolver ejercicios</h2>
+    <p>
+        Completar las funciones en <code>src/</code>, reemplazando <code>pass</code> por tu soluci&oacute;n. No es
+        indispensable completarlas a todas: se puede resolver cada ejercicio individualmente y luego correr sus tests.
+    </p>
+    <p>
+        Los ejercicios están organizados por categorías con dificultad incremental:
+
+    <ol>
+        <li>Números</li>
+        <li>Strings</li>
+        <li>Listas y tuplas</li>
+        <li>Conjuntos y diccionarios</li>
+    </ol>
+
+    </p>
+    <p>
+        Cada función representa un ejercicio. La documentación (docstring) explica lo que la función debe hacer y
+        retornar. Ejemplo:
+    </p>
+
+    <pre><code>
+def es_primo(numero):
+"""
+Evalúa si un número es primo.
+Ejemplo:
+    es_primo(numero=7) -> True
+-Parámetro:
+    -numero (int): número a evaluar. Positivo.
+-Valor retornado:
+    (bool) True si el número es primo. False si no lo es.
+"""
+pass
+    </code></pre>
+
+    <h2>4. Ejecutar tests</h2>
+    <p>De una función puntual:</p>
+    <pre><code>python -m unittest -v tests/tests_numeros.py -k test_menor</code></pre>
+    <p>Todos los tests de una categor&iacute;a:</p>
+    <pre><code>python -m unittest -v tests/tests_numeros.py</code></pre>
+    <p>Todos los tests del proyecto:</p>
+    <pre><code>python ejecutar_tests.py</code></pre>
+</section>

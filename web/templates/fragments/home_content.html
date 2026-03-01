@@ -1,0 +1,68 @@
+<section class="hero">
+    <h1>Plataforma de pr&aacute;ctica de algoritmia b&aacute;sica</h1>
+    <p class="hero-subtitle">
+        Continuaci&oacute;n pr&aacute;ctica del curso gratuito de Programaci&oacute;n Desde Cero.
+    </p>
+    <div class="hero-actions">
+        <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+            class="button-secondary">
+            Ver curso
+        </a>
+
+        <a href="/offline" class="button-secondary">
+            Versi&oacute;n offline
+        </a>
+    </div>
+</section>
+
+<section class="platform-explanation">
+    <div class="card">
+        <h2>&iquest;C&oacute;mo est&aacute; pensada esta plataforma?</h2>
+        <p>
+            Esta plataforma ofrece ejercicios de programaci&oacute;n de nivel inicial, organizados por categor&iacute;as
+            y con dificultad incremental.
+
+            Est&aacute; pensada para quienes ya conocen los fundamentos b&aacute;sicos de programaci&oacute;n en Python,
+            por ejemplo quienes completaron el
+            <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank">
+                curso gratuito de introducci&oacute;n
+            </a>
+            del canal Programaci&oacute;n Desde Cero, y quieren practicar razonamiento algor&iacute;tmico.
+        </p>
+        <p>
+            Los ejercicios pueden resolverse en el orden sugerido o libremente. El foco est&aacute; en comprender el
+            problema y validar soluciones mediante tests, no en utilizar herramientas avanzadas del lenguaje.
+        </p>
+        <p>
+            En la era de la IA, entender c&oacute;digo y detectar errores sigue siendo una habilidad esencial.
+        </p>
+    </div>
+</section>
+
+<section class="categories-section">
+    <h2>Categor&iacute;as</h2>
+
+    <div class="categories-grid">
+        {% for category in category_cards %}
+        <a href="/exercises/{{ category.slug }}" class="category-card" data-count="{{ category.count }}">
+            <h3>{{ category.title }}</h3>
+            <p>{{ category.count }} ejercicios</p>
+            <div class="category-progress">
+                <div class="category-progress-bar"></div>
+            </div>
+            <div class="category-progress-text">
+                0/{{ category.count }} completados
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="home-repository-link">
+    <p>
+        Repositorio del proyecto:
+        <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios" target="_blank">
+            GitHub
+        </a>
+    </p>
+</section>

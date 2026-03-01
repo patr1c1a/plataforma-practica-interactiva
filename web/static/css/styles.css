@@ -64,6 +64,24 @@ a:hover {
   margin-top: 2rem;
 }
 
+.offline-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.offline-guide pre {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.7rem 0.8rem;
+  overflow-x: auto;
+}
+
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
