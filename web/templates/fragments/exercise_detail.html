@@ -45,7 +45,6 @@
       {%- for parameter in problem_sections.parameters -%}
         <article class="problem-param-item">
           <header>
-            <strong><code>{{ parameter.name }}</code></strong>
             {%- if parameter.type_parts -%}
               <div class="type-tags">
                 {%- for type_part in parameter.type_parts -%}
@@ -57,6 +56,7 @@
                 <span class="type-tag">{{ parameter.type }}</span>
               </div>
             {%- endif -%}
+            <strong><code>{{ parameter.name }}</code></strong>
           </header>
           {%- if parameter.description -%}
             <p>{{ parameter.description }}</p>

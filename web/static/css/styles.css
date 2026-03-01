@@ -163,7 +163,7 @@ header {
 
 .problem-param-item header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
@@ -172,6 +172,10 @@ header {
 .problem-param-item p,
 .problem-return-item p {
   margin-top: 0.45rem;
+}
+
+.problem-param-item header {
+  padding: 0.2rem 0;
 }
 
 .type-tags {
