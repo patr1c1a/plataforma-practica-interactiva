@@ -175,18 +175,33 @@ def _replace_function_definition(
             "El código enviado no contiene una definición de función válida."
         )
 
-    user_function_node = user_function_definitions[0]
+    # Separate main function and helpers
+    user_functions_by_name = {func.name: func for func in user_function_definitions}
+
+    if target_function_name not in user_functions_by_name:
+        raise ValueError(
+            f"Debe definir la función '{target_function_name}'."
+        )
 
     updated_module_body = []
 
+    # Replace existing functions if user provided new versions
     for node in original_module_ast.body:
-        if isinstance(node, ast.FunctionDef) and node.name == target_function_name:
-            updated_module_body.append(user_function_node)
+        if isinstance(node, ast.FunctionDef):
+            if node.name in user_functions_by_name:
+                # Replace with user's version
+                updated_module_body.append(user_functions_by_name[node.name])
+                # Remove from dict to avoid re-adding later
+                del user_functions_by_name[node.name]
+            else:
+                updated_module_body.append(node)
         else:
             updated_module_body.append(node)
 
+    # Add any new helper functions not originally present
+    for remaining_function in user_functions_by_name.values():
+        updated_module_body.append(remaining_function)
+
     original_module_ast.body = updated_module_body
 
-    updated_module_code = ast.unparse(original_module_ast)
-
-    return updated_module_code
+    return ast.unparse(original_module_ast)
