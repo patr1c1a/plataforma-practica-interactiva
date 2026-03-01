@@ -5,33 +5,115 @@
 
 <h3>Descripción de la función</h3>
 
-<pre class="problem-description">
-{{ problem_description }}
-</pre>
+<section class="problem-description">
+{%- if problem_sections.description -%}
+  <div class="problem-block">
+    {%- for paragraph in problem_sections.description -%}
+      <p>{{ paragraph }}</p>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{%- if problem_sections.suggestions -%}
+  <div class="problem-block">
+    {%- for suggestion in problem_sections.suggestions -%}
+      <p class="problem-suggestion-line"><strong>Sugerencia:</strong> {{ suggestion }}</p>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{%- if problem_sections.examples -%}
+  <div class="problem-block">
+    <h4>Ejemplos</h4>
+    <div class="problem-examples">
+      {%- for example in problem_sections.examples -%}
+        <div class="problem-example-item">
+          <div><strong>Entrada:</strong> <code>{{ example.input }}</code></div>
+          {%- if example.output -%}
+            <div><strong>Salida:</strong> <code>{{ example.output }}</code></div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if problem_sections.parameters -%}
+  <div class="problem-block">
+    <h4>Parámetros</h4>
+    <div class="problem-params">
+      {%- for parameter in problem_sections.parameters -%}
+        <article class="problem-param-item">
+          <header>
+            <strong><code>{{ parameter.name }}</code></strong>
+            {%- if parameter.type_parts -%}
+              <div class="type-tags">
+                {%- for type_part in parameter.type_parts -%}
+                <span class="type-tag">{{ type_part }}</span>
+                {%- endfor -%}
+              </div>
+            {%- elif parameter.type -%}
+              <div class="type-tags">
+                <span class="type-tag">{{ parameter.type }}</span>
+              </div>
+            {%- endif -%}
+          </header>
+          {%- if parameter.description -%}
+            <p>{{ parameter.description }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if problem_sections.return_value -%}
+  <div class="problem-block">
+    <h4>Valor retornado</h4>
+    <article class="problem-return-item">
+      {%- if problem_sections.return_value.type_parts -%}
+        <div class="type-tags">
+          {%- for type_part in problem_sections.return_value.type_parts -%}
+            <span class="type-tag">{{ type_part }}</span>
+          {%- endfor -%}
+        </div>
+      {%- elif problem_sections.return_value.type -%}
+        <div class="type-tags">
+          <span class="type-tag">{{ problem_sections.return_value.type }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if problem_sections.return_value.description -%}
+        <p>{{ problem_sections.return_value.description }}</p>
+      {%- endif -%}
+    </article>
+  </div>
+{%- endif -%}
+</section>
 
 <h3>Código</h3>
 
 <form
-    hx-post="/exercises/{{ category_name }}/{{ function_name }}/run"
-    hx-target="#result"
-    hx-swap="innerHTML"
+  hx-post="/exercises/{{ category_name }}/{{ function_name }}/run"
+  hx-target="#result"
+  hx-swap="innerHTML"
 >
-<textarea
+  <textarea
     id="code-editor"
     name="code"
     data-storage-key="exercise-{{ category_name }}-{{ function_name }}"
->{{ function_signature }}</textarea>
+  >{{ function_signature }}</textarea>
 
-    <br><br>
+  <br><br>
 
-    <div class="exercise-actions">
-        <button type="submit">
-            Ejecutar
-        </button>
-        <button type="button" id="reset-exercise" class="button-secondary">
-            Reiniciar ejercicio
-        </button>
-    </div>
+  <div class="exercise-actions">
+    <button type="submit">
+      Ejecutar
+    </button>
+    <button type="button" id="reset-exercise" class="button-secondary">
+      Reiniciar ejercicio
+    </button>
+  </div>
 </form>
 
 <h3>Resultado</h3>

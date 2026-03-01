@@ -119,8 +119,75 @@ header {
   border: 1px solid var(--border);
   padding: 1rem;
   border-radius: 6px;
-  white-space: pre-wrap;
   color: var(--text-primary);
+  white-space: normal;
+  line-height: 1.5;
+}
+
+.problem-description p {
+  margin: 0;
+}
+
+.problem-description code {
+  white-space: normal;
+}
+
+.problem-block + .problem-block {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.problem-block h4 {
+  margin: 0 0 0.6rem;
+}
+
+.problem-suggestion-line {
+  margin: 0;
+}
+
+.problem-examples,
+.problem-params {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.problem-example-item,
+.problem-param-item,
+.problem-return-item {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.7rem 0.8rem;
+}
+
+.problem-param-item header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.problem-param-item p,
+.problem-return-item p {
+  margin-top: 0.45rem;
+}
+
+.type-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.type-tag {
+  background-color: rgba(100, 181, 246, 0.15);
+  border: 1px solid rgba(100, 181, 246, 0.45);
+  color: var(--text-primary);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .brand-link {
