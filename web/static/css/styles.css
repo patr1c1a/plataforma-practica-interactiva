@@ -500,8 +500,7 @@ header {
 }
 
 .exercise-sidebar {
-  position: sticky;
-  top: 100px;
+  position: static;
 }
 
 .exercise-main {

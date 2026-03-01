@@ -139,9 +139,6 @@
 
         activeCodeEditor = editor;
 
-        const totalLines = editor.lineCount();
-        editor.setCursor({ line: totalLines - 1, ch: 4 });
-
         initializeExerciseResetButton();
     }
 
