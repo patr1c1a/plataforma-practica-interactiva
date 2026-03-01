@@ -10,8 +10,8 @@ def menor(numero1, numero2):
         menor(numero1=3, numero2=1) -> 1
         menor(numero1=3, numero2=3) -> 3
     -Parámetros:
-        numero1 (numérico): uno de los números a procesar.
-        numero2 (numérico): otro de los números a procesar.
+        -numero1 (numérico): uno de los números a procesar.
+        -numero2 (numérico): otro de los números a procesar.
     -Valor retornado:
         (numérico) El menor de los dos números. numero1 si ambos son iguales.
     """
@@ -25,7 +25,7 @@ def valor_absoluto(numero):
         valor_absoluto(numero=3) -> 3
         valor_absoluto(numero=-10) -> 10
     -Parámetro:
-        numero (numérico): número cuyo valor absoluto se retornará.
+        -numero (numérico): número cuyo valor absoluto se retornará.
     -Valor retornado:
         (numérico) El valor absoluto de numero.
     """
@@ -39,7 +39,7 @@ def buscar_mes(fecha):
         buscar_mes(fecha=31122020) -> 12
         buscar_mes(fecha=5091946) -> 9
     -Parámetros:
-        fecha (int): fecha a procesar, con formato ddmmaaaa o dmmaaaa (donde las "d" indican los dígitos del día,
+        -fecha (int): fecha a procesar, con formato ddmmaaaa o dmmaaaa (donde las "d" indican los dígitos del día,
         las "m" indican los dígitos del mes y las "a" indican los dígitos del año). Positivo.
     -Valor retornado:
         (int) Mes contenido en fecha.
@@ -54,9 +54,9 @@ def sumar_multiplos(inferior, superior, n):
         sumar_multiplos(inferior=0, superior=30, n=5) -> 105
         sumar_multiplos(inferior=-30, superior=0, n=5) -> -105
     -Parámetros:
-        inferior (int): límite inferior del intervalo. Menor o igual que superior.
-        superior (int): límite superior del intervalo. Mayor o igual que inferior.
-        n (int): número cuyos múltiplos se sumarán. Distinto de 0.
+        -inferior (int): límite inferior del intervalo. Menor o igual que superior.
+        -superior (int): límite superior del intervalo. Mayor o igual que inferior.
+        -n (int): número cuyos múltiplos se sumarán. Distinto de 0.
     -Valor retornado:
         (int) La suma de los números múltiplos de n que se encuentran entre inferior y superior (inclusive).
     """
@@ -72,7 +72,7 @@ def es_capicua(numero):
         es_capicua(numero=123321) -> True
         es_capicua(numero=1234) -> False
     -Parámetros:
-        numero (int): número a evaluar. Positivo.
+        -numero (int): número a evaluar. Positivo.
     -Valor retornado:
         (bool) True si el número es capicúa, False si no lo es.
     """
@@ -86,7 +86,7 @@ def es_bisiesto(anio):
         es_bisiesto(anio=2020) -> True
         es_bisiesto(anio=1800) -> False
     -Parámetro:
-        anio (int): año a evaluar. Número positivo.
+        -anio (int): año a evaluar. Número positivo.
     -Valor retornado:
         (bool) True si el año es bisiesto. False si no lo es.
     """
@@ -101,8 +101,8 @@ def dias_en_mes(mes, anio):
     Ejemplo:
         dias_en_mes(mes=11, anio=1981) -> 30
     -Parámetros:
-        mes (int): número representando al mes. Entre 1 y 12.
-        anio (int): número representando al año. Positivo.
+        -mes (int): número representando al mes. Entre 1 y 12.
+        -anio (int): número representando al año. Positivo.
     -Valor retornado:
         (int) Cantidad de días que tiene el mes.
     """
@@ -115,7 +115,7 @@ def contar_digitos(numero):
     Ejemplo:
         contar_digitos(numero=120) -> 3
     -Parámetro:
-        numero (int): número cuyos dígitos se contarán. Positivo.
+        -numero (int): número cuyos dígitos se contarán. Positivo.
     -Valor retornado:
         (int) Cantidad de dígitos en numero.
     """
@@ -128,7 +128,7 @@ def suma_digitos_cuadrados(numero):
     Ejemplo:
         suma_digitos_cuadrados(numero=15) -> 26
     -Parámetro:
-        numero (int): número cuyos dígitos se procesarán. Positivo.
+        -numero (int): número cuyos dígitos se procesarán. Positivo.
     -Valor retornado:
         (int) La suma de los cuadrados de los dígitos de numero.
     """
@@ -141,7 +141,7 @@ def porcentaje_digitos_pares(numero):
     Ejemplo:
         porcentaje_digitos_pares(numero=5555666555) -> 30.0
     -Parámetro:
-        numero (int): número cuyos dígitos se evaluarán. Positivo.
+        -numero (int): número cuyos dígitos se evaluarán. Positivo.
     -Valor retornado:
         (float) Porcentaje de dígitos pares en numero (de 0 a 100).
     """
@@ -156,7 +156,7 @@ def es_pronico(numero):
         es_pronico(numero=56) -> True
         (56 puede expresarse como 7*8).
     -Parámetro:
-        numero (int): número a evaluar. Mayor que 0.
+        -numero (int): número a evaluar. Mayor que 0.
     -Valor retornado:
         (bool) True si numero es prónico, False si no lo es.
     """
@@ -169,7 +169,7 @@ def es_primo(numero):
     Ejemplo:
         es_primo(numero=7) -> True
     -Parámetro:
-        numero (int): número a evaluar. Positivo.
+        -numero (int): número a evaluar. Positivo.
     -Valor retornado:
         (bool) True si el número es primo. False si no lo es.
     """
@@ -182,7 +182,7 @@ def factorial(numero):
     Ejemplo:
         factorial(numero=4) -> 24
     -Parámetro:
-        numero (int): número cuyo factorial se calculará. Positivo.
+        -numero (int): número cuyo factorial se calculará. Positivo.
     -Valor retornado:
         (int) El factorial de numero.
     """
@@ -196,7 +196,7 @@ def suma_primeros_n_fibonacci(n):
     Ejemplo:
         suma_primeros_n_fibonacci(n=6) -> 12
     -Parámetros:
-        n (int): cantidad de números Fibonacci a sumar. Mayor o igual que 2.
+        -n (int): cantidad de números Fibonacci a sumar. Mayor o igual que 2.
     -Valor retornado:
         (int) Sumatoria de los primeros n números de la sucesión de Fibonacci.
     """
@@ -209,7 +209,7 @@ def mayor_divisor(numero):
     Ejemplo:
         mayor_divisor(numero=182) -> 91
     -Parámetros:
-        numero (int): número cuyo mayor divisor se calculará. Positivo.
+        -numero (int): número cuyo mayor divisor se calculará. Positivo.
     -Valor retornado:
         (int) Mayor número que divide a numero sin arrojar resto.
     """
@@ -224,8 +224,8 @@ def mcd_euclides(m, n):
     Ejemplo:
         mcd_euclides(m=60, n=24) -> 12
     -Parámetros:
-        m (int): número positivo.
-        n (int): número entero no negativo.
+        -m (int): número positivo.
+        -n (int): número entero no negativo.
     -Valor retornado:
         (int) Mayor divisor común entre m y n.
     """
@@ -242,8 +242,8 @@ def obtener_mes(dia_consecutivo, anio):
         (el día consecutivo número 60 en un año bisiesto representa el 29 de febrero, mientras que en un año no bisiesto
          representa el 1 de marzo).
     -Parámetros:
-        dia_consecutivo (int): número de días transcurridos desde el 1 de enero (entre 1 y 366). Positivo.
-        anio (int): número de año (bisiesto o no). Positivo.
+        -dia_consecutivo (int): número de días transcurridos desde el 1 de enero (entre 1 y 366). Positivo.
+        -anio (int): número de año (bisiesto o no). Positivo.
     -Valor retornado:
         (int) Número de mes (entre 1 y 12) correspondiente al dia_consecutivo en el anio dado.
     """
@@ -260,7 +260,7 @@ def es_disarium(numero):
         es_disarium(numero=518) -> True
         (518 es un número disarium, ya que 5**1=5, 1**2=1, 8**3=512, y 5+1+512=518).
     -Parámetro:
-        numero (int): número cuyos dígitos se procesarán. Positivo.
+        -numero (int): número cuyos dígitos se procesarán. Positivo.
     -Valor retornado:
         (bool) True si numero es "disarium", False si no lo es.
     """
@@ -280,7 +280,7 @@ def ordenar_monedas(cantidad):
         ¤ ¤
         )
     -Parámetro:
-        cantidad (int): cantidad de monedas a usar. Positivo.
+        -cantidad (int): cantidad de monedas a usar. Positivo.
     -Valor retornado:
         (int) Cantidad máxima de escalones completos que pueden formarse con la cantidad de monedas dada.
     """
@@ -295,7 +295,7 @@ def cantidad_unos_solos(numero):
         cantidad_unos_solos(numero=141211) -> 2
         cantidad_unos_solos(numero=11411211) -> 0
     -Parámetro:
-        numero (int): número cuyos dígitos se evaluarán. Positivo.
+        -numero (int): número cuyos dígitos se evaluarán. Positivo.
     -Valor retornado:
         (int) Cantidad de dígitos 1 no consecutivos en numero.
     """

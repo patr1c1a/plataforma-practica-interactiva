@@ -10,8 +10,8 @@ def cantidad_par_caracteres(cadena1, cadena2):
         cantidad_par_caracteres(cadena1="aaaa", cadena2="aaaa") -> True
         cantidad_par_caracteres(cadena1="aaa", cadena2="aaaa") -> False
     -Parámetros:
-        cadena1 (str): uno de los strings a procesar.
-        cadena2 (str): otro de los strings a procesar.
+        -cadena1 (str): uno de los strings a procesar.
+        -cadena2 (str): otro de los strings a procesar.
     -Valor retornado:
         (bool) True si la cantidad de caracteres de cadena1 y la cantidad de caracteres de cadena2 son, ambas, números
         pares. False si al menos una de las dos cadenas tiene una cantidad impar de caracteres.
@@ -26,8 +26,8 @@ def contar_ocurrencias(cadena, caracter):
     Ejemplo:
         contar_ocurrencias(cadena="Esto es una frase", caracter="s") -> 3
     -Parámetros:
-        cadena (str): string donde contar ocurrencias de un carácter.
-        caracter (str): el carácter a contabilizar.
+        -cadena (str): string donde contar ocurrencias de un carácter.
+        -caracter (str): el carácter a contabilizar.
     -Valor retornado:
         (int) Cantidad de ocurrencias de caracter en cadena.
     """
@@ -42,7 +42,7 @@ def contar_vocales_totales(cadena):
     Ejemplo:
         contar_vocales_totales(cadena="Esto es una frase") -> 7
     -Parámetro:
-        cadena (str): string en el cual se contarán las vocales.
+        -cadena (str): string en el cual se contarán las vocales.
     -Valor retornado:
         (int) Cantidad total de vocales en cadena.
     """
@@ -58,7 +58,7 @@ def contar_vocales_unicas(cadena):
     Ejemplo:
         contar_vocales_unicas(cadena="Esto Es Una Frase") -> 4
     -Parámetro:
-        cadena (str): string en el cual se contarán las vocales.
+        -cadena (str): string en el cual se contarán las vocales.
     -Valor retornado:
         (int) Cantidad de vocales únicas en cadena.
     """
@@ -72,8 +72,8 @@ def reemplazar_caracter_con_asterisco(cadena, caracter):
     Ejemplos:
         reemplazar_caracter_con_asterisco(cadena="esto es una frase", caracter="a") -> "esto es un* fr*se"
     -Parámetros:
-        cadena (str): el string donde se harán los reemplazos.
-        caracter (str): el carácter a reemplazar.
+        -cadena (str): el string donde se harán los reemplazos.
+        -caracter (str): el carácter a reemplazar.
     -Valor retornado:
         (str) Un nuevo string con el contenido de cadena, donde todas las ocurrencias de caracter fueron reemplazadas
         por '*'.
@@ -87,8 +87,8 @@ def invertir_cadena(cadena):
     Sugerencia: evitar usar rebanadas con paso negativo.
     Ejemplo:
         invertir_cadena(cadena="Esto es una frase!") -> "!esarf anu se otsE"
-    Parámetro:
-        cadena (str): string a invertir.
+    -Parámetro:
+        -cadena (str): string a invertir.
     -Valor retornado:
         (str) Un nuevo string con los caracteres de cadena en el orden inverso.
     """
@@ -103,7 +103,7 @@ def reemplazar_simbolos(cadena, nuevo_caracter):
         reemplazar_simbolos(cadena="--Esto es 1 frase donde reemplazaremos con @ cada símbolo", nuevo_caracter="@")
         -> "@@Esto es 1 frase donde reemplazaremos con @ cada símbolo"
     -Parámetros:
-        cadena (str): string donde se efectuarán los reemplazos.
+        -cadena (str): string donde se efectuarán los reemplazos.
     -Valor retornado:
         (str) Un string donde cada símbolo ha sido reemplazado por nuevo_caracter.
     """
@@ -118,7 +118,7 @@ def porcentaje_digitos_numericos(cadena):
         porcentaje_digitos_numericos(cadena="Tenemos 1 dígito") -> 6.25
         porcentaje_digitos_numericos(cadena="1984") -> 100
     -Parámetro:
-        cadena (str): string a procesar, que puede o no contener dígitos numéricos.
+        -cadena (str): string a procesar, que puede o no contener dígitos numéricos.
     -Valor retornado:
         (numérico) Porcentaje (número entre 0 y 100) de caracteres numéricos que posee la cadena, sobre su cantidad
         total de caracteres.
@@ -135,7 +135,7 @@ def clasificar_cadena_numerica(cadena):
         clasificar_cadena_numerica(cadena="123456") -> "246$36"
         clasificar_cadena_numerica(cadena="2222") -> "2222$"
     -Parámetro:
-        cadena (str): string numérico a procesar. El string solo contendrá dígitos numéricos.
+        -cadena (str): string numérico a procesar. El string solo contendrá dígitos numéricos.
     -Valor retornado:
         (str) String compuesto por la concatenación de los caracteres de la cadena que son múltiplos de 2 (en su
         representación numérica), seguidos de un '$' a continuación, seguidos de  la concatenación de los caracteres de
@@ -151,7 +151,7 @@ def caracteres_centrales(cadena):
         caracteres_centrales(cadena="AbcDefGhi") -> "Def"
         caracteres_centrales(cadena="A   A") -> "   "
     -Parámetro:
-        cadena (str) string a procesar. La cadena tendrá 5 o más caracteres y su longitud será impar.
+        -cadena (str) string a procesar. La cadena tendrá 5 o más caracteres y su longitud será impar.
     -Valor retornado:
         (str) String de longitud 3 conteniendo los caracteres ubicados en el medio de la cadena pasada por parámetro.
     """    
@@ -169,7 +169,7 @@ def es_palindromo(cadena):
         es_palindromo(cadena="abba") -> True
         es_palindromo(cadena="baéceab") -> False
     -Parámetro:
-        cadena (str): el string a procesar.
+        -cadena (str): el string a procesar.
     -Valor retornado:
         (bool) True si la cadena es palíndromo. False si no lo es.
     """
@@ -186,8 +186,8 @@ def incluye_caracteres(cadena1, cadena2):
         incluye_caracteres(cadena1="super", cadena2="supermercado") -> True
         incluye_caracteres(cadena1="aaa", cadena2="rosa") -> True
     -Parámetros:
-        cadena1 (str): el string cuyos caracteres deben buscarse en cadena2.
-        cadena2 (str): el string donde se buscarán los caracteres de cadena1.
+        -cadena1 (str): el string cuyos caracteres deben buscarse en cadena2.
+        -cadena2 (str): el string donde se buscarán los caracteres de cadena1.
     -Valor retornado:
         (bool) True si cadena2 incluye todos los caracteres de cadena1. False si no incluye a todos.
     """
@@ -203,8 +203,8 @@ def son_anagrama(cadena1, cadena2):
         son_anagrama(cadena1="aval", cadena2="lava") -> True
         son_anagrama(cadena1="aval", cadena2="lavar") -> False
     -Parámetros:
-        cadena1 (str): un string a procesar, para saber si es anagrama de cadena2.
-        cadena2 (str): un string a procesar, para saber si es anagrama de cadena1.
+        -cadena1 (str): un string a procesar, para saber si es anagrama de cadena2.
+        -cadena2 (str): un string a procesar, para saber si es anagrama de cadena1.
     -Valor retornado:
         (bool) True si son anagramas. False si no lo son.
     """
@@ -219,8 +219,8 @@ def cuantos_eliminar_para_anagrama(cadena1, cadena2):
     Ejemplo:
         cuantos_eliminar_para_anagrama(cadena1="avala", cadena2="lavar") -> 2
     -Parámetros:
-        cadena1 (str): uno de los strings a procesar.
-        cadena2 (str): otro string a procesar.
+        -cadena1 (str): uno de los strings a procesar.
+        -cadena2 (str): otro string a procesar.
     -Valor retornado:
         (int) Cantidad de caracteres que deberían eliminarse para que ambas cadenas sean anagramas.
     """
@@ -237,7 +237,7 @@ def invertir_palabras(cadena):
     Ejemplo:
         invertir_palabras(cadena="Esto es una frase.") -> "otsE se anu .esarf"
     -Parámetros:
-        cadena (str): string formado por palabras que serán invertidas.
+        -cadena (str): string formado por palabras que serán invertidas.
     -Valor retornado:
         (str) Un nuevo string donde cada palabra se encuentra invertida, sin modificar su posición original dentro de
         la cadena.
@@ -253,7 +253,7 @@ def longitud_ultima_palabra(cadena):
         longitud_ultima_palabra(cadena="esto es una frase") -> 5
         longitud_ultima_palabra(cadena="   espacios   ") -> 8
     -Parámetro:
-        cadena (str): string compuesto por letras y espacios.
+        -cadena (str): string compuesto por letras y espacios.
     -Valor retornado:
         (int) Cantidad de caracteres de la última palabra de la cadena.
     """
@@ -270,7 +270,7 @@ def convertir_a_titulo(cadena):
         convertir_a_titulo(cadena="esto es una frase") -> "Esto Es Una Frase"
         convertir_a_titulo(cadena="ESTO ES UNA FRASE") -> "Esto Es Una Frase"
     -Parámetro:
-        cadena (str): string a convertir.
+        -cadena (str): string a convertir.
     -Valor retornado:
         (str) Un nuevo string con el contenido de cadena, donde la primera letra de cada palabra es mayúscula y el
         resto son minúsculas.
@@ -290,8 +290,8 @@ def cifrar_cesar(cadena, n):
         cifrar_cesar(cadena="esto es una frase", n=2) -> "guvq gu woc htcug"
         cifrar_cesar(cadena="abc123 xyz987!", n=4) -> "efg123 bcd987!"
     -Parámetros:
-        cadena (str): string a cifrar.
-        n (int): cantidad de posiciones que se moverá cada carácter dentro del alfabeto español de 27 letras.
+        -cadena (str): string a cifrar.
+        -n (int): cantidad de posiciones que se moverá cada carácter dentro del alfabeto español de 27 letras.
     -Valor retornado:
         (str) Un nuevo string donde cada letra ha sido reemplazado por otra del alfabeto, ubicada n posiciones hacia la
         derecha.
@@ -309,8 +309,8 @@ def rotar_n_posiciones(cadena, n):
         rotar_n_posiciones(cadena="Esto es una frase", n=6) -> " fraseEsto es una"
         rotar_n_posiciones(cadena="palabra", n=3) -> "brapala"
     -Parámetros:
-        cadena (str): string a partir del cual se producirán las rotaciones.
-        n (int): cantidad de posiciones que se moverá cada carácter dentro del string.
+        -cadena (str): string a partir del cual se producirán las rotaciones.
+        -n (int): cantidad de posiciones que se moverá cada carácter dentro del string.
     -Valor retornado:
         (str) Un nuevo string donde cada carácter se ha desplazado n posiciones hacia la derecha.
     """
@@ -327,7 +327,7 @@ def comprimir_RLE(cadena):
         comprimir_RLE(cadena="aaabbc") -> "a3b2c"
         comprimir_RLE(cadena="abcde") -> "abcde"
     -Parámetro:
-        cadena (str): string a comprimir.
+        -cadena (str): string a comprimir.
     -Valor retornado:
         (str) String comprimido mediante RLE.
     """

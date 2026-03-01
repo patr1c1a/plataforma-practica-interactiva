@@ -10,8 +10,8 @@ def has_even_amount_chars(s1, s2):
         even_amount_chars(s1="aaaa", s2="aaaa") -> True
         even_amount_chars(s1="aaa", s2="aaaa") -> False
     -Parameters:
-        s1 (str): one of the strings to evaluate.
-        s2 (str): the other string to evaluate.
+        -s1 (str): one of the strings to evaluate.
+        -s2 (str): the other string to evaluate.
     -Returns:
         (bool) True if the amount of characters in both s1 and s2 is an even number.
         False if at least one of the two strings has an odd amount of characters.
@@ -26,7 +26,7 @@ def count_occurrences(s, character):
     Example:
         occurrence_count(s="This is an example sentence", character="s") -> 3
     -Parameters:
-        s (str): string where character occurrences will be evaluated.
+        -s (str): string where character occurrences will be evaluated.
         character: character whose occurrences will be counted.
     -Returns:
         (int) How many occurrences of character can be found in s.
@@ -42,7 +42,7 @@ def count_vowels(s):
     Example:
         count_vowels(s="This is an Example Sentence") -> 9
     -Parameter:
-        s (str): string whose vowels will be counted.
+        -s (str): string whose vowels will be counted.
     -Returns:
         (int) How many vowels are there in s.
     """
@@ -58,7 +58,7 @@ def count_unique_vowels(s):
     Example:
         count_unique_vowels(s="This is an Example Sentence") -> 3
     -Parameter:
-        s (str): string whose vowels will be counted.
+        -s (str): string whose vowels will be counted.
     -Returns:
         (int) How many unique vowels are there in s.
     """
@@ -72,8 +72,8 @@ def replace_character_w_asterisk(s, character):
     Examples:
         replace_character_w_asterisk(s="this is an example sentence", character="e") -> "this is an *xampl* s*nt*nc*"
     -Parameters:
-        s (str): string where replacements will take place.
-        character (str): character to be replaced with '*'.
+        -s (str): string where replacements will take place.
+        -character (str): character to be replaced with '*'.
     -Returns:
         (str) A new string where every occurrence of character in s has been replaced with '*'.
     """
@@ -87,7 +87,7 @@ def reverse_string(s):
     Example:
         reverse_string(s="This is an example sentence!") -> "!ecnetnes elpmaxe na si sihT"
     -Parameter:
-        s (str): string that will be reversed.
+        -s (str): string that will be reversed.
     -Returns:
         (str) A new string where characters from s are in reverse order.
     """
@@ -102,8 +102,8 @@ def replace_symbols(s, new_character):
         replace_symbols(s="--This is 1 example sentence and we'll replace the @ symbol", new_character="@")
         -> "@@This is 1 example sentence and we@ll replace the @ symbol"
     -Parameters:
-        s (str): string where replacements will take place.
-        new_character (str): string with length 1 that will replace every symbol in s.
+        -s (str): string where replacements will take place.
+        -new_character (str): string with length 1 that will replace every symbol in s.
     -Returns:
         (str) A string where every occurrence of any symbol is replaced with new_character.
     """
@@ -118,7 +118,7 @@ def percentage_numerical_digits(s):
         percentage_numerical_digits(s="This has 1 digit") -> 6.25
         percentage_numerical_digits(s="1984") -> 100
     -Parameter:
-        s (str): string to be processed, which may or may not have numerical digit characters.
+        -s (str): string to be processed, which may or may not have numerical digit characters.
     -Returns:
         (numeric) Percentage (0 to 100) of numerical digit characters in s, over the total number of characters.
     """
@@ -134,7 +134,7 @@ def classify_numerical_string(s):
          classify_numerical_string(s="123456") -> "246$36"
          classify_numerical_string(s="2222") -> "2222$"
     -Parameter:
-        s (str): numerical string that will be processed. The string will only contain numerical digits.
+        -s (str): numerical string that will be processed. The string will only contain numerical digits.
     -Returns:
         (str) A concatenation of characters in s that are multiples of 2 (in their numerical representation), followed
         by a '$' symbol, followed by the concatenation of characters in s that are multiples of 3.
@@ -149,7 +149,7 @@ def middle_characters(s):
         middle_characters(s="AbcDefGhi") -> "Def"
         middle_characters(s="A   A") -> "   "
     -Parameter:
-        s (str): string that will be processed. The string contains 5 or more characters and its length
+        -s (str): string that will be processed. The string contains 5 or more characters and its length
         is an odd number.
     -Returns:
         (str) String of length 3 containing the middle characters of s.
@@ -168,7 +168,7 @@ def is_palindrome(s):
         is_palindrome(s="abba") -> True
         is_palindrome(s="baéceab") -> False
     -Parameter:
-        s (str): string to be evaluated.
+        -s (str): string to be evaluated.
     -Returns:
         (bool) True if s is a palindrome. False if it's not.
     """
@@ -185,8 +185,8 @@ def contains_characters(s1, s2):
         contains_characters(s1="super", s2="supermarket") -> True
         contains_characters(s1="fff", s2="foo") will return True.
     -Parameters:
-        s1 (str): string whose characters will be evaluated in s2.
-        s2 (str): string where characters from s1 will be evaluated.
+        -s1 (str): string whose characters will be evaluated in s2.
+        -s2 (str): string where characters from s1 will be evaluated.
     -Returns:
         (bool) True is s2 contains all characters included in s1. False if it doesn't contain all of them.
     """
@@ -202,8 +202,8 @@ def is_anagram(s1, s2):
         is_anagram(s1="below", s2="elbow") -> True
         is_anagram(s1="below", s2="elbows") -> False
     -Parameters:
-        s1 (str): string to be processed, to find out if it's an anagram of s2.
-        s2 (str): string to be processed, to find out if it's an anagram of s1.
+        -s1 (str): string to be processed, to find out if it's an anagram of s2.
+        -s2 (str): string to be processed, to find out if it's an anagram of s1.
     -Returns:
         (bool) True if s1 and s2 are anagrams of each other. False if they're not.
     """
@@ -218,8 +218,8 @@ def how_many_remove_for_anagram(s1, s2):
     Example:
         how_many_remove_for_anagram(s1="states", s2="tasted") -> 2
     -Parameters:
-        s1 (str): one of the strings to be processed.
-        s2 (str): another string to be processed.
+        -s1 (str): one of the strings to be processed.
+        -s2 (str): another string to be processed.
     -Returns:
         (int) Number of characters that should be removed so that both strings become anagrams.
     """
@@ -236,7 +236,7 @@ def reverse_words(s):
     Example:
         reverse_words(s="This is an example sentence.") -> "sihT si na elpmaxe .ecnetnes"
     -Parameters:
-        s (str): string with words that will be reversed.
+        -s (str): string with words that will be reversed.
     -Returns:
         (str) A new string where every word is reversed, without altering its original position within s.
     """
@@ -251,7 +251,7 @@ def length_last_word(s):
         get_length_last_word(s="This is an example sentence") -> 8
         get_length_last_word(s="   spaces   ") -> 6
     -Parameter:
-        s (str): string containing letters and spaces only.
+        -s (str): string containing letters and spaces only.
     -Returns:
         (int) Number of characters in the last word of s.
     """
@@ -268,7 +268,7 @@ def title_case(s):
         title_case(s="This is an example sentence") -> "This Is An Example Sentence"
         title_case(s="THIS IS AN EXAMPLE SENTENCE") -> "This Is An Example Sentence"
     -Parameter:
-        s (str): string to be processed.
+        -s (str): string to be processed.
     -Returns:
         (str) A new string with the contents of s, where the first letter in every word is upper case and all other
         letters are lower case.
@@ -288,8 +288,8 @@ def caesar_cipher(s, n):
         caesar_cipher(s="this is an example sentence", n=2) -> "vjku ku co gacñrng ugovgoeg"
         caesar_cipher(s="abc123 xyz987!", n=4) -> "efg123 cde987!"
     -Parameters:
-        s (str): string to be ciphered.
-        n (int): the number of characters to shift the cipher alphabet.
+        -s (str): string to be ciphered.
+        -n (int): the number of characters to shift the cipher alphabet.
     -Returns:
         (str) A new string where every letter from s has been replaced by another letter, shifting n positions down the
         alphabet.
@@ -307,8 +307,8 @@ def shift_n_characters(s, n):
         shift_n_characters(s="This is an example sentence", n=9) -> " sentenceThis is an example"
         shift_n_characters(s="word", n=11) -> "ordw"
     -Parameters:
-        s (str): string where characters will be shifted.
-        n (int): number of positions each character will be shifted from its original position within s.
+        -s (str): string where characters will be shifted.
+        -n (int): number of positions each character will be shifted from its original position within s.
     -Returns:
         (str) A new string where each character has been shifted n positions forward.
     """
@@ -326,7 +326,7 @@ def encode_rle(s):
         encode_rle(s="aaabbc") -> "a3b2c"
         encode_rle(s="abcde") -> "abcde"
     -Parameter:
-        s (str): string to be encoded.
+        -s (str): string to be encoded.
     -Returns:
         (str) Compressed string as a result of applying run-length encoding.
     """

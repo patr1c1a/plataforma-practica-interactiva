@@ -10,7 +10,7 @@ def productoria_numeros(numeros):
     Ejemplo:
         productoria_numeros(numeros=[1, 2, 3, 4]) -> 24
     -Parámetros:
-        numeros (list, elementos: numéricos): lista cuyos números se multiplicarán.
+        -numeros (list, elementos: numéricos): lista cuyos números se multiplicarán.
     -Valor retornado:
         (numérico / None) El producto de todos los números en la lista. Si la lista está vacía, retorna None.
     """
@@ -23,7 +23,7 @@ def mayor_elemento(strings):
     Ejemplo:
         mayor_elemento(strings=["x", "y", "z"]) -> "z"
     -Parámetros:
-        strings (list; elementos: str): la lista donde se buscará el mayor elemento.
+        -strings (list; elementos: str): la lista donde se buscará el mayor elemento.
     -Valor retornado:
         (str / None) El mayor de los strings contenidos en la lista. Si la lista está vacía, retorna None.
     """
@@ -39,7 +39,7 @@ def mayor_ganancia(precios):
         mayor_ganancia(precios=[70, 53, 15, 23, 41, 30]) -> 55
         (Si los precios son [70, 53, 15, 23, 41, 30] la diferencia entre el mayor y el menor precio es 70-15=55).
     -Parámetro:
-        precios (list; elementos: numéricos): lista con los precios de las acciones en cada día. len(precios) >= 2.
+        -precios (list; elementos: numéricos): lista con los precios de las acciones en cada día. len(precios) >= 2.
     -Valor retornado:
         (numérico) La mayor ganancia que puede obtenerse si se compra al menor valor y se vende al mayor valor.
     """
@@ -53,7 +53,7 @@ def elementos_unicos(puede_tener_duplicados):
         elementos_unicos(puede_tener_duplicados=[3, False, "a", 1, 1, 2, 4, False, 4]) -> [3, "a", 2]
         elementos_unicos(puede_tener_duplicados=[1, 1, 1]) -> []
     -Parámetro:
-        puede_tener_duplicados (list; elementos: heterogéneos): lista que puede o no tener elementos duplicados.
+        -puede_tener_duplicados (list; elementos: heterogéneos): lista que puede o no tener elementos duplicados.
     -Valor retornado:
         (list; elementos: heterogéneos) Una nueva lista, con los elementos de puede_tener_duplicados que sean únicos.
     """
@@ -68,7 +68,7 @@ def porcentaje_pares_impares(numeros):
         porcentaje_pares_impares(numeros=[-5, 3, 2, -4, 7]) -> (40.0, 60.0)
         porcentaje_pares_impares(numeros=[1, 1, 1, 1]) -> (0.0, 100.0)
     -Parámetro:
-        numeros (list; elementos: int): lista de números. len(numeros) >= 1.
+        -numeros (list; elementos: int): lista de números. len(numeros) >= 1.
     -Valor retornado:
         (tuple; elementos: float) Una tupla donde el primer elemento representa el porcentaje (de 0 a 100) de números pares sobre el total de
         elementos contenidos en numeros y el segundo elemento representa el porcentaje de números impares contenidos en
@@ -84,7 +84,7 @@ def sumar_indice(numeros):
         sumar_indice(numeros=[1, 2, 3, 4, 5, 6]) -> [1, 3, 5, 7, 9, 11]
         sumar_indice(numeros=[0, 0, 0]) -> [0, 1, 2]
     -Parámetros:
-        numeros (list; elementos: numéricos): lista de números.
+        -numeros (list; elementos: numéricos): lista de números.
     -Valor retornado:
         (list; elementos: numéricos) Una nueva lista donde, a cada elemento de numeros se le ha sumado su índice.
     """
@@ -99,7 +99,7 @@ def sumas_parciales(numeros):
         sumas_parciales(numeros=[4, 6, 10, 7]) -> [4, 10, 20, 27]
         (Cada número es calculado como: 4, 6+4, 10+6+4, 7+10+6+4).
     -Parámetros:
-        numeros (list; elementos: numéricos): lista de números.
+        -numeros (list; elementos: numéricos): lista de números.
     -Valor retornado:
         (list; elementos: numéricos) Una nueva lista donde cada elemento es la suma de sí mismo más todos los
         anteriores.
@@ -116,7 +116,7 @@ def numeros_faltantes(numeros):
         (n=7, entonces: 1, 3, 4, 6 son los números entre 0 y 6 que no aparecen en la lista).
         numeros_faltantes(numeros=[3, 7, 15, 3, 9]) -> [0, 1, 2, 4]
     -Parámetro:
-        numeros (list; elementos: int): una lista de números, de longitud n.
+        -numeros (list; elementos: int): una lista de números, de longitud n.
     -Valor retornado:
         (list; elementos: int) Una nueva lista donde los elementos son los números entre 0 y n-1 que no aparecen en
         numeros.
@@ -133,7 +133,7 @@ def cuantos_numeros_menores(numeros):
         i=1 almacena el número 3 y hay un elemento menor: 2. Lo mismo sucede con i=2. i=3 almacena el 4 y hay tres
         elementos menores: 3, 3, 2. Y para i=4, que almacena el número 2, no hay elementos menores).
     -Parámetros:
-        numeros (list; elementos: numéricos): lista de números.
+        -numeros (list; elementos: numéricos): lista de números.
     -Valor retornado:
         (list; elementos: numéricos) Una nueva lista donde cada elemento i es la cantidad de elementos menores que
         numeros[i] existentes en numeros.
@@ -148,7 +148,7 @@ def dos_maximos(numeros):
     Ejemplo:
         dos_maximos(numeros=[5, 3, 6, 2, 8]) -> (8, 6)
     -Parámetro:
-        numeros (list; elementos: numéricos): la lista con números a evaluar. len(numeros) >= 2.
+        -numeros (list; elementos: numéricos): la lista con números a evaluar. len(numeros) >= 2.
     -Valor retornado:
         (tuple; 2 elementos: numéricos) Una tupla con los dos números mayores contenidos dentro de numeros, donde el
         elemento en la posición 0 es mayor o igual que el elemento en la posición 1.
@@ -169,8 +169,8 @@ def jugada_uno(mano, carta_descubierta):
         jugada_uno(mano=["rojo 2", "azul 5", "verde 1"], carta_descubierta="rojo 3") -> True
         jugada_uno(mano=["rojo 2", "azul 5", "verde 1"], carta_descubierta="amarillo 3") -> False
     -Parámetros:
-        mano (list; elementos: str): lista con las cartas que tiene en la mano el jugador.
-        carta_descubierta (str): carta que se encuentra descubierta sobre la mesa.
+        -mano (list; elementos: str): lista con las cartas que tiene en la mano el jugador.
+        -carta_descubierta (str): carta que se encuentra descubierta sobre la mesa.
     -Valor retornado:
         (bool) True si el jugador está habilitado a hacer una jugada (el color o el número de una de sus cartas
         coincide con el color o el número de la carta descubierta). False en caso contrario.
@@ -187,8 +187,8 @@ def descartar_ocurrencias_extra(numeros, n):
         descartar_ocurrencias_extra(numeros=[1, 2, 3, 2, 3, 3], n=1) -> [1, 2, 3]
         descartar_ocurrencias_extra(numeros=[1, 2, 3, 2, 3, 3], n=3) -> [1, 2, 3, 2, 3, 3]
     -Parámetros:
-        numeros (list; elementos: int): la lista a procesar.
-        n (int): cantidad de ocurrencias máximas que pueden aparecer de cada elemento.
+        -numeros (list; elementos: int): la lista a procesar.
+        -n (int): cantidad de ocurrencias máximas que pueden aparecer de cada elemento.
     -Valor retornado:
         (list; elementos: int) Una nueva lista donde los elementos sean los mismos y en el mismo orden que en numeros,
         descartando las ocurrencias que excedan el máximo permitido.
@@ -205,9 +205,9 @@ def es_desplazamiento(numeros1, numeros2, n):
         es_desplazamiento(numeros1=[1, 2, 3, 4], numeros2=[3, 4, 1, 2], n=2) -> True
         es_desplazamiento(numeros1=[1, 2], numeros2=[3, 4], n=1) -> False
     -Parámetros:
-        numeros1 (list; elementos: numéricos): la lista desplazada.
-        numeros2 (list; elementos: numéricos): la lista con la cual se comparará numeros1.
-        n (int): cantidad de posiciones de rotación. Positivo.
+        -numeros1 (list; elementos: numéricos): la lista desplazada.
+        -numeros2 (list; elementos: numéricos): la lista con la cual se comparará numeros1.
+        -n (int): cantidad de posiciones de rotación. Positivo.
     -Valor retornado:
         (bool) True si numeros1 equivale a numeros2 con sus elementos rotados n posiciones hacia la derecha. False en
         el caso contrario.
@@ -227,8 +227,8 @@ def suma_cada_n(numeros, n):
         (Pues 1+9+8=18).
         suma_cada_n(numeros=[1.5, 2, -3, 4], n=5) -> 0
     -Parámetros:
-        numeros (list; elementos: numéricos): lista de números.
-        n (int): número entero mayor que 0.
+        -numeros (list; elementos: numéricos): lista de números.
+        -n (int): número entero mayor que 0.
     -Valor retornado:
         (int) Suma de los elementos de numeros, comenzando por el elemento en la posición n y saltando de a n
         posiciones. 0 si n es mayor que la cantidad de elementos en la lista.
@@ -245,7 +245,7 @@ def desplazar_ceros(numeros):
         desplazar_ceros(numeros=[5, 8, 0, 3, 0, 0, 4]) -> [5, 8, 3, 4, 0, 0, 0]
         desplazar_ceros(numeros=[1, 2, 3, 0, 0, 0]) -> [1, 2, 3, 0, 0, 0]
     -Parámetro:
-        numeros (list; elementos: int): la lista con números a procesar.
+        -numeros (list; elementos: int): la lista con números a procesar.
     -Valor retornado:
         (list; elementos: int) La lista numeros, con sus ceros ubicados de forma contigua al final y el resto de los
         elementos manteniendo su orden relativo.
@@ -262,7 +262,7 @@ def desanidar(listas):
         -> [1, 0, 4, "a", "b", True, False, True, True]
         desanidar(listas=[[], ["a", "b"]]) -> ["a", "b"]
     -Parámetro:
-        listas (list; elementos: list, con elementos heterogéneos): una lista que contiene listas como elementos (los
+        -listas (list; elementos: list, con elementos heterogéneos): una lista que contiene listas como elementos (los
         elementos de éstas pueden ser de cualquier tipo).
     -Valor retornado:
         (list; elementos: heterogéneos) Una nueva lista cuyos elementos son directamente los elementos que están
@@ -283,7 +283,7 @@ def cantidad_aprobados(resultados_examen):
                                               ["Martín Sotomayor", 209, 7]])
         -> 3
     -Parámetro:
-        resultados_examen (list; elementos: list, con 3 elementos: str, int, int): lista con datos de alumnos,
+        -resultados_examen (list; elementos: list, con 3 elementos: str, int, int): lista con datos de alumnos,
         contenidos en listas anidadas.
     -Valor retornado:
         (int) Cantidad de alumnos que aprobaron el examen.
@@ -302,7 +302,7 @@ def suma_diagonal(matriz):
          [7,8,9]]
         y esto retorna 15, pues 1+5+9=15).
     -Parámetro:
-        matriz (list; elementos: list, con elementos numéricos): lista de listas, formando una matriz de n columnas y
+        -matriz (list; elementos: list, con elementos numéricos): lista de listas, formando una matriz de n columnas y
         n filas.
     -Valor retornado:
         (numeric) Suma de la diagonal principal.

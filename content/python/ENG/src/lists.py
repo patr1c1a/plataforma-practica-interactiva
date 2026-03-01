@@ -10,7 +10,7 @@ def multiplication(nums):
     Example:
         multiplication(nums=[1, 2, 3, 4]) -> 24
     -Parameters:
-        nums (list, elements: numeric): list whose numbers will be multiplied.
+        -nums (list, elements: numeric): list whose numbers will be multiplied.
     -Returns:
         (numeric / None) Product of all numbers in nums. If nums is empty, it returns None.
     """
@@ -23,7 +23,7 @@ def greatest_element(strings):
     Example:
         greatest_element(strings=["x", "y", "z"]) -> "z"
     -Parameters:
-        strings (list; elements: str): list where the greatest element will be searched for.
+        -strings (list; elements: str): list where the greatest element will be searched for.
     -Returns:
         (str / None) The greatest string in the list. If the list is empty, it returns None.
     """
@@ -41,7 +41,7 @@ def highest_profit(prices):
         (If prices are [70, 53, 15, 23, 41, 30] the biggest profit can be obtained by buying when price is 15 and then
         selling when it's 70, so 70-15=55).
     -Parameter:
-        prices (list; elements: numeric): list with prices of shares of a company in each given day. len(prices) >= 2.
+        -prices (list; elements: numeric): list with prices of shares of a company in each given day. len(prices) >= 2.
     -Returns:
         (numeric) The highest profit that can be obtained if shares are bought at the lowest price and then sold at the
         highest price.
@@ -56,7 +56,7 @@ def no_duplicates(might_have_duplicates):
         no_duplicates(might_have_duplicates=[3, False, "a", 1, 1, 2, 4, False, 4]) -> [3, "a", 2]
         no_duplicates([1, 1, 1]) -> []
     -Parameter:
-        might_have_duplicates (list; elements: multiple types): list that may or may not have duplicate elements.
+        -might_have_duplicates (list; elements: multiple types): list that may or may not have duplicate elements.
     -Returns:
         (list; elements: multiple types) A new list with the elements from might_have_duplicates that are unique (have
         no duplicates).
@@ -72,7 +72,7 @@ def percentages_even_odd_numbers(nums):
         percentages_even_odd_numbers(nums=[-5, 3, 2, -4, 7]) -> (40.0, 60.0)
         percentages_even_odd_numbers(nums=[1, 1, 1, 1]) -> (0.0, 100.0)
     -Parameter:
-        nums (list; elements: int): list with numbers. len(numbers) >= 1.
+        -nums (list; elements: int): list with numbers. len(numbers) >= 1.
     -Returns:
         (tuple; elements: float). A 2-element tuple where its first element represents the percentage (from 0 to 100) of
         even numbers contained in nums, while the second element represents the percentage of odd numbers in nums.
@@ -87,7 +87,7 @@ def add_index(nums):
         add_index(nums=[1, 2, 3, 4, 5, 6]) -> [1, 3, 5, 7, 9, 11]
         add_index(nums=[0, 0, 0]) -> [0, 1, 2]
     -Parameters:
-        nums (list; elements: numeric): list with numbers.
+        -nums (list; elements: numeric): list with numbers.
     -Returns:
         (list; elements: numeric) A new list where each element from nums was added to its index.
     """
@@ -102,7 +102,7 @@ def partial_sums(nums):
         partial_sums(nums=[4, 6, 10, 7]) -> [4, 10, 20, 27]
         (Each element in the new list is calculated as follows: 4, 6+4, 10+6+4, 7+10+6+4)
     -Parameters:
-        nums (list; elements: numeric): list with numbers.
+        -nums (list; elements: numeric): list with numbers.
     -Returns:
         (list; elements: numeric) A new list where each element is calculated as the sum of all previous elements plus
         itself in nums.
@@ -119,7 +119,7 @@ def missing_numbers(nums):
         (n=7, so: 1, 3, 4, 6 are the numbers between 0 and 6 missing in the list).
         missing_numbers([3, 7, 15, 3, 9]) -> [0, 1, 2, 4]
     -Parameter:
-        nums (list, elements: int): list with numbers, of length n.
+        -nums (list, elements: int): list with numbers, of length n.
     -Returns:
         (list; elements: int) A new list where elements are the numbers from 0 to n-1 that are not included in nums.
     """
@@ -135,7 +135,7 @@ def how_many_are_smaller(nums):
         i=1 stores number 3 and there is one smaller element: 2. The same happens with i=2. i=3 stores 4 and there are
         three smaller elements: 3, 3, 2. And for i=4, which stores number 2, there are no smaller elements).
     -Parameters:
-        nums (list; elements: numeric): list with numbers.
+        -nums (list; elements: numeric): list with numbers.
     -Returns:
         (list; elements: numeric) A new list where each element i represents the number of elements smaller than
         nums[i].
@@ -150,7 +150,7 @@ def two_largest(nums):
     Example:
         two_largest(nums=[5, 3, 6, 2, 8]) -> (8, 6)
     -Parameter:
-        nums (list; elements: numeric): list with numbers. len(numeros) >= 2
+        -nums (list; elements: numeric): list with numbers. len(numeros) >= 2
     -Returns:
         (tuple; 2 numeric elements) A tuple with the two largest numbers in nums, where the element at index 0 is
         greater or equal to the element at index 1.
@@ -171,8 +171,8 @@ def uno_round(hand, card_discard_pile):
         uno_round(hand=["red 2", "blue 5", "green 1"], card_discard_pile="red 3") -> True
         uno_round(hand=["red 2", "blue 5", "green 1"], card_discard_pile="yellow 3") -> False
     -Parameters:
-        hand (list; elements: str): list with the cards held in hand by the player.
-        card_discard_pile (str): card on top of the discard pile.
+        -hand (list; elements: str): list with the cards held in hand by the player.
+        -card_discard_pile (str): card on top of the discard pile.
     -Returns:
         (bool) True if the player is allowed to play a card: if either the color or the number in one of the cards held
         in hand matches the color or the number in the card on top of the discard pile. False otherwise.
@@ -190,8 +190,8 @@ def discard_excess_occurrences(nums, maximum):
         discard_excess_occurrences(nums=[1, 2, 3, 2, 3, 3], maximum=1) -> [1, 2, 3]
         discard_excess_occurrences(nums=[1, 2, 3, 2, 3, 3], maximum=3) -> [1, 2, 3, 2, 3, 3]
     -Parameters:
-        nums (list; elements: int): list with numbers.
-        maximum (int): number of maximum occurrences allowed for each element.
+        -nums (list; elements: int): list with numbers.
+        -maximum (int): number of maximum occurrences allowed for each element.
     -Returns:
         (list; elements: int) A new list where elements from nums are copied without altering their relative position,
         but discarding any occurrences that exceed the maximum amount allowed.
@@ -208,9 +208,9 @@ def is_shifted(nums1, nums2, n):
         is_shifted(nums1=[1, 2, 3, 4], nums2=[3, 4, 1, 2], n=2) -> True
         is_shifted(nums1=[1, 2], nums2=[3, 4], n=1) -> False
     -Parameters:
-        nums1 (list; elements: numeric): shifted list.
-        nums2 (list; elements: numeric): list with which nums1 will be compared.
-        n (int): number of shifts done. Positive.
+        -nums1 (list; elements: numeric): shifted list.
+        -nums2 (list; elements: numeric): list with which nums1 will be compared.
+        -n (int): number of shifts done. Positive.
     -Returns:
         (bool) True if nums2 matches nums1 after n shifts are made. False otherwise.
     """
@@ -229,8 +229,8 @@ def add_every_nth(nums, n):
         (Since 1+9+8=18).
         add_every_nth(nums=[1.5, 2, -3, 4], n=5) -> 0
     -Parameters:
-        nums (list; elements: numeric): list with numbers.
-        n (int): step. Greater than 0.
+        -nums (list; elements: numeric): list with numbers.
+        -n (int): step. Greater than 0.
     -Returns:
         (int) Sum of elements in nums, starting with the nth element and going forward every n elements. 0 if n is
         greater than the length of nums.
@@ -247,7 +247,7 @@ def move_zeroes(nums):
         move_zeroes(nums=[5, 8, 0, 3, 0, 0, 4]) -> [5, 8, 3, 4, 0, 0, 0]
         move_zeroes(nums=[1, 2, 3, 0, 0, 0]) -> [1, 2, 3, 0, 0, 0]
     -Parameter:
-        nums (list; elements: int): list with numbers.
+        -nums (list; elements: int): list with numbers.
     -Returns:
         (list; elements: int) The list (nums) with all zeroes moved to the end of the list and with all non-zero
         elements in their same relative position.
@@ -264,7 +264,7 @@ def unnest(nested_lists):
         -> [1, 0, 4, "a", "b", True, False, True, True]
         unnest(nested_lists=[[], ["a", "b"]]) -> ["a", "b"]
     -Parameter:
-        nested_lists (list; elements: lists containing elements of multiple types): a list with nested list elements.
+        -nested_lists (list; elements: lists containing elements of multiple types): a list with nested list elements.
     -Returns:
         (list; elements: multiple types) A new list containing the elements in each nested list, in the same order.
     """
@@ -283,7 +283,7 @@ def how_many_passed(exam_results):
                                       ["Martin Smith", 209, 7]])
         -> 3
     -Parameter:
-        exam_results (list; elements: lists containing 3 elements: str, int, int): list with student information in
+        -exam_results (list; elements: lists containing 3 elements: str, int, int): list with student information in
         nested lists.
     -Returns:
         (int) Number of students that passed the exam (with a grade of 6 or more).
@@ -302,7 +302,7 @@ def diagonal_sum(matrix):
         [7,8,9]]
         and this returns 15, since 1+5+9=15).
     -Parameter:
-        matrix (list; elements: lists containing numeric elements): list with nested lists forming a matrix of n columns
+        -matrix (list; elements: lists containing numeric elements): list with nested lists forming a matrix of n columns
         and n rows.
     -Returns:
         (numeric) Sum of the matrix primary diagonal.

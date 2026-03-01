@@ -10,8 +10,8 @@ def smallest(number1, number2):
         smallest(number1=3, 1) -> 1
         smallest(number1=3, 3) -> 3
     -Parameters:
-        number1 (numeric): one of the numbers to be processed.
-        number2 (numeric): the other number to be processed.
+        -number1 (numeric): one of the numbers to be processed.
+        -number2 (numeric): the other number to be processed.
     -Returns:
         (numeric) The smallest between two numbers. number1 if they're equal.
     """
@@ -26,7 +26,7 @@ def absolute_value(number):
         absolute_value(number=3) -> 3
         absolute_value(number=-10) -> 10
     -Parameter:
-        number (numeric): the number whose absolute value will be calculated.
+        -number (numeric): the number whose absolute value will be calculated.
     -Returns:
         (numeric) Absolute value of a number.
     """
@@ -41,7 +41,7 @@ def extract_month(date):
         extract_month(date=31122020) -> 12
         extract_month(date=5091946) -> 9
     -Parameters:
-        date (int): valid date in a ddmmaaaa or dmmaaaa format. dd (or d) will be between 1 and 31. mm will be between
+        -date (int): valid date in a ddmmaaaa or dmmaaaa format. dd (or d) will be between 1 and 31. mm will be between
         1 and 12. Positive.
     -Returns:
         (int) The month contained in date.
@@ -56,9 +56,9 @@ def add_multiples(lower, upper, n):
         add_multiples(lower=0, upper=30, n=5) -> 105
         add_multiples(lower=-30, upper=0, n=5) -> -105
     -Parameters:
-        lower (int): lower bound of the interval. Lesser or equal to upper.
-        upper (int): upper bound of the interval. Greater or equal to lower.
-        n (int): number whose multiples will be added up. Cannot be 0.
+        -lower (int): lower bound of the interval. Lesser or equal to upper.
+        -upper (int): upper bound of the interval. Greater or equal to lower.
+        -n (int): number whose multiples will be added up. Cannot be 0.
     -Returns:
         (int) Summation of multiples of n between lower and upper bounds.
     """
@@ -73,7 +73,7 @@ def is_palindromic_number(number):
         is_palindromic_number(number=123321) -> True
         is_palindromic_number(number=1234) -> False
     -Parameters:
-        number (int): number to evaluate. Positive.
+        -number (int): number to evaluate. Positive.
     -Returns:
         (bool) True if number is a palindrome, False if it's not.
     """
@@ -87,7 +87,7 @@ def leap_year(year):
         leap_year(year=2020) -> True
         leap_year(year=1800) -> False
     -Parameter:
-        year (int): year to evaluate. Positive.
+        -year (int): year to evaluate. Positive.
     -Returns:
         (bool) True if it's a leap year. False if it's not.
     """
@@ -102,8 +102,8 @@ def days_in_month(month, year):
     Example:
         days_in_month(month=11, year=1981) -> 30
     -Parameters:
-        month (int): number representing the month. Between 1 and 12.
-        year (int): number representing the year. Positive.
+        -month (int): number representing the month. Between 1 and 12.
+        -year (int): number representing the year. Positive.
     -Returns:
         (int) Day count in the given month.
     """
@@ -116,7 +116,7 @@ def digit_count(number):
     Example:
         digit_count(number=120) -> 3
     -Parameter:
-        number (int): number whose digits are being counted.
+        -number (int): number whose digits are being counted.
     -Returns:
         (int) Digit count in number.
     """
@@ -129,7 +129,7 @@ def add_square_digits(number):
     Example:
         add_square_digits(number=15) -> 26
     -Parameter:
-        number (int): number where digits are being processed. Positive.
+        -number (int): number where digits are being processed. Positive.
     -Returns:
         (int) Sum of squares of every digit in number.
     """
@@ -142,7 +142,7 @@ def percentage_even_digits(number):
     Example:
         percentage_even_digits(number=5555666555) -> 30.0
     -Parameter:
-        number (int): number where digits are being processed. Positive.
+        -number (int): number where digits are being processed. Positive.
     -Returns:
         (float) Percentage (from 0 to 100) of even digits in number.
     """
@@ -156,7 +156,7 @@ def is_pronic(number):
         is_pronic(number=56) -> True
         (56 can be expressed as 7*8).
     -Parameter:
-        number (int): number to evaluate. Greater than 0.
+        -number (int): number to evaluate. Greater than 0.
     -Returns:
         (bool) True if number is pronic, False if it's not.
     """
@@ -169,7 +169,7 @@ def is_prime(number):
     Example:
         is_prime(number=7) -> True
     -Parameter:
-        number (int): number to evaluate. Positive.
+        -number (int): number to evaluate. Positive.
     -Returns:
         (bool) True if number is prime. False if it's not.
     """
@@ -182,7 +182,7 @@ def factorial(number):
     Example:
         factorial(number=4) -> 24
     -Parameter:
-        number (int): number whose factorial will be calculated. Positive.
+        -number (int): number whose factorial will be calculated. Positive.
     -Returns:
         (int) Factorial of number.
     """
@@ -196,7 +196,7 @@ def sum_first_n_fibonacci(n):
     Example:
         sum_first_n_fibonacci(n=6) -> 12
     -Parameters:
-        n (int): how many Fibonacci terms will be summed. Greater or equal than 2.
+        -n (int): how many Fibonacci terms will be summed. Greater or equal than 2.
     -Returns:
         (int) Sum of first n numbers in the Fibonacci sequence.
     """
@@ -210,7 +210,7 @@ def greatest_divisor(number):
     Example:
         greatest_divisor(number=182) -> 91
     -Parameters:
-        number (int): number whose divisor will be calculated. Positive.
+        -number (int): number whose divisor will be calculated. Positive.
     -Returns:
         (int) Greatest number that can be used as a divisor for the number, without a remainder.
     """
@@ -224,8 +224,8 @@ def euclidean_gcd(m, n):
     Example:
         euclidean_gcd(m=60, n=24) -> 12
     -Parameters:
-        m (int): positive number.
-        n (int): non-negative number.
+        -m (int): positive number.
+        -n (int): non-negative number.
     -Returns:
         (int) Greatest common divisor of m and n.
     """
@@ -241,8 +241,8 @@ def get_month(consecutive_day, year):
         (the 60th consecutive day in a leap year represents February 29, while in a non-leap
         year it will be March 1st).
     -Parameters:
-        consecutive_day (int): number of days gone by from January 1st. Between 1 and 366.
-        year (int): year (leap or non-leap). Positive.
+        -consecutive_day (int): number of days gone by from January 1st. Between 1 and 366.
+        -year (int): year (leap or non-leap). Positive.
     -Returns:
         (int) Month number (between 1 and 12) where consecutive_day lies in the given year.
     """
@@ -259,7 +259,7 @@ def is_disarium(number):
         is_disarium(number=518) -> True
         (518 is a disarium number, since 5**1=5, 1**2=1, 8**3=512, and 5+1+512=518).
     -Parameter:
-        number (int): number whose digits will be evaluated. Positive.
+        -number (int): number whose digits will be evaluated. Positive.
     -Returns:
         (bool) True if number is "disarium", False if it's not.
     """
@@ -278,7 +278,7 @@ def arrange_coins(amount):
         ¤ ¤
         )
     -Parameter:
-        amount (int): number of coins that must be used. Positive.
+        -amount (int): number of coins that must be used. Positive.
     -Returns:
         (int) Maximum full rows that can be built with the given amount of coins.
     """
@@ -293,7 +293,7 @@ def single_ones(number):
         single_ones(number=141211) -> 2
         single_ones(number=11411211) -> 0
     -Parameter:
-        number (int): number whose digits will be evaluated. Positive.
+        -number (int): number whose digits will be evaluated. Positive.
     -Returns:
         (int) How many non-consecutive 1's are there in number.
     """
