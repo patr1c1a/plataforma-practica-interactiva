@@ -143,6 +143,7 @@
     ========================= */
 
     const PROGRESS_STORAGE_KEY = "platform-progress-v1";
+    const EXERCISE_STORAGE_PREFIX = "exercise-";
 
     function loadProgress() {
         const raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
@@ -151,6 +152,60 @@
 
     function saveProgress(progressData) {
         localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progressData));
+    }
+
+    function buildExerciseStorageKey(category, exercise) {
+        return `${EXERCISE_STORAGE_PREFIX}${category}-${exercise}`;
+    }
+
+    function collectExerciseCodeForExport(progressData) {
+        const codeByExercise = {};
+
+        Object.entries(progressData).forEach(([category, exercises]) => {
+            Object.entries(exercises).forEach(([exercise, state]) => {
+                if (!state?.attempted && !state?.completed) return;
+
+                const storageKey = buildExerciseStorageKey(category, exercise);
+                const code = sessionStorage.getItem(storageKey);
+
+                if (!codeByExercise[category]) {
+                    codeByExercise[category] = {};
+                }
+
+                // Export code for attempted/completed exercises, even if currently empty.
+                codeByExercise[category][exercise] = code ?? "";
+            });
+        });
+
+        return codeByExercise;
+    }
+
+    function restoreImportedExerciseCode(codeByExercise) {
+        if (!codeByExercise || typeof codeByExercise !== "object") return;
+
+        Object.entries(codeByExercise).forEach(([category, exercises]) => {
+            Object.entries(exercises || {}).forEach(([exercise, code]) => {
+                if (typeof code !== "string") return;
+
+                const storageKey = buildExerciseStorageKey(category, exercise);
+                sessionStorage.setItem(storageKey, code);
+            });
+        });
+    }
+
+    function clearStoredExerciseCode() {
+        const keysToRemove = [];
+
+        for (let i = 0; i < sessionStorage.length; i += 1) {
+            const key = sessionStorage.key(i);
+            if (!key) continue;
+
+            if (key.startsWith(EXERCISE_STORAGE_PREFIX)) {
+                keysToRemove.push(key);
+            }
+        }
+
+        keysToRemove.forEach(key => sessionStorage.removeItem(key));
     }
 
     function markExerciseAttempted(category, exercise) {
@@ -306,11 +361,13 @@
 
         exportButton.addEventListener("click", function () {
             const progress = loadProgress();
+            const code = collectExerciseCodeForExport(progress);
 
             const exportData = {
-                version: 1,
+                version: 2,
                 exportedAt: new Date().toISOString(),
-                progress: progress
+                progress: progress,
+                code: code
             };
 
             const blob = new Blob(
@@ -348,6 +405,8 @@
                     }
 
                     saveProgress(parsed.progress);
+                    clearStoredExerciseCode();
+                    restoreImportedExerciseCode(parsed.code);
                     updateProgressUI();
                 } catch {
                     return;
@@ -367,6 +426,7 @@
             if (!confirmed) return;
 
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
+            clearStoredExerciseCode();
             updateProgressUI();
         });
     }
