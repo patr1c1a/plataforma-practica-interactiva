@@ -169,6 +169,9 @@ def _replace_function_definition(
     user_function_definitions = [
         node for node in user_submitted_ast.body if isinstance(node, ast.FunctionDef)
     ]
+    user_class_definitions = [
+        node for node in user_submitted_ast.body if isinstance(node, ast.ClassDef)
+    ]
 
     if not user_function_definitions:
         raise ValueError(
@@ -201,6 +204,10 @@ def _replace_function_definition(
     # Add any new helper functions not originally present
     for remaining_function in user_functions_by_name.values():
         updated_module_body.append(remaining_function)
+
+    # Preserve user-defined helper classes.
+    for user_class in user_class_definitions:
+        updated_module_body.append(user_class)
 
     original_module_ast.body = updated_module_body
 
