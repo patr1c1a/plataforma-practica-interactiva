@@ -94,9 +94,14 @@
         const textarea = document.getElementById("code-editor");
         if (!textarea) return;
 
+        if (textarea._initialCode === undefined) {
+            textarea._initialCode = textarea.value;
+        }
+
         // If CodeMirror was already used, do not initialize again
         if (textarea._editorInstance) {
             activeCodeEditor = textarea._editorInstance;
+            initializeExerciseResetButton();
             return;
         }
 
@@ -136,6 +141,8 @@
 
         const totalLines = editor.lineCount();
         editor.setCursor({ line: totalLines - 1, ch: 4 });
+
+        initializeExerciseResetButton();
     }
 
     /* =========================
@@ -206,6 +213,59 @@
         }
 
         keysToRemove.forEach(key => sessionStorage.removeItem(key));
+    }
+
+    function clearExerciseProgress(category, exercise) {
+        const progress = loadProgress();
+
+        if (!progress[category] || !progress[category][exercise]) return;
+
+        delete progress[category][exercise];
+
+        if (Object.keys(progress[category]).length === 0) {
+            delete progress[category];
+        }
+
+        saveProgress(progress);
+    }
+
+    function getCurrentExerciseFromPath() {
+        const match = window.location.pathname.match(/exercises\/([^\/]+)\/([^\/]+)/);
+        if (!match) return null;
+
+        return {
+            category: match[1],
+            exercise: match[2]
+        };
+    }
+
+    function initializeExerciseResetButton() {
+        const resetExerciseButton = document.getElementById("reset-exercise");
+        if (!resetExerciseButton || resetExerciseButton.dataset.initialized === "true") return;
+
+        resetExerciseButton.dataset.initialized = "true";
+        resetExerciseButton.addEventListener("click", function () {
+            const textarea = document.getElementById("code-editor");
+            if (!textarea || !textarea._editorInstance) return;
+
+            const originalCode = textarea._initialCode ?? "";
+            const storageKey = textarea.dataset.storageKey;
+
+            textarea._editorInstance.setValue(originalCode);
+            sessionStorage.setItem(storageKey, originalCode);
+
+            const exerciseInfo = getCurrentExerciseFromPath();
+            if (exerciseInfo) {
+                clearExerciseProgress(exerciseInfo.category, exerciseInfo.exercise);
+            }
+
+            const resultContainer = document.getElementById("result");
+            if (resultContainer) {
+                resultContainer.innerHTML = "";
+            }
+
+            updateProgressUI();
+        });
     }
 
     function markExerciseAttempted(category, exercise) {
@@ -407,6 +467,7 @@
                     saveProgress(parsed.progress);
                     clearStoredExerciseCode();
                     restoreImportedExerciseCode(parsed.code);
+                    refreshCurrentEditorFromStorage();
                     updateProgressUI();
                 } catch {
                     return;
@@ -415,6 +476,19 @@
 
             reader.readAsText(file);
         });
+    }
+
+    function refreshCurrentEditorFromStorage() {
+        const textarea = document.getElementById("code-editor");
+        if (!textarea || !textarea._editorInstance) return;
+
+        const storageKey = textarea.dataset.storageKey;
+        if (!storageKey) return;
+
+        const restoredCode = sessionStorage.getItem(storageKey);
+        if (restoredCode === null) return;
+
+        textarea._editorInstance.setValue(restoredCode);
     }
 
     function initializeReset() {

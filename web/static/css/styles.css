@@ -241,6 +241,13 @@ header {
   background-color: var(--surface-elevated);
 }
 
+.exercise-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .categories-section {
   margin-top: 3rem;
 }
