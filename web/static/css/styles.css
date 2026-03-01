@@ -51,6 +51,19 @@ a:hover {
   padding: 2rem;
 }
 
+.site-footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.home-repository-link {
+  margin-top: 2rem;
+}
+
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
