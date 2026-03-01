@@ -51,7 +51,7 @@ def list_exercises(request: Request):
     return render_with_optional_fragment(
         request=request,
         full_template="index.html",
-        fragment_template="fragments/exercise_detail.html",
+        fragment_template="fragments/exercise_list.html",
         context=template_context,
     )
 
@@ -79,7 +79,7 @@ def list_category_exercises(request: Request, category: str):
     return render_with_optional_fragment(
         request=request,
         full_template="index.html",
-        fragment_template="fragments/exercise_detail.html",
+        fragment_template="fragments/exercise_list.html",
         context=template_context,
     )
 
