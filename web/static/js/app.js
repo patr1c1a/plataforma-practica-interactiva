@@ -571,6 +571,10 @@
     ========================== */
 
     document.addEventListener("DOMContentLoaded", function () {
+        if ("scrollRestoration" in history) {
+            history.scrollRestoration = "manual";
+        }
+
         initializeApplication();
 
         document.addEventListener("click", function () {
