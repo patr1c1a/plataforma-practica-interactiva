@@ -6,7 +6,7 @@
 def hallar_repetidos(strings1, strings2):
     """
     Dadas dos listas de strings, retorna cuáles de esos strings están incluidos en ambas listas.
-    Sugerencia: evitar iterar por las listas para lograr el cometido.
+    Sugerencia didáctica: evitar iterar por las listas para lograr el cometido.
     Ejemplo:
         hallar_repetidos(strings1=["abc", "cde", "abc", "fff"], strings2=["cde", "aaa"]) -> {"cde"}
     -Parámetros:
@@ -23,7 +23,7 @@ def solo_una_mascota(perros, gatos):
     Dada una lista de dueños de mascotas que tienen perros y otra lista de dueños que tienen gatos (donde un mismo
     nombre puede estar en ambas, en caso de tener ambas mascotas), retorna cuáles de esas personas tiene únicamente
     perro o únicamente gato, pero no ambos.
-    Sugerencia: evitar iterar por las listas para lograr el cometido.
+    Sugerencia didáctica: evitar iterar por las listas para lograr el cometido.
     Ejemplo:
          solo_una_mascota(perros=["Lucrecia Borges", "Juan Sebastián Balsa", "Cristóbal Colombraro"],
                           gatos=["Juan Sebastián Balsa", "Juan Jacobo Russo", "Ana Bologna", "Cristóbal Colombraro"])
@@ -140,7 +140,7 @@ def ocurrencias_digitos(digitos):
     """
     Dada una lista que contiene dígitos numéricos, informa la cantidad de ocurrencias de cada dígito, indicando el
     valor 0 para los dígitos (entre el 0 y el 9) que no se encuentran en la lista.
-    Sugerencia: evitar el uso de collections.Counter().
+    Sugerencia didáctica: evitar el uso de collections.Counter().
     Ejemplo:
         ocurrencias_digitos(digitos=[8, 9, 0, 4, 2, 2, 4, 1, 8, 2]) -> {0:1, 1:1, 2:3, 3:0, 4:2, 5:0, 6:0, 7:0, 8:2, 9:1}
     -Parámetro:
@@ -174,7 +174,7 @@ def mayor_valor(ocurrencias):
     """
     Dado un diccionario con valores únicos de tipo numérico positivos, retorna cuál es la clave que corresponde al
     mayor valor. Si el diccionario está vacío, retorna string vacío. Cada valor solo ocurre una vez en el diccionario.
-    Sugerencia: evitar el uso de max().
+    Sugerencia didáctica: evitar el uso de max().
     Ejemplo:
         mayor_valor(ocurrencias={"a":1, "e":7, "i":4, "o":9, "u":3}) -> "o"
     -Parámetro:

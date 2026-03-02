@@ -221,7 +221,7 @@ def suma_cada_n(numeros, n):
     n puede ser mayor que la longitud de la lista y no necesariamente es un múltiplo de esta longitud.
     n no puede ser 0.
     Si n es mayor que la longitud de la lista, retorna 0.
-    Sugerencia: evitar el uso de sum().
+    Sugerencia didáctica: evitar el uso de sum().
     Ejemplo:
         suma_cada_n(numeros=[5, 2, 1, 6, 4, 9, 3, 7, 8], n=3) -> 18
         (Pues 1+9+8=18).
@@ -256,7 +256,7 @@ def desplazar_ceros(numeros):
 def desanidar(listas):
     """
     Dada una lista cuyos elementos son listas, retorna una nueva lista con un nivel menos de anidamiento.
-    Sugerencia: evitar usar bucles anidados.
+    Sugerencia didáctica: evitar usar bucles anidados.
     Ejemplos:
         desanidar(listas=[[1, 0, 4], ["a", "b"], [True, False, True, True]])
         -> [1, 0, 4, "a", "b", True, False, True, True]

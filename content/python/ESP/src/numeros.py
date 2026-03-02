@@ -67,7 +67,7 @@ def es_capicua(numero):
     """
     Evalúa si un número es capicúa o no. Los números capicúa son aquellos que se leen de igual manera, tanto de
     izquierda a derecha como de derecha a izquierda.
-    Sugerencia: usar números únicamente, evitando otros tipos de datos.
+    Sugerencia didáctica: usar números únicamente, evitando otros tipos de datos.
     Ejemplos:
         es_capicua(numero=123321) -> True
         es_capicua(numero=1234) -> False
@@ -97,7 +97,7 @@ def dias_en_mes(mes, anio):
     """
     Calcula la cantidad de días que tiene un mes determinado, en un año determinado (para el caso de que se trate
     de febrero en un año bisiesto).
-    Sugerencia: separar el problema en partes, usando un algoritmo que determine si un año es bisiesto.
+    Sugerencia didáctica: separar el problema en partes, usando un algoritmo que determine si un año es bisiesto.
     Ejemplo:
         dias_en_mes(mes=11, anio=1981) -> 30
     -Parámetros:
@@ -236,7 +236,7 @@ def obtener_mes(dia_consecutivo, anio):
     """
     Obtiene el número de mes correspondiente, dada la cantidad de días transcurridos desde el 1 de enero de un año 
     en particular (teniendo en cuenta la posibilidad de que sea bisiesto).
-    Sugerencia: separar el problema en partes, usando un algoritmo que obtenga la cantidad de días en un mes.
+    Sugerencia didáctica: separar el problema en partes, usando un algoritmo que obtenga la cantidad de días en un mes.
     Ejemplo:
         obtener_mes(dia_consecutivo=200, anio=1969) -> 7
         (el día consecutivo número 60 en un año bisiesto representa el 29 de febrero, mientras que en un año no bisiesto
@@ -255,7 +255,7 @@ def es_disarium(numero):
     Evalúa si un número es un número "disarium". Un número es considerado "disarium" si la suma de sus dígitos, cada
     uno elevado a su respectiva posición dentro del número (empezando con la posición 1 desde la izquierda), es igual
     al número dado.
-    Sugerencia: separar el problema en partes, usando un algoritmo para contar los digitos de un número.
+    Sugerencia didáctica: separar el problema en partes, usando un algoritmo para contar los digitos de un número.
     Ejemplo:
         es_disarium(numero=518) -> True
         (518 es un número disarium, ya que 5**1=5, 1**2=1, 8**3=512, y 5+1+512=518).
@@ -290,7 +290,7 @@ def ordenar_monedas(cantidad):
 def cantidad_unos_solos(numero):
     """
     Cuenta, de un número, la cantidad de dígitos 1 que no están seguidos de otro 1 consecutivo.
-    Sugerencia: evitar convertir el número o sus dígitos a otros tipos de datos.
+    Sugerencia didáctica: evitar convertir el número o sus dígitos a otros tipos de datos.
     Ejemplos:
         cantidad_unos_solos(numero=141211) -> 2
         cantidad_unos_solos(numero=11411211) -> 0

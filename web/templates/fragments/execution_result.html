@@ -1,4 +1,4 @@
-<div id="execution-status" data-status="{{ result.status }}"></div>
+<div id="execution-status" data-status="{{ result.status }}">
     {% if result.status == "syntax_error" %}
         <h3 style="color: darkred;">⚠️ Error de sintaxis</h3>
     {% elif result.status == "pass" %}

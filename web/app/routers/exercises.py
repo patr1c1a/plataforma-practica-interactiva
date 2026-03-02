@@ -67,7 +67,7 @@ def parse_problem_description(docstring: str | None) -> dict:
     suggestions = []
     current_description = []
     current_suggestion = []
-    suggestion_pattern = re.compile(r"^-?Sugerencia:\s*(.*)$", re.IGNORECASE)
+    suggestion_pattern = re.compile(r"^-?Sugerencia didáctica:\s*(.*)$", re.IGNORECASE)
 
     def flush_description() -> None:
         nonlocal current_description

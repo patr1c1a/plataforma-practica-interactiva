@@ -22,7 +22,7 @@ def cantidad_par_caracteres(cadena1, cadena2):
 def contar_ocurrencias(cadena, caracter):
     """
     Cuenta la cantidad de veces que un carácter aparece en una cadena.
-    Sugerencia: evitar el uso de count().
+    Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_ocurrencias(cadena="Esto es una frase", caracter="s") -> 3
     -Parámetros:
@@ -38,7 +38,7 @@ def contar_vocales_totales(cadena):
     """
     Cuenta la cantidad de vocales (incluyendo repeticiones) que hay en una cadena, teniendo en cuenta mayúsculas como
     minúsculas. Las vocales del idioma español son: a, e, i, o, u.
-    Sugerencia: evitar el uso de count().
+    Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_vocales_totales(cadena="Esto es una frase") -> 7
     -Parámetro:
@@ -54,7 +54,7 @@ def contar_vocales_unicas(cadena):
     Cuenta la cantidad de vocales que hay en una cadena.
     Las vocales del idioma español son: a, e, i, o, u.
     Cada vocal debe contarse una única vez, indistintamente en su forma mayúscula o minúscula.
-    Sugerencia: evitar el uso de count().
+    Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_vocales_unicas(cadena="Esto Es Una Frase") -> 4
     -Parámetro:
@@ -68,7 +68,7 @@ def contar_vocales_unicas(cadena):
 def reemplazar_caracter_con_asterisco(cadena, caracter):
     """
     Reemplaza por '*' a todas las ocurrencias del carácter indicado.
-    Sugerencia: evitar el uso de replace().
+    Sugerencia didáctica: evitar el uso de replace().
     Ejemplos:
         reemplazar_caracter_con_asterisco(cadena="esto es una frase", caracter="a") -> "esto es un* fr*se"
     -Parámetros:
@@ -84,7 +84,7 @@ def reemplazar_caracter_con_asterisco(cadena, caracter):
 def invertir_cadena(cadena):
     """
     Invierte el orden de los caracteres de la cadena.
-    Sugerencia: evitar usar rebanadas con paso negativo.
+    Sugerencia didáctica: evitar usar rebanadas con paso negativo.
     Ejemplo:
         invertir_cadena(cadena="Esto es una frase!") -> "!esarf anu se otsE"
     -Parámetro:
@@ -164,7 +164,7 @@ def es_palindromo(cadena):
     Se incluyen todos los caracteres, sean o no letras.
     Las letras acentuadas se consideran como caracteres diferentes de sus contrapartes no acentuadas.
     La cadena vacía no se considera palíndromo.
-    Sugerencia: evitar las rebanadas con paso negativo y el uso de reversed().
+    Sugerencia didáctica: evitar las rebanadas con paso negativo y el uso de reversed().
     Ejemplos:
         es_palindromo(cadena="abba") -> True
         es_palindromo(cadena="baéceab") -> False
@@ -233,7 +233,7 @@ def invertir_palabras(cadena):
     Separador de palabras: un único espacio.
     La cadena no contendrá espacios al principio ni al final. Puede contener símbolos o dígitos y en ese caso se
     considerarán de la misma forma que las letras.
-    Sugerencia: evitar el uso de split().
+    Sugerencia didáctica: evitar el uso de split().
     Ejemplo:
         invertir_palabras(cadena="Esto es una frase.") -> "otsE se anu .esarf"
     -Parámetros:
@@ -265,7 +265,7 @@ def convertir_a_titulo(cadena):
     Convierte la primera letra de cada palabra a mayúsculas y el resto a minúsculas.
     Separador de palabras: cualquier símbolo (excluyendo letras y números), excepto apóstrofos.
     No debe modificarse la cantidad de espacios.
-    Sugerencia: evitar el uso de title().
+    Sugerencia didáctica: evitar el uso de title().
     Ejemplos:
         convertir_a_titulo(cadena="esto es una frase") -> "Esto Es Una Frase"
         convertir_a_titulo(cadena="ESTO ES UNA FRASE") -> "Esto Es Una Frase"
