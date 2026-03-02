@@ -110,15 +110,15 @@ En cada archivo hay funciones que representan cada ejercicio. Estas funciones ti
 
 Para resolver un ejercicio, el algoritmo debe escribirse en reemplazo de la palabra clave "pass" (la cual debe eliminarse).
 
-Finalmente, se deben ejecutar los tests para verificar la solución. Los tests pueden ejecutarse:
+Finalmente, se deben correr las pruebas para verificar la solución. Las pruebas pueden ejecutarse:
 
-- para una sola función,
-- para un archivo,
+- para una sola función (ejercicio),
+- para un archivo completo,
 - para los 4 archivos.
 
 ### Importante
 
-Para ejecutar los tests, es necesario ubicarse **dentro de la carpeta ESP (o ENG)** antes de correr los comandos.
+Para ejecutar las pruebas, es necesario ubicarse **dentro de la carpeta ESP (o ENG)** antes de correr los comandos.
 
 Ejemplo:
 
@@ -126,21 +126,21 @@ Ejemplo:
 cd content/python/ESP
 ```
 
-### Ejecutar un único test de un archivo
+### Ejecutar una única prueba de un ejercicio
 
-Ejemplo: ejecutar solo el test `test_menor` del archivo `tests_numeros.py`:
+Ejemplo: ejecutar solo la prueba `test_menor` del archivo `tests_numeros.py`:
 
 `python -m unittest -v tests/tests_numeros.py -k test_menor`
 
-### Ejecutar todos los tests de una categoría
+### Ejecutar todas las pruebas de una categoría
 
-Ejemplo: ejecutar todos los tests del archivo `tests_numeros.py`:
+Ejemplo: ejecutar todas las pruebas del archivo `tests_numeros.py`:
 
 `python -m unittest -v tests/tests_numeros.py`
 
-### Ejecutar todos los tests del proyecto
+### Ejecutar todos las pruebas del proyecto
 
-Para ejecutar los tests de todas las categorías, utilizar el runner provisto:
+Para ejecutar las pruebas de todas las categorías, utilizar el runner provisto:
 
 `python ejecutar_tests.py`
 
@@ -154,14 +154,14 @@ Esta versión permite:
 
 - seleccionar una categoría de ejercicios,
 - seleccionar un ejercicio a resolver,
-- ejecutar los mismos tests unitarios que se usan en la versión offline,
+- ejecutar las mismos pruebas que se usan en la versión offline,
 - ver los errores reales producidos por el código,
 - ver el progreso de ejercicios intentados o completados en cada categoría,
 - reiniciar un ejercicio o resetear el progreso completo,
 - exportar e importar el progreso de resolución de ejercicios,
 - seleccionar tema claro/oscuro (con el oscuro siendo el tema por defecto).
 
-La versión web reutiliza exactamente el mismo contenido y los mismos tests que la versión offline.
+La versión web reutiliza exactamente el mismo contenido y las mismas pruebas que la versión offline.
 
 El contenido educativo no se duplica ni se modifica para adaptarse a la web.
 
@@ -171,3 +171,9 @@ El contenido educativo no se duplica ni se modifica para adaptarse a la web.
 - Trabajar con errores reales y feedback no simplificado.
 - Proveer en la versión offline un entorno que permita familiarizarse con la terminal.
 - Mantener el proyecto simple y mantenible.
+
+## Unit tests
+
+Deben correrse desde la carpeta raíz del proyecto y dentro del entorno virtual, donde antes deben instalarse los paquetes necesarios: `pip install -r requirements.txt`.
+
+Correr unit tests: `python -m unittest discover -s web/tests -v`.
