@@ -144,45 +144,26 @@ Para ejecutar los tests de todas las categorías, utilizar el runner provisto:
 
 `python ejecutar_tests.py`
 
-### Soluciones propuestas
-
-Dentro de la carpeta correspondiente del proyecto offline se encuentra el archivo:
-
-`soluciones_propuestas.md`
-
-Este archivo contiene una posible solución para cada ejercicio.
-
-Las soluciones:
-
-- no son únicas,
-- no necesariamente son las más eficientes,
-- se proveen solo como referencia.
-
-Se recomienda intentar resolver los ejercicios sin consultar este archivo, y usarlo únicamente como apoyo en caso de bloqueo.
-
 ## Versión web (en desarrollo)
 
 La versión web del proyecto se encuentra en la carpeta:
 
 `web/`
 
-Esta versión permitirá:
+Esta versión permite:
 
-- seleccionar ejercicios desde el navegador,
-- escribir el cuerpo de las funciones,
+- seleccionar una categoría de ejercicios,
+- seleccionar un ejercicio a resolver,
 - ejecutar los mismos tests unitarios que se usan en la versión offline,
-- ver los errores reales producidos por el código.
+- ver los errores reales producidos por el código,
+- ver el progreso de ejercicios intentados o completados en cada categoría,
+- reiniciar un ejercicio o resetear el progreso completo,
+- exportar e importar el progreso de resolución de ejercicios,
+- seleccionar tema claro/oscuro (con el oscuro siendo el tema por defecto).
 
 La versión web reutiliza exactamente el mismo contenido y los mismos tests que la versión offline.
 
 El contenido educativo no se duplica ni se modifica para adaptarse a la web.
-
-## Estado del proyecto
-
-- La versión offline está completa y es totalmente funcional.
-- La versión web se encuentra en desarrollo.
-
-El diseño del proyecto permite incorporar otros lenguajes en el futuro, aunque actualmente solo se implementa Python.
 
 ## Filosofía del proyecto
 
