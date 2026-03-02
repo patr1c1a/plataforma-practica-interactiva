@@ -1,6 +1,8 @@
 (function () {
 
     let activeCodeEditor = null;
+    let hasDropdownDocumentClickListener = false;
+    let hasProgressPanelDocumentClickListener = false;
 
     function initializeApplication() {
         migrateExerciseCodeStorageToLocal();
@@ -32,6 +34,9 @@
 
         applyTheme(themeToApply);
 
+        if (toggleButton.dataset.initialized === "true") return;
+        toggleButton.dataset.initialized = "true";
+
         toggleButton.addEventListener("click", function () {
             const currentTheme = document.documentElement.getAttribute("data-theme");
             const newTheme = currentTheme === "dark" ? "light" : "dark";
@@ -61,16 +66,24 @@
     ========================== */
 
     function initializeDropdowns() {
+        const closeAllDropdowns = function () {
+            document.querySelectorAll(".dropdown").forEach(dropdown => {
+                dropdown.classList.remove("open");
+            });
+        };
+
         const dropdowns = document.querySelectorAll(".dropdown");
 
         dropdowns.forEach(dropdown => {
             const toggle = dropdown.querySelector(".dropdown-toggle");
             if (!toggle) return;
+            if (toggle.dataset.initialized === "true") return;
+            toggle.dataset.initialized = "true";
 
             toggle.addEventListener("click", function (event) {
                 event.stopPropagation();
 
-                dropdowns.forEach(d => {
+                document.querySelectorAll(".dropdown").forEach(d => {
                     if (d !== dropdown) {
                         d.classList.remove("open");
                     }
@@ -80,9 +93,12 @@
             });
         });
 
-        document.addEventListener("click", function () {
-            dropdowns.forEach(d => d.classList.remove("open"));
-        });
+        if (!hasDropdownDocumentClickListener) {
+            document.addEventListener("click", function () {
+                closeAllDropdowns();
+            });
+            hasDropdownDocumentClickListener = true;
+        }
     }
 
     /* =========================
@@ -443,14 +459,23 @@
 
         if (!panel || !button) return;
 
-        button.addEventListener("click", function (event) {
-            event.stopPropagation();
-            panel.classList.toggle("hidden");
-        });
+        if (button.dataset.initialized !== "true") {
+            button.dataset.initialized = "true";
+            button.addEventListener("click", function (event) {
+                event.stopPropagation();
+                panel.classList.toggle("hidden");
+            });
+        }
 
-        document.addEventListener("click", function () {
-            panel.classList.add("hidden");
-        });
+        if (!hasProgressPanelDocumentClickListener) {
+            document.addEventListener("click", function () {
+                const progressPanel = document.getElementById("progress-panel");
+                if (progressPanel) {
+                    progressPanel.classList.add("hidden");
+                }
+            });
+            hasProgressPanelDocumentClickListener = true;
+        }
 
         initializeExport();
         initializeImport();
@@ -460,6 +485,8 @@
     function initializeExport() {
         const exportButton = document.getElementById("export-progress");
         if (!exportButton) return;
+        if (exportButton.dataset.initialized === "true") return;
+        exportButton.dataset.initialized = "true";
 
         exportButton.addEventListener("click", function () {
             const progress = loadProgress();
@@ -491,6 +518,8 @@
     function initializeImport() {
         const input = document.getElementById("import-progress");
         if (!input) return;
+        if (input.dataset.initialized === "true") return;
+        input.dataset.initialized = "true";
 
         input.addEventListener("change", function (event) {
             const file = event.target.files[0];
@@ -558,6 +587,8 @@
     function initializeReset() {
         const resetButton = document.getElementById("reset-progress");
         if (!resetButton) return;
+        if (resetButton.dataset.initialized === "true") return;
+        resetButton.dataset.initialized = "true";
 
         resetButton.addEventListener("click", function () {
             const confirmed = confirm("¿Estás seguro de que querés borrar todo el progreso?");
@@ -595,6 +626,9 @@
 
         categories.forEach(category => {
             const toggle = category.querySelector(".sidebar-category-toggle");
+            if (!toggle) return;
+            if (toggle.dataset.initialized === "true") return;
+            toggle.dataset.initialized = "true";
 
             toggle.addEventListener("click", function () {
                 category.classList.toggle("open");
@@ -660,11 +694,6 @@
         }
 
         initializeApplication();
-
-        document.addEventListener("click", function () {
-            const dropdown = document.querySelector(".dropdown");
-            if (dropdown) dropdown.classList.remove("open");
-        });
     });
 
     document.body.addEventListener("htmx:historyRestore", function () {
