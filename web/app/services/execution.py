@@ -202,7 +202,7 @@ def _run_docker_unittest(
         "--tmpfs",
         "/tmp:rw,noexec,nosuid,size=16m",
         "--mount",
-        f"type=bind,src={host_workspace_path},dst=/workspace,rw",
+        f"type=bind,src={host_workspace_path},dst=/workspace",
         "--workdir",
         "/workspace",
         DOCKER_IMAGE,
