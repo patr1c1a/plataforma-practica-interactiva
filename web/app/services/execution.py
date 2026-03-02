@@ -12,6 +12,14 @@ RUNTIME_TMP_DIRECTORY.mkdir(parents=True, exist_ok=True)
 MAXIMUM_ALLOWED_CODE_LENGTH = 10_000
 EXECUTION_TIMEOUT_SECONDS = 10
 
+SANDBOX_PROVIDER = os.getenv("EXECUTION_SANDBOX_PROVIDER", "docker").strip().lower()
+DOCKER_IMAGE = os.getenv(
+    "EXECUTION_DOCKER_IMAGE", "plataforma-ejercicios-runner:latest"
+).strip()
+DOCKER_CPUS_LIMIT = os.getenv("EXECUTION_DOCKER_CPUS", "0.5").strip()
+DOCKER_MEMORY_LIMIT = os.getenv("EXECUTION_DOCKER_MEMORY", "128m").strip()
+DOCKER_PIDS_LIMIT = os.getenv("EXECUTION_DOCKER_PIDS", "64").strip()
+
 # Names/calls that materially increase sandbox escape risk.
 BLOCKED_NAMES = {
     "__import__",
@@ -72,7 +80,7 @@ def _validate_user_submission(
         if isinstance(node, ast.ClassDef):
             return _error_result(
                 "error",
-                "No se permiten clases en la resolución.",
+                "No se permiten clases en la resolucion.",
             )
         if not isinstance(node, ast.FunctionDef):
             return _error_result(
@@ -82,7 +90,7 @@ def _validate_user_submission(
         if node.decorator_list:
             return _error_result(
                 "error",
-                "No se permiten decoradores en el código enviado.",
+                "No se permiten decoradores en el codigo enviado.",
             )
 
     user_function_names = {
@@ -91,44 +99,44 @@ def _validate_user_submission(
     if not user_function_names:
         return _error_result(
             "error",
-            "El código enviado no contiene una definición de función válida.",
+            "El codigo enviado no contiene una definicion de funcion valida.",
         )
     if target_function_name not in user_function_names:
         return _error_result(
             "error",
-            f"Debe definir la función '{target_function_name}'.",
+            f"Debe definir la funcion '{target_function_name}'.",
         )
 
     for node in ast.walk(parsed_user_ast):
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             return _error_result(
                 "error",
-                "No está permitido importar módulos externos.",
+                "No esta permitido importar modulos externos.",
             )
 
         if isinstance(node, (ast.Global, ast.Nonlocal, ast.Lambda)):
             return _error_result(
                 "error",
-                "Se detectaron construcciones no permitidas en el código enviado.",
+                "Se detectaron construcciones no permitidas en el codigo enviado.",
             )
 
         if isinstance(node, ast.Name):
             if node.id in BLOCKED_NAMES:
                 return _error_result(
                     "error",
-                    f"No está permitido usar '{node.id}'.",
+                    f"No esta permitido usar '{node.id}'.",
                 )
             if node.id.startswith("__"):
                 return _error_result(
                     "error",
-                    "No está permitido usar identificadores especiales.",
+                    "No esta permitido usar identificadores especiales.",
                 )
 
         if isinstance(node, ast.Attribute):
             if node.attr in BLOCKED_ATTRIBUTE_NAMES or node.attr.startswith("__"):
                 return _error_result(
                     "error",
-                    "No está permitido acceder a atributos internos.",
+                    "No esta permitido acceder a atributos internos.",
                 )
 
         if isinstance(node, ast.Call):
@@ -136,10 +144,160 @@ def _validate_user_submission(
             if call_name in BLOCKED_NAMES:
                 return _error_result(
                     "error",
-                    f"No está permitido usar '{call_name}'.",
+                    f"No esta permitido usar '{call_name}'.",
                 )
 
     return None
+
+
+def _build_unittest_command(category: str, function_name: str) -> list[str]:
+    return [
+        "python",
+        "-S",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        f"tests/tests_{category}.py",
+        "-k",
+        f"test_{function_name}",
+    ]
+
+
+def _run_local_unittest(tmp_path: Path, category: str, function_name: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        _build_unittest_command(category, function_name),
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        timeout=EXECUTION_TIMEOUT_SECONDS,
+        env={
+            **os.environ,
+            "PYTHONIOENCODING": "utf-8",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "PYTHONNOUSERSITE": "1",
+        },
+    )
+
+
+def _run_docker_unittest(
+    tmp_path: Path,
+    category: str,
+    function_name: str,
+) -> subprocess.CompletedProcess[str]:
+    host_workspace_path = str(tmp_path.resolve())
+    docker_command = [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--cpus",
+        DOCKER_CPUS_LIMIT,
+        "--memory",
+        DOCKER_MEMORY_LIMIT,
+        "--pids-limit",
+        DOCKER_PIDS_LIMIT,
+        "--read-only",
+        "--tmpfs",
+        "/tmp:rw,noexec,nosuid,size=16m",
+        "--mount",
+        f"type=bind,src={host_workspace_path},dst=/workspace,rw",
+        "--workdir",
+        "/workspace",
+        DOCKER_IMAGE,
+        *_build_unittest_command(category, function_name),
+    ]
+
+    return subprocess.run(
+        docker_command,
+        capture_output=True,
+        text=True,
+        timeout=EXECUTION_TIMEOUT_SECONDS,
+    )
+
+
+def _run_sandboxed_unittest(
+    tmp_path: Path,
+    category: str,
+    function_name: str,
+) -> subprocess.CompletedProcess[str] | ExecutionResult:
+    if SANDBOX_PROVIDER == "docker":
+        try:
+            return _run_docker_unittest(tmp_path, category, function_name)
+        except FileNotFoundError:
+            return _error_result(
+                "error",
+                (
+                    "Docker no esta instalado o no esta en PATH. "
+                    "Para desarrollo local, exporta EXECUTION_SANDBOX_PROVIDER=local."
+                ),
+            )
+        except subprocess.TimeoutExpired:
+            return _error_result(
+                "timeout",
+                "La ejecucion excedio el tiempo limite.",
+            )
+
+    if SANDBOX_PROVIDER == "local":
+        try:
+            return _run_local_unittest(tmp_path, category, function_name)
+        except subprocess.TimeoutExpired:
+            return _error_result(
+                "timeout",
+                "La ejecucion excedio el tiempo limite.",
+            )
+
+    return _error_result(
+        "error",
+        (
+            "Proveedor de sandbox no soportado. "
+            "Usa EXECUTION_SANDBOX_PROVIDER=docker o EXECUTION_SANDBOX_PROVIDER=local."
+        ),
+    )
+
+
+def _parse_execution_result(raw_output: str, returncode: int) -> tuple[str, list[str]]:
+    if returncode == 0:
+        return "pass", []
+
+    if "AssertionError" in raw_output:
+        execution_status = "fail"
+    elif "ImportError" in raw_output:
+        execution_status = "error"
+    elif "Traceback" in raw_output:
+        execution_status = "runtime_error"
+    else:
+        execution_status = "error"
+
+    failed_test_cases: list[str] = []
+    if execution_status != "fail":
+        return execution_status, failed_test_cases
+
+    output_lines = raw_output.splitlines()
+    for line in output_lines:
+        if not line.strip().startswith("AssertionError:"):
+            continue
+
+        error_content = line.strip().replace("AssertionError:", "").strip()
+        parts = error_content.split(" : ")
+
+        comparison_part = parts[0]
+        context_part = parts[1] if len(parts) > 1 else ""
+
+        if "!=" in comparison_part:
+            actual_value, expected_value = comparison_part.split("!=", 1)
+            formatted_failure = (
+                f"{context_part}\n"
+                f"Esperado: {expected_value.strip()}\n"
+                f"Recibido: {actual_value.strip()}"
+            )
+        else:
+            formatted_failure = error_content
+
+        failed_test_cases.append(formatted_failure)
+
+    return execution_status, failed_test_cases
 
 
 def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
@@ -151,20 +309,20 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
     if not src_file.exists() or not test_file.exists():
         return _error_result(
             "error",
-            "Error interno: categoría o archivo de tests no encontrados.",
+            "Error interno: categoria o archivo de tests no encontrados.",
         )
 
     if len(user_code) > MAXIMUM_ALLOWED_CODE_LENGTH:
         return _error_result(
             "error",
-            "El código excede el tamaño máximo permitido.",
+            "El codigo excede el tamano maximo permitido.",
         )
 
     try:
         parsed_user_ast = ast.parse(user_code)
     except SyntaxError as syntax_error:
         formatted_error_message = (
-            f"Error de sintaxis en la línea {syntax_error.lineno}:\n"
+            f"Error de sintaxis en la linea {syntax_error.lineno}:\n"
             f"{syntax_error.msg}"
         )
         return _error_result("syntax_error", formatted_error_message)
@@ -198,73 +356,15 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
 
         exercise_path.write_text(updated_code, encoding="utf-8")
 
-        try:
-            result = subprocess.run(
-                [
-                    "python",
-                    "-S",
-                    "-B",
-                    "-m",
-                    "unittest",
-                    "-v",
-                    f"tests/tests_{category}.py",
-                    "-k",
-                    f"test_{function_name}",
-                ],
-                cwd=tmp_path,
-                capture_output=True,
-                text=True,
-                timeout=EXECUTION_TIMEOUT_SECONDS,
-                env={
-                    **os.environ,
-                    "PYTHONIOENCODING": "utf-8",
-                    "PYTHONDONTWRITEBYTECODE": "1",
-                    "PYTHONNOUSERSITE": "1",
-                },
-            )
-        except subprocess.TimeoutExpired:
-            return _error_result(
-                "timeout",
-                "La ejecución excedió el tiempo límite.",
-            )
+        execution_result = _run_sandboxed_unittest(tmp_path, category, function_name)
+        if isinstance(execution_result, dict):
+            return execution_result
 
-        raw_output = result.stdout + "\n" + result.stderr
-
-        if result.returncode == 0:
-            execution_status = "pass"
-        elif "AssertionError" in raw_output:
-            execution_status = "fail"
-        elif "ImportError" in raw_output:
-            execution_status = "error"
-        elif "Traceback" in raw_output:
-            execution_status = "runtime_error"
-        else:
-            execution_status = "error"
-
-        failed_test_cases = []
-
-        if execution_status == "fail":
-            output_lines = raw_output.splitlines()
-
-            for line in output_lines:
-                if line.strip().startswith("AssertionError:"):
-                    error_content = line.strip().replace("AssertionError:", "").strip()
-                    parts = error_content.split(" : ")
-
-                    comparison_part = parts[0]
-                    context_part = parts[1] if len(parts) > 1 else ""
-
-                    if "!=" in comparison_part:
-                        actual_value, expected_value = comparison_part.split("!=")
-                        formatted_failure = (
-                            f"{context_part}\n"
-                            f"Esperado: {expected_value.strip()}\n"
-                            f"Recibido: {actual_value.strip()}"
-                        )
-                    else:
-                        formatted_failure = error_content
-
-                    failed_test_cases.append(formatted_failure)
+        raw_output = execution_result.stdout + "\n" + execution_result.stderr
+        execution_status, failed_test_cases = _parse_execution_result(
+            raw_output=raw_output,
+            returncode=execution_result.returncode,
+        )
 
         return {
             "status": execution_status,
@@ -287,13 +387,13 @@ def _replace_function_definition(
 
     if not user_function_definitions:
         raise ValueError(
-            "El código enviado no contiene una definición de función válida."
+            "El codigo enviado no contiene una definicion de funcion valida."
         )
 
     user_functions_by_name = {func.name: func for func in user_function_definitions}
 
     if target_function_name not in user_functions_by_name:
-        raise ValueError(f"Debe definir la función '{target_function_name}'.")
+        raise ValueError(f"Debe definir la funcion '{target_function_name}'.")
 
     updated_module_body = []
 

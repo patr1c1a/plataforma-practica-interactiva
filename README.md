@@ -9,6 +9,13 @@ El proyecto está diseñado para cumplir dos objetivos:
 
 El foco del proyecto está puesto en el razonamiento algorítmico, la lectura de errores reales y la práctica cercana a un entorno profesional, evitando abstracciones innecesarias, dependencias externas y ayudas automáticas.
 
+## Filosofía del proyecto
+
+- Priorizar fundamentos y razonamiento por sobre herramientas.
+- Trabajar con errores reales y feedback no simplificado.
+- Proveer en la versión offline un entorno que permita familiarizarse con la terminal.
+- Mantener el proyecto simple y mantenible.
+
 ---
 
 ## Estructura general del repositorio
@@ -21,7 +28,7 @@ plataforma-ejercicios/
 ││├── ESP/
 │└└── ENG/
 │
-├── web/      # Versión web (en desarrollo)
+├── web/      # Versión web
 │
 ├── runtime/  # Directorios temporales de ejecución
 │
@@ -165,15 +172,44 @@ La versión web reutiliza exactamente el mismo contenido y las mismas pruebas qu
 
 El contenido educativo no se duplica ni se modifica para adaptarse a la web.
 
-## Filosofía del proyecto
-
-- Priorizar fundamentos y razonamiento por sobre herramientas.
-- Trabajar con errores reales y feedback no simplificado.
-- Proveer en la versión offline un entorno que permita familiarizarse con la terminal.
-- Mantener el proyecto simple y mantenible.
-
 ## Unit tests
 
 Deben correrse desde la carpeta raíz del proyecto y dentro del entorno virtual, donde antes deben instalarse los paquetes necesarios: `pip install -r requirements.txt`.
 
 Correr unit tests: `python -m unittest discover -s web/tests -v`.
+
+## Sandbox de ejecución web
+
+La versión web ejecuta las pruebas de usuarios en un contenedor Docker aislado por defecto.
+
+### Construcción de imagen (primera vez)
+
+Desde la raíz del proyecto:
+
+`docker build -t plataforma-ejercicios-runner:latest -f web/sandbox_runner/Dockerfile .`
+
+Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/Dockerfile.
+
+### Ejecución local del proyecto web
+
+- Activar el entorno virtual
+- Instalar dependencias: `pip install -r requirements.txt`
+- Asegurar Docker en ejecución (verificar imagen: `docker images | findstr plataforma-ejercicios-runner`).
+- Levantar la app (ejemplo): `uvicorn web.main:app --reload`
+
+### Configuración del sandbox
+
+- `EXECUTION_SANDBOX_PROVIDER`:
+  - `docker` (default, recomendado para entorno expuesto a internet)
+  - `local` (solo desarrollo local, sin aislamiento OS/container)
+- `EXECUTION_DOCKER_IMAGE`: imagen a usar (default `plataforma-ejercicios-runner:latest`)
+- Limites opcionales:
+  - `EXECUTION_DOCKER_CPUS` (default `0.5`)
+  - `EXECUTION_DOCKER_MEMORY` (default `128m`)
+  - `EXECUTION_DOCKER_PIDS` (default `64`)
+
+Correr sin Docker solo en local:
+
+`EXECUTION_SANDBOX_PROVIDER=local uvicorn web.main:app --reload`
+
+Si algún proceso queda en ejecución, es necesario matar los procesos Python (ejemplo en Windows: `taskkill /F /IM python.exe`).

@@ -26,7 +26,7 @@ class TestExecutionService(unittest.TestCase):
         )
 
         self.assertEqual(result["status"], "error")
-        self.assertIn("No está permitido importar", result["raw_output"])
+        self.assertIn("No esta permitido importar", result["raw_output"])
 
     def test_requires_target_function_to_exist(self) -> None:
         result = run_tests(
@@ -39,7 +39,7 @@ class TestExecutionService(unittest.TestCase):
         )
 
         self.assertEqual(result["status"], "error")
-        self.assertIn("Debe definir la función 'menor'", result["raw_output"])
+        self.assertIn("Debe definir la funcion 'menor'", result["raw_output"])
 
     def test_rejects_dunder_attribute_access(self) -> None:
         result = run_tests(
