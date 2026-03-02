@@ -319,6 +319,21 @@ def exercise_detail(request: Request, category: str, function_name: str):
     args = [arg.arg for arg in function_node.args.args]
     function_signature = f"def {function_name}({', '.join(args)}):\n    "
 
+    ordered_exercises = [
+        (category_name, function)
+        for category_name, function_names in all_exercises.items()
+        for function in function_names
+    ]
+    current_index = ordered_exercises.index((category, function_name))
+    previous_exercise = (
+        ordered_exercises[current_index - 1] if current_index > 0 else None
+    )
+    next_exercise = (
+        ordered_exercises[current_index + 1]
+        if current_index < len(ordered_exercises) - 1
+        else None
+    )
+
     template_context = {
         "request": request,
         "category_name": category,
@@ -332,6 +347,8 @@ def exercise_detail(request: Request, category: str, function_name: str):
         "category_cards": category_cards,
         "category_titles": CATEGORY_TITLES,
         "view": "exercise_detail",
+        "previous_exercise": previous_exercise,
+        "next_exercise": next_exercise,
     }
 
     return render_with_optional_fragment(

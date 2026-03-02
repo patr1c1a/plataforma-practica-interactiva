@@ -6,103 +6,96 @@
 <h3>Descripción de la función</h3>
 
 <section class="problem-description">
-{%- if problem_sections.description -%}
+  {%- if problem_sections.description -%}
   <div class="problem-block">
     {%- for paragraph in problem_sections.description -%}
-      <p>{{ paragraph }}</p>
+    <p>{{ paragraph }}</p>
     {%- endfor -%}
   </div>
-{%- endif -%}
+  {%- endif -%}
 
-{%- if problem_sections.suggestions -%}
+  {%- if problem_sections.suggestions -%}
   <div class="problem-block">
     {%- for suggestion in problem_sections.suggestions -%}
-      <p class="problem-suggestion-line"><strong>Sugerencia didáctica:</strong> {{ suggestion }}</p>
+    <p class="problem-suggestion-line"><strong>Sugerencia didáctica:</strong> {{ suggestion }}</p>
     {%- endfor -%}
   </div>
-{%- endif -%}
+  {%- endif -%}
 
-{%- if problem_sections.examples -%}
+  {%- if problem_sections.examples -%}
   <div class="problem-block">
     <h4>Ejemplos</h4>
     <div class="problem-examples">
       {%- for example in problem_sections.examples -%}
-        <div class="problem-example-item">
-          <div><strong>Entrada:</strong> <code>{{ example.input }}</code></div>
-          {%- if example.output -%}
-            <div><strong>Salida:</strong> <code>{{ example.output }}</code></div>
-          {%- endif -%}
-        </div>
+      <div class="problem-example-item">
+        <div><strong>Entrada:</strong> <code>{{ example.input }}</code></div>
+        {%- if example.output -%}
+        <div><strong>Salida:</strong> <code>{{ example.output }}</code></div>
+        {%- endif -%}
+      </div>
       {%- endfor -%}
     </div>
   </div>
-{%- endif -%}
+  {%- endif -%}
 
-{%- if problem_sections.parameters -%}
+  {%- if problem_sections.parameters -%}
   <div class="problem-block">
     <h4>Parámetros</h4>
     <div class="problem-params">
       {%- for parameter in problem_sections.parameters -%}
-        <article class="problem-param-item">
-          <header>
-            {%- if parameter.type_parts -%}
-              <div class="type-tags">
-                {%- for type_part in parameter.type_parts -%}
-                <span class="type-tag">{{ type_part }}</span>
-                {%- endfor -%}
-              </div>
-            {%- elif parameter.type -%}
-              <div class="type-tags">
-                <span class="type-tag">{{ parameter.type }}</span>
-              </div>
-            {%- endif -%}
-            <strong><code>{{ parameter.name }}</code></strong>
-          </header>
-          {%- if parameter.description -%}
-            <p>{{ parameter.description }}</p>
+      <article class="problem-param-item">
+        <header>
+          {%- if parameter.type_parts -%}
+          <div class="type-tags">
+            {%- for type_part in parameter.type_parts -%}
+            <span class="type-tag">{{ type_part }}</span>
+            {%- endfor -%}
+          </div>
+          {%- elif parameter.type -%}
+          <div class="type-tags">
+            <span class="type-tag">{{ parameter.type }}</span>
+          </div>
           {%- endif -%}
-        </article>
+          <strong><code>{{ parameter.name }}</code></strong>
+        </header>
+        {%- if parameter.description -%}
+        <p>{{ parameter.description }}</p>
+        {%- endif -%}
+      </article>
       {%- endfor -%}
     </div>
   </div>
-{%- endif -%}
+  {%- endif -%}
 
-{%- if problem_sections.return_value -%}
+  {%- if problem_sections.return_value -%}
   <div class="problem-block">
     <h4>Valor retornado</h4>
     <article class="problem-return-item">
       {%- if problem_sections.return_value.type_parts -%}
-        <div class="type-tags">
-          {%- for type_part in problem_sections.return_value.type_parts -%}
-            <span class="type-tag">{{ type_part }}</span>
-          {%- endfor -%}
-        </div>
+      <div class="type-tags">
+        {%- for type_part in problem_sections.return_value.type_parts -%}
+        <span class="type-tag">{{ type_part }}</span>
+        {%- endfor -%}
+      </div>
       {%- elif problem_sections.return_value.type -%}
-        <div class="type-tags">
-          <span class="type-tag">{{ problem_sections.return_value.type }}</span>
-        </div>
+      <div class="type-tags">
+        <span class="type-tag">{{ problem_sections.return_value.type }}</span>
+      </div>
       {%- endif -%}
 
       {%- if problem_sections.return_value.description -%}
-        <p>{{ problem_sections.return_value.description }}</p>
+      <p>{{ problem_sections.return_value.description }}</p>
       {%- endif -%}
     </article>
   </div>
-{%- endif -%}
+  {%- endif -%}
 </section>
 
 <h3>Código</h3>
 
-<form
-  hx-post="/exercises/{{ category_name }}/{{ function_name }}/run"
-  hx-target="#result"
-  hx-swap="innerHTML"
->
-  <textarea
-    id="code-editor"
-    name="code"
-    data-storage-key="exercise-{{ category_name }}-{{ function_name }}"
-  >{{ function_signature }}</textarea>
+<form hx-post="/exercises/{{ category_name }}/{{ function_name }}/run" hx-target="#result" hx-swap="innerHTML">
+  <textarea id="code-editor" name="code"
+    data-storage-key="exercise-{{ category_name }}-{{ function_name }}">{{ function_signature }}</textarea>
 
   <br><br>
 
@@ -116,5 +109,21 @@
   </div>
 </form>
 
-<h3>Resultado</h3>
-<div id="result"></div>
+<h3>Resultado:</h3>
+<section class="problem-example-item">
+  <div id="result"></div>
+</section>
+
+<div class="exercise-navigation">
+  {% if previous_exercise %}
+  <a href="/exercises/{{ previous_exercise[0] }}/{{ previous_exercise[1] }}" class="button-secondary">
+    Ejercicio anterior
+  </a>
+  {% endif %}
+
+  {% if next_exercise %}
+  <a href="/exercises/{{ next_exercise[0] }}/{{ next_exercise[1] }}" class="button-secondary exercise-next-link">
+    Ejercicio siguiente
+  </a>
+  {% endif %}
+</div>

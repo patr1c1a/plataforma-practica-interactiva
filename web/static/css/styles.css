@@ -355,6 +355,17 @@ header {
   align-items: center;
 }
 
+.exercise-navigation {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.exercise-next-link {
+  margin-left: auto;
+}
+
 .categories-section {
   margin-top: 3rem;
 }
