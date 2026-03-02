@@ -2,7 +2,11 @@
     <h1>Versi&oacute;n offline</h1>
     <p>
         Esta versi&oacute;n permite practicar los ejercicios localmente, sin depender de la interfaz web, usando
-        cualquier IDE o editor de texto para resolver los ejercicios.
+        cualquier <span class="emphasis">IDE o editor de texto</span> para resolver los ejercicios.
+    </p>
+    <p>
+        Practicar sin una interfaz gráfica también aporta el beneficio de familiarizarse con un entorno de desarrollo
+        más similar a un entorno laboral real, en el que es normal ejecutar código e interpretar salidas en la terminal.
     </p>
 
     <h2>1. Descargar contenido offline</h2>
@@ -19,19 +23,17 @@
 
     <h2>3. Resolver ejercicios</h2>
     <p>
-        Completar las funciones en <code>src/</code>, reemplazando <code>pass</code> por tu soluci&oacute;n. No es
+        Completar las funciones en la carpeta <code>src/</code>, reemplazando <code>pass</code> por tu soluci&oacute;n. No es
         indispensable completarlas a todas: se puede resolver cada ejercicio individualmente y luego correr sus tests.
     </p>
     <p>
         Los ejercicios están organizados por categorías con dificultad incremental:
-
     <ol>
         <li>Números</li>
         <li>Strings</li>
         <li>Listas y tuplas</li>
         <li>Conjuntos y diccionarios</li>
     </ol>
-
     </p>
     <p>
         Cada función representa un ejercicio. La documentación (docstring) explica lo que la función debe hacer y
@@ -51,6 +53,11 @@ Ejemplo:
 """
 pass
     </code></pre>
+    <p>Es recomendable usar las pruebas de la carpeta <code>tests/</code> para guiarte en el proceso de
+        escribir el algoritmo (pero no se espera que modifiques esos tests de ninguna forma). Solo se debe agregar
+        contenido a las funciones, sin modificar nada más (nombre, parámetros o documentación de las funciones) ni el
+        resto del archivo.
+    </p>
 
     <h2>4. Ejecutar tests</h2>
     <p>De una función puntual:</p>
@@ -59,4 +66,7 @@ pass
     <pre><code>python -m unittest -v tests/tests_numeros.py</code></pre>
     <p>Todos los tests del proyecto:</p>
     <pre><code>python ejecutar_tests.py</code></pre>
+    <p>Cuando los tests pasen, la salida mostrará "ok". Si algún test falla, mostrará qué función se ejecutó, qué
+        argumentos se usaron para invocarlo, qué retornó
+        y cuál era el valor de retorno esperado.</p>
 </section>

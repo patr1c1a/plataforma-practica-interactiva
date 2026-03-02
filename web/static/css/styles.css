@@ -4,7 +4,7 @@
   --surface-elevated: #2a2a2a;
   --text-primary: #e4e4e4;
   --text-secondary: #a0a0a0;
-  --accent: #64b5f6;
+  --accent: #c00b95;
   --success: #4caf50;
   --error: #ef5350;
   --warning: #ffb74d;
@@ -17,7 +17,7 @@
   --surface-elevated: #ffffff;
   --text-primary: #222831;
   --text-secondary: #5c6773;
-  --accent: #1565c0;
+  --accent: #c00b95;
   --success: #2e7d32;
   --error: #c62828;
   --warning: #ef6c00;
@@ -43,6 +43,11 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.emphasis {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .container {
@@ -668,4 +673,3 @@ header {
     order: 1;
   }
 }
-
