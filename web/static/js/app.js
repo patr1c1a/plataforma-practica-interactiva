@@ -3,6 +3,7 @@
     let activeCodeEditor = null;
 
     function initializeApplication() {
+        migrateExerciseCodeStorageToLocal();
         initializeTheme();
         initializeDropdowns();
         initializeCodeEditor();
@@ -127,14 +128,14 @@
         activeCodeEditor = editor;
 
         const storageKey = textarea.dataset.storageKey;
-        const savedCode = sessionStorage.getItem(storageKey);
+        const savedCode = getStoredExerciseCode(storageKey);
 
-        if (savedCode) {
+        if (savedCode !== null) {
             editor.setValue(savedCode);
         }
 
         editor.on("change", function (cm) {
-            sessionStorage.setItem(storageKey, cm.getValue());
+            setStoredExerciseCode(storageKey, cm.getValue());
         });
 
         activeCodeEditor = editor;
@@ -148,6 +149,50 @@
 
     const PROGRESS_STORAGE_KEY = "platform-progress-v1";
     const EXERCISE_STORAGE_PREFIX = "exercise-";
+
+    function getStoredExerciseCode(storageKey) {
+        const persistentCode = localStorage.getItem(storageKey);
+        if (persistentCode !== null) return persistentCode;
+
+        const sessionCode = sessionStorage.getItem(storageKey);
+        if (sessionCode !== null) {
+            localStorage.setItem(storageKey, sessionCode);
+            sessionStorage.removeItem(storageKey);
+            return sessionCode;
+        }
+
+        return null;
+    }
+
+    function setStoredExerciseCode(storageKey, code) {
+        localStorage.setItem(storageKey, code);
+    }
+
+    function clearStoredExerciseCodeByKey(storageKey) {
+        localStorage.removeItem(storageKey);
+        sessionStorage.removeItem(storageKey);
+    }
+
+    function migrateExerciseCodeStorageToLocal() {
+        const keysToMigrate = [];
+
+        for (let i = 0; i < sessionStorage.length; i += 1) {
+            const key = sessionStorage.key(i);
+            if (!key) continue;
+            if (!key.startsWith(EXERCISE_STORAGE_PREFIX)) continue;
+            keysToMigrate.push(key);
+        }
+
+        keysToMigrate.forEach(key => {
+            if (localStorage.getItem(key) === null) {
+                const code = sessionStorage.getItem(key);
+                if (code !== null) {
+                    localStorage.setItem(key, code);
+                }
+            }
+            sessionStorage.removeItem(key);
+        });
+    }
 
     function loadProgress() {
         const raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
@@ -170,7 +215,7 @@
                 if (!state?.attempted && !state?.completed) return;
 
                 const storageKey = buildExerciseStorageKey(category, exercise);
-                const code = sessionStorage.getItem(storageKey);
+                const code = getStoredExerciseCode(storageKey);
 
                 if (!codeByExercise[category]) {
                     codeByExercise[category] = {};
@@ -192,7 +237,7 @@
                 if (typeof code !== "string") return;
 
                 const storageKey = buildExerciseStorageKey(category, exercise);
-                sessionStorage.setItem(storageKey, code);
+                setStoredExerciseCode(storageKey, code);
             });
         });
     }
@@ -200,8 +245,8 @@
     function clearStoredExerciseCode() {
         const keysToRemove = [];
 
-        for (let i = 0; i < sessionStorage.length; i += 1) {
-            const key = sessionStorage.key(i);
+        for (let i = 0; i < localStorage.length; i += 1) {
+            const key = localStorage.key(i);
             if (!key) continue;
 
             if (key.startsWith(EXERCISE_STORAGE_PREFIX)) {
@@ -209,7 +254,7 @@
             }
         }
 
-        keysToRemove.forEach(key => sessionStorage.removeItem(key));
+        keysToRemove.forEach(key => clearStoredExerciseCodeByKey(key));
     }
 
     function clearExerciseProgress(category, exercise) {
@@ -249,7 +294,7 @@
             const storageKey = textarea.dataset.storageKey;
 
             textarea._editorInstance.setValue(originalCode);
-            sessionStorage.setItem(storageKey, originalCode);
+            setStoredExerciseCode(storageKey, originalCode);
 
             const exerciseInfo = getCurrentExerciseFromPath();
             if (exerciseInfo) {
@@ -456,18 +501,30 @@
             reader.onload = function (e) {
                 try {
                     const parsed = JSON.parse(e.target.result);
+                    const progressData = parsed?.progress ?? parsed?.progreso ?? parsed;
+                    const codeData = parsed?.code ?? parsed?.codigo ?? {};
 
-                    if (!parsed.version || !parsed.progress) {
+                    if (
+                        !progressData ||
+                        typeof progressData !== "object" ||
+                        Array.isArray(progressData)
+                    ) {
+                        alert("El archivo no contiene progreso válido.");
                         return;
                     }
 
-                    saveProgress(parsed.progress);
+                    saveProgress(progressData);
                     clearStoredExerciseCode();
-                    restoreImportedExerciseCode(parsed.code);
+                    restoreImportedExerciseCode(codeData);
                     refreshCurrentEditorFromStorage();
                     updateProgressUI();
-                } catch {
+                } catch (error) {
+                    console.error("Error al importar progreso:", error);
+                    alert("No se pudo importar el archivo seleccionado.");
                     return;
+                } finally {
+                    // Allow importing the same file again without changing file name.
+                    input.value = "";
                 }
             };
 
@@ -482,10 +539,20 @@
         const storageKey = textarea.dataset.storageKey;
         if (!storageKey) return;
 
-        const restoredCode = sessionStorage.getItem(storageKey);
+        const restoredCode = getStoredExerciseCode(storageKey);
         if (restoredCode === null) return;
 
         textarea._editorInstance.setValue(restoredCode);
+    }
+
+    function persistCurrentEditorCode() {
+        const textarea = document.getElementById("code-editor");
+        if (!textarea || !textarea._editorInstance) return;
+
+        const storageKey = textarea.dataset.storageKey;
+        if (!storageKey) return;
+
+        setStoredExerciseCode(storageKey, textarea._editorInstance.getValue());
     }
 
     function initializeReset() {
@@ -498,6 +565,23 @@
 
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
             clearStoredExerciseCode();
+
+            const textarea = document.getElementById("code-editor");
+            if (textarea && textarea._editorInstance) {
+                const originalCode = textarea._initialCode ?? "";
+                const storageKey = textarea.dataset.storageKey;
+
+                textarea._editorInstance.setValue(originalCode);
+                if (storageKey) {
+                    setStoredExerciseCode(storageKey, originalCode);
+                }
+            }
+
+            const resultContainer = document.getElementById("result");
+            if (resultContainer) {
+                resultContainer.innerHTML = "";
+            }
+
             updateProgressUI();
         });
     }
@@ -625,8 +709,17 @@
 
         const editor = textarea._editorInstance;
         const currentCode = editor.getValue();
+        const storageKey = textarea.dataset.storageKey;
+
+        if (storageKey) {
+            setStoredExerciseCode(storageKey, currentCode);
+        }
 
         event.detail.parameters["code"] = currentCode;
+    });
+
+    window.addEventListener("beforeunload", function () {
+        persistCurrentEditorCode();
     });
 
 })();

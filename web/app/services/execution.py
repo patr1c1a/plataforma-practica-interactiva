@@ -1,62 +1,181 @@
+import ast
+import os
 import shutil
 import subprocess
 import tempfile
-import ast
 from pathlib import Path
+from typing import TypedDict
 
 RUNTIME_TMP_DIRECTORY = Path("runtime/tmp")
 RUNTIME_TMP_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
-def run_tests(category: str, function_name: str, user_code: str) -> str:
+MAXIMUM_ALLOWED_CODE_LENGTH = 10_000
+EXECUTION_TIMEOUT_SECONDS = 10
+
+# Names/calls that materially increase sandbox escape risk.
+BLOCKED_NAMES = {
+    "__import__",
+    "eval",
+    "exec",
+    "compile",
+    "open",
+    "input",
+    "globals",
+    "locals",
+    "vars",
+    "dir",
+    "getattr",
+    "setattr",
+    "delattr",
+    "breakpoint",
+}
+
+BLOCKED_ATTRIBUTE_NAMES = {
+    "__class__",
+    "__bases__",
+    "__subclasses__",
+    "__mro__",
+    "__dict__",
+    "__globals__",
+    "__code__",
+    "__closure__",
+    "__getattribute__",
+}
+
+
+class ExecutionResult(TypedDict, total=False):
+    status: str
+    raw_output: str
+    failed_cases: list[str]
+
+
+def _error_result(status: str, message: str) -> ExecutionResult:
+    return {
+        "status": status,
+        "raw_output": message,
+    }
+
+
+def _get_call_name(call_node: ast.Call) -> str | None:
+    if isinstance(call_node.func, ast.Name):
+        return call_node.func.id
+    if isinstance(call_node.func, ast.Attribute):
+        return call_node.func.attr
+    return None
+
+
+def _validate_user_submission(
+    parsed_user_ast: ast.Module,
+    target_function_name: str,
+) -> ExecutionResult | None:
+    for node in parsed_user_ast.body:
+        if isinstance(node, ast.ClassDef):
+            return _error_result(
+                "error",
+                "No se permiten clases en la resolución.",
+            )
+        if not isinstance(node, ast.FunctionDef):
+            return _error_result(
+                "error",
+                "Solo se permiten definiciones de funciones.",
+            )
+        if node.decorator_list:
+            return _error_result(
+                "error",
+                "No se permiten decoradores en el código enviado.",
+            )
+
+    user_function_names = {
+        node.name for node in parsed_user_ast.body if isinstance(node, ast.FunctionDef)
+    }
+    if not user_function_names:
+        return _error_result(
+            "error",
+            "El código enviado no contiene una definición de función válida.",
+        )
+    if target_function_name not in user_function_names:
+        return _error_result(
+            "error",
+            f"Debe definir la función '{target_function_name}'.",
+        )
+
+    for node in ast.walk(parsed_user_ast):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            return _error_result(
+                "error",
+                "No está permitido importar módulos externos.",
+            )
+
+        if isinstance(node, (ast.Global, ast.Nonlocal, ast.Lambda)):
+            return _error_result(
+                "error",
+                "Se detectaron construcciones no permitidas en el código enviado.",
+            )
+
+        if isinstance(node, ast.Name):
+            if node.id in BLOCKED_NAMES:
+                return _error_result(
+                    "error",
+                    f"No está permitido usar '{node.id}'.",
+                )
+            if node.id.startswith("__"):
+                return _error_result(
+                    "error",
+                    "No está permitido usar identificadores especiales.",
+                )
+
+        if isinstance(node, ast.Attribute):
+            if node.attr in BLOCKED_ATTRIBUTE_NAMES or node.attr.startswith("__"):
+                return _error_result(
+                    "error",
+                    "No está permitido acceder a atributos internos.",
+                )
+
+        if isinstance(node, ast.Call):
+            call_name = _get_call_name(node)
+            if call_name in BLOCKED_NAMES:
+                return _error_result(
+                    "error",
+                    f"No está permitido usar '{call_name}'.",
+                )
+
+    return None
+
+
+def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
     base_content = Path("content/python/ESP")
 
     src_file = base_content / "src" / f"{category}.py"
     test_file = base_content / "tests" / f"tests_{category}.py"
 
     if not src_file.exists() or not test_file.exists():
-        return {
-            "status": "error",
-            "raw_output": "Error interno: categoría o archivo de tests no encontrados.",
-        }
+        return _error_result(
+            "error",
+            "Error interno: categoría o archivo de tests no encontrados.",
+        )
 
-    maximum_allowed_code_length = 10_000
-
-    if len(user_code) > maximum_allowed_code_length:
-        return {
-            "status": "error",
-            "raw_output": "El código excede el tamaño máximo permitido.",
-        }
+    if len(user_code) > MAXIMUM_ALLOWED_CODE_LENGTH:
+        return _error_result(
+            "error",
+            "El código excede el tamaño máximo permitido.",
+        )
 
     try:
-        ast.parse(user_code)
-
         parsed_user_ast = ast.parse(user_code)
-        import_statements = [
-            node
-            for node in ast.walk(parsed_user_ast)
-            if isinstance(node, (ast.Import, ast.ImportFrom))
-        ]
-
-        if import_statements:
-            return {
-                "status": "error",
-                "raw_output": "No está permitido importar módulos externos.",
-            }
     except SyntaxError as syntax_error:
         formatted_error_message = (
             f"Error de sintaxis en la línea {syntax_error.lineno}:\n"
             f"{syntax_error.msg}"
         )
+        return _error_result("syntax_error", formatted_error_message)
 
-        return {
-            "status": "syntax_error",
-            "raw_output": formatted_error_message,
-        }
+    validation_error = _validate_user_submission(parsed_user_ast, function_name)
+    if validation_error:
+        return validation_error
 
     with tempfile.TemporaryDirectory(dir=RUNTIME_TMP_DIRECTORY) as tmp_dir:
         tmp_path = Path(tmp_dir)
 
-        # Same structure as the CLI version
         tmp_src = tmp_path / "src"
         tmp_tests = tmp_path / "tests"
         tmp_src.mkdir()
@@ -65,31 +184,26 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
         shutil.copy(src_file, tmp_src / src_file.name)
         shutil.copy(test_file, tmp_tests / test_file.name)
 
-        # Read code
         exercise_path = tmp_src / src_file.name
         original_code = exercise_path.read_text(encoding="utf-8")
 
-        # Replace the function body
         try:
             updated_code = _replace_function_definition(
                 original_module_code=original_code,
                 target_function_name=function_name,
-                user_submitted_code=user_code,
+                parsed_user_submitted_ast=parsed_user_ast,
             )
         except ValueError as value_error:
-            return {
-                "status": "error",
-                "raw_output": str(value_error),
-            }
+            return _error_result("error", str(value_error))
 
         exercise_path.write_text(updated_code, encoding="utf-8")
 
-        # Run tests from root
-        timeout_seconds = 10
         try:
             result = subprocess.run(
                 [
                     "python",
+                    "-S",
+                    "-B",
                     "-m",
                     "unittest",
                     "-v",
@@ -100,28 +214,30 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
                 cwd=tmp_path,
                 capture_output=True,
                 text=True,
-                timeout=timeout_seconds,
+                timeout=EXECUTION_TIMEOUT_SECONDS,
+                env={
+                    **os.environ,
+                    "PYTHONIOENCODING": "utf-8",
+                    "PYTHONDONTWRITEBYTECODE": "1",
+                    "PYTHONNOUSERSITE": "1",
+                },
             )
         except subprocess.TimeoutExpired:
-            return {
-                "status": "timeout",
-                "raw_output": "La ejecución excedió el tiempo límite.",
-            }
+            return _error_result(
+                "timeout",
+                "La ejecución excedió el tiempo límite.",
+            )
 
         raw_output = result.stdout + "\n" + result.stderr
 
         if result.returncode == 0:
             execution_status = "pass"
-
         elif "AssertionError" in raw_output:
             execution_status = "fail"
-
         elif "ImportError" in raw_output:
             execution_status = "error"
-
         elif "Traceback" in raw_output:
             execution_status = "runtime_error"
-
         else:
             execution_status = "error"
 
@@ -133,7 +249,6 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
             for line in output_lines:
                 if line.strip().startswith("AssertionError:"):
                     error_content = line.strip().replace("AssertionError:", "").strip()
-
                     parts = error_content.split(" : ")
 
                     comparison_part = parts[0]
@@ -161,16 +276,13 @@ def run_tests(category: str, function_name: str, user_code: str) -> str:
 def _replace_function_definition(
     original_module_code: str,
     target_function_name: str,
-    user_submitted_code: str,
+    parsed_user_submitted_ast: ast.Module,
 ) -> str:
     original_module_ast = ast.parse(original_module_code)
-    user_submitted_ast = ast.parse(user_submitted_code)
+    user_submitted_ast = parsed_user_submitted_ast
 
     user_function_definitions = [
         node for node in user_submitted_ast.body if isinstance(node, ast.FunctionDef)
-    ]
-    user_class_definitions = [
-        node for node in user_submitted_ast.body if isinstance(node, ast.ClassDef)
     ]
 
     if not user_function_definitions:
@@ -178,36 +290,25 @@ def _replace_function_definition(
             "El código enviado no contiene una definición de función válida."
         )
 
-    # Separate main function and helpers
     user_functions_by_name = {func.name: func for func in user_function_definitions}
 
     if target_function_name not in user_functions_by_name:
-        raise ValueError(
-            f"Debe definir la función '{target_function_name}'."
-        )
+        raise ValueError(f"Debe definir la función '{target_function_name}'.")
 
     updated_module_body = []
 
-    # Replace existing functions if user provided new versions
     for node in original_module_ast.body:
         if isinstance(node, ast.FunctionDef):
             if node.name in user_functions_by_name:
-                # Replace with user's version
                 updated_module_body.append(user_functions_by_name[node.name])
-                # Remove from dict to avoid re-adding later
                 del user_functions_by_name[node.name]
             else:
                 updated_module_body.append(node)
         else:
             updated_module_body.append(node)
 
-    # Add any new helper functions not originally present
     for remaining_function in user_functions_by_name.values():
         updated_module_body.append(remaining_function)
-
-    # Preserve user-defined helper classes.
-    for user_class in user_class_definitions:
-        updated_module_body.append(user_class)
 
     original_module_ast.body = updated_module_body
 
