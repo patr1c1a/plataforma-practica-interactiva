@@ -75,6 +75,7 @@ def index(request: Request):
     category_cards = get_ordered_category_cards(exercise_groups)
 
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
             "request": request,
@@ -90,6 +91,7 @@ def index(request: Request):
 @app.get("/offline")
 def offline_instructions(request: Request):
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
             "request": request,

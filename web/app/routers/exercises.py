@@ -40,9 +40,9 @@ def render_with_optional_fragment(
     request_from_htmx = request.headers.get("hx-request") == "true"
 
     if request_from_htmx:
-        return templates.TemplateResponse(fragment_template, context)
+        return templates.TemplateResponse(request, fragment_template, context)
 
-    return templates.TemplateResponse(full_template, context)
+    return templates.TemplateResponse(request, full_template, context)
 
 
 @router.get("/exercises")
@@ -161,6 +161,7 @@ def run_exercise(
     )
 
     return templates.TemplateResponse(
+        request,
         "fragments/execution_result.html",
         {
             "request": request,
