@@ -41,6 +41,25 @@ class TestExerciseProblemDescriptionParser(unittest.TestCase):
         self.assertEqual(parsed["parameters"], [])
         self.assertIsNone(parsed["return_value"])
 
+    def test_parse_suggestion_and_split_return_type(self) -> None:
+        docstring = """
+        Evalua algo.
+        Sugerencia didáctica: dividir el problema en pasos.
+        Ejemplos:
+            ejemplo() -> ok
+        -Parámetros:
+            -(int; float) valor: número de entrada.
+        -Valor retornado:
+            (bool; None) indica si se cumple.
+        """
+
+        parsed = parse_problem_description(docstring)
+
+        self.assertEqual(parsed["suggestions"], ["dividir el problema en pasos."])
+        self.assertEqual(parsed["parameters"][0]["name"], "valor")
+        self.assertEqual(parsed["parameters"][0]["type_parts"], ["int", "float"])
+        self.assertEqual(parsed["return_value"]["type_parts"], ["bool", "None"])
+
 
 if __name__ == "__main__":
     unittest.main()

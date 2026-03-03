@@ -27,6 +27,24 @@ class TestWebRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Resolver ejercicio", response.text)
 
+    def test_exercise_detail_endpoint(self) -> None:
+        response = self.client.get("/exercises/numeros/menor")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Ejercicio", response.text)
+
+    def test_category_not_found_returns_404(self) -> None:
+        response = self.client.get("/exercises/categoria_inexistente")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn("Categoria no encontrada", response.text)
+
+    def test_function_not_found_returns_404(self) -> None:
+        response = self.client.get("/exercises/numeros/funcion_inexistente")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertIn("Funcion no encontrada", response.text)
+
     @patch("web.app.routers.exercises.run_tests")
     def test_run_exercise_endpoint_renders_result_fragment(self, run_tests_mock) -> None:
         run_tests_mock.return_value = {
