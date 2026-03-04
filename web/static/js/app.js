@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 
     let activeCodeEditor = null;
     let hasDropdownDocumentClickListener = false;
@@ -52,7 +52,7 @@
         localStorage.setItem("preferred-theme", theme);
 
         if (toggleButton) {
-            toggleButton.textContent = theme === "dark" ? "🌙" : "☀";
+            toggleButton.textContent = theme === "dark" ? "☀️" : "🌙";
         }
 
         if (activeCodeEditor) {
@@ -538,7 +538,7 @@
                         typeof progressData !== "object" ||
                         Array.isArray(progressData)
                     ) {
-                        alert("El archivo no contiene progreso válido.");
+                        alert("El archivo no contiene progreso vÃ¡lido.");
                         return;
                     }
 
@@ -591,7 +591,7 @@
         resetButton.dataset.initialized = "true";
 
         resetButton.addEventListener("click", function () {
-            const confirmed = confirm("¿Estás seguro de que querés borrar todo el progreso?");
+            const confirmed = confirm("Â¿EstÃ¡s seguro de que querÃ©s borrar todo el progreso?");
             if (!confirmed) return;
 
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
@@ -752,3 +752,4 @@
     });
 
 })();
+
