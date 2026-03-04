@@ -1,3 +1,8 @@
+import os
+import time
+from collections import deque
+from threading import Lock
+
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -21,6 +26,21 @@ templates = Jinja2Templates(directory="web/templates")
 problem_description_parser = ProblemDescriptionParser()
 exercise_repository = ExerciseRepository()
 
+RUN_RATE_LIMIT_WINDOW_SECONDS = int(
+    os.getenv("RUN_RATE_LIMIT_WINDOW_SECONDS", "60")
+)
+RUN_RATE_LIMIT_MAX_REQUESTS = int(
+    os.getenv("RUN_RATE_LIMIT_MAX_REQUESTS", "20")
+)
+RUN_MAX_CONCURRENT_EXECUTIONS = int(
+    os.getenv("RUN_MAX_CONCURRENT_EXECUTIONS", "4")
+)
+
+_run_rate_limit_lock = Lock()
+_run_requests_by_client: dict[str, deque[float]] = {}
+_run_inflight_lock = Lock()
+_run_inflight_executions = 0
+
 
 def parse_problem_description(docstring: str | None) -> dict:
     # Backward-compatible wrapper used by existing tests/imports.
@@ -43,6 +63,69 @@ def render_with_optional_fragment(
         return templates.TemplateResponse(request, fragment_template, context)
 
     return templates.TemplateResponse(request, full_template, context)
+
+
+def _get_client_identifier(request: Request) -> str:
+    x_forwarded_for = request.headers.get("x-forwarded-for")
+    if x_forwarded_for:
+        first_ip = x_forwarded_for.split(",")[0].strip()
+        if first_ip:
+            return first_ip
+
+    if request.client and request.client.host:
+        return request.client.host
+
+    return "unknown"
+
+
+def _try_start_execution(client_id: str) -> tuple[bool, int, str | None]:
+    now = time.monotonic()
+    appended_timestamp = False
+
+    with _run_rate_limit_lock:
+        request_times = _run_requests_by_client.setdefault(client_id, deque())
+        cutoff = now - RUN_RATE_LIMIT_WINDOW_SECONDS
+
+        while request_times and request_times[0] <= cutoff:
+            request_times.popleft()
+
+        if len(request_times) >= RUN_RATE_LIMIT_MAX_REQUESTS:
+            return (
+                False,
+                429,
+                "Demasiadas ejecuciones en poco tiempo. Intenta nuevamente en un minuto.",
+            )
+
+        request_times.append(now)
+        appended_timestamp = True
+
+    with _run_inflight_lock:
+        global _run_inflight_executions
+        if _run_inflight_executions >= RUN_MAX_CONCURRENT_EXECUTIONS:
+            if appended_timestamp:
+                with _run_rate_limit_lock:
+                    request_times = _run_requests_by_client.get(client_id)
+                    if request_times:
+                        try:
+                            request_times.pop()
+                        except IndexError:
+                            pass
+            return (
+                False,
+                503,
+                "El servidor esta ocupado procesando otras ejecuciones. Reintenta en unos segundos.",
+            )
+
+        _run_inflight_executions += 1
+
+    return True, 200, None
+
+
+def _finish_execution() -> None:
+    with _run_inflight_lock:
+        global _run_inflight_executions
+        if _run_inflight_executions > 0:
+            _run_inflight_executions -= 1
 
 
 @router.get("/exercises")
@@ -154,11 +237,19 @@ def exercise_detail(request: Request, category: str, function_name: str):
 def run_exercise(
     request: Request, category: str, function_name: str, code: str = Form(...)
 ):
-    result = run_tests(
-        category=category,
-        function_name=function_name,
-        user_code=code,
-    )
+    client_id = _get_client_identifier(request)
+    can_start, status_code, error_message = _try_start_execution(client_id)
+    if not can_start:
+        return HTMLResponse(status_code=status_code, content=error_message or "Error")
+
+    try:
+        result = run_tests(
+            category=category,
+            function_name=function_name,
+            user_code=code,
+        )
+    finally:
+        _finish_execution()
 
     return templates.TemplateResponse(
         request,
