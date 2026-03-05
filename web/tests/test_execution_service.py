@@ -1,6 +1,9 @@
 import unittest
+import subprocess
+from pathlib import Path
+from unittest.mock import patch
 
-from web.app.services.execution import run_tests
+from web.app.services.execution import _run_sandboxed_unittest, run_tests
 
 
 class TestExecutionService(unittest.TestCase):
@@ -53,6 +56,43 @@ class TestExecutionService(unittest.TestCase):
 
         self.assertEqual(result["status"], "error")
         self.assertIn("atributos internos", result["raw_output"])
+
+    def test_blocks_local_sandbox_in_production_by_default(self) -> None:
+        with (
+            patch("web.app.services.execution.SANDBOX_PROVIDER", "local"),
+            patch("web.app.services.execution.ALLOW_LOCAL_IN_PRODUCTION", False),
+            patch("web.app.services.execution._is_production_environment", return_value=True),
+            patch("web.app.services.execution._run_local_unittest") as run_local_mock,
+        ):
+            result = _run_sandboxed_unittest(
+                tmp_path=Path("."),
+                category="numeros",
+                function_name="menor",
+            )
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["status"], "error")
+        self.assertIn("no esta permitido en produccion", result["raw_output"])
+        run_local_mock.assert_not_called()
+
+    def test_allows_local_sandbox_in_production_with_explicit_override(self) -> None:
+        with (
+            patch("web.app.services.execution.SANDBOX_PROVIDER", "local"),
+            patch("web.app.services.execution.ALLOW_LOCAL_IN_PRODUCTION", True),
+            patch("web.app.services.execution._is_production_environment", return_value=True),
+            patch(
+                "web.app.services.execution._run_local_unittest",
+                side_effect=subprocess.TimeoutExpired(cmd="python", timeout=10),
+            ),
+        ):
+            result = _run_sandboxed_unittest(
+                tmp_path=Path("."),
+                category="numeros",
+                function_name="menor",
+            )
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["status"], "timeout")
 
 
 if __name__ == "__main__":

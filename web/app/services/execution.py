@@ -19,6 +19,9 @@ DOCKER_IMAGE = os.getenv(
 DOCKER_CPUS_LIMIT = os.getenv("EXECUTION_DOCKER_CPUS", "0.5").strip()
 DOCKER_MEMORY_LIMIT = os.getenv("EXECUTION_DOCKER_MEMORY", "128m").strip()
 DOCKER_PIDS_LIMIT = os.getenv("EXECUTION_DOCKER_PIDS", "64").strip()
+ALLOW_LOCAL_IN_PRODUCTION = (
+    os.getenv("EXECUTION_ALLOW_LOCAL_IN_PROD", "").strip().lower() in {"1", "true", "yes"}
+)
 
 # Names/calls that materially increase sandbox escape risk.
 BLOCKED_NAMES = {
@@ -62,6 +65,15 @@ def _error_result(status: str, message: str) -> ExecutionResult:
         "status": status,
         "raw_output": message,
     }
+
+
+def _is_production_environment() -> bool:
+    for variable_name in ("APP_ENV", "ENVIRONMENT", "FASTAPI_ENV", "PYTHON_ENV"):
+        value = os.getenv(variable_name, "").strip().lower()
+        if value in {"prod", "production"}:
+            return True
+
+    return False
 
 
 def _get_call_name(call_node: ast.Call) -> str | None:
@@ -240,6 +252,15 @@ def _run_sandboxed_unittest(
             )
 
     if SANDBOX_PROVIDER == "local":
+        if _is_production_environment() and not ALLOW_LOCAL_IN_PRODUCTION:
+            return _error_result(
+                "error",
+                (
+                    "Configuracion insegura: EXECUTION_SANDBOX_PROVIDER=local "
+                    "no esta permitido en produccion. Usa docker."
+                ),
+            )
+
         try:
             return _run_local_unittest(tmp_path, category, function_name)
         except subprocess.TimeoutExpired:
