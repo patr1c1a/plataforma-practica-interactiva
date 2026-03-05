@@ -128,6 +128,15 @@ def _finish_execution() -> None:
             _run_inflight_executions -= 1
 
 
+def _reset_run_guards_for_tests() -> None:
+    with _run_rate_limit_lock:
+        _run_requests_by_client.clear()
+
+    with _run_inflight_lock:
+        global _run_inflight_executions
+        _run_inflight_executions = 0
+
+
 @router.get("/exercises")
 def list_exercises(request: Request):
     exercises = get_exercise_groups()

@@ -1,4 +1,5 @@
 import io
+import os
 import zipfile
 from pathlib import Path
 
@@ -17,6 +18,81 @@ from web.app.services.exercise_catalog import (
 )
 
 app = FastAPI()
+MAX_RUN_REQUEST_BODY_BYTES = int(
+    os.getenv("RUN_MAX_REQUEST_BODY_BYTES", "65536")
+)
+
+
+class _RequestBodyTooLargeError(Exception):
+    """Internal sentinel used to abort oversized streamed request bodies."""
+
+
+class RunRequestBodyLimitMiddleware:
+    def __init__(self, app, max_body_bytes: int):
+        self.app = app
+        self.max_body_bytes = max_body_bytes
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http":
+            await self.app(scope, receive, send)
+            return
+
+        method = scope.get("method", "")
+        path = scope.get("path", "")
+        is_run_endpoint = (
+            method == "POST"
+            and path.startswith("/exercises/")
+            and path.endswith("/run")
+        )
+        if not is_run_endpoint:
+            await self.app(scope, receive, send)
+            return
+
+        headers = scope.get("headers", [])
+        content_length_value = None
+        for key, value in headers:
+            if key == b"content-length":
+                try:
+                    content_length_value = int(value.decode("latin-1"))
+                except ValueError:
+                    content_length_value = None
+                break
+
+        if (
+            content_length_value is not None
+            and content_length_value > self.max_body_bytes
+        ):
+            response = StreamingResponse(
+                iter([b"Request body too large for code execution endpoint."]),
+                status_code=413,
+                media_type="text/plain",
+            )
+            await response(scope, receive, send)
+            return
+
+        received_body_bytes = 0
+
+        async def limited_receive():
+            nonlocal received_body_bytes
+            message = await receive()
+
+            if message.get("type") == "http.request":
+                received_body_bytes += len(message.get("body", b""))
+                if received_body_bytes > self.max_body_bytes:
+                    raise _RequestBodyTooLargeError()
+
+            return message
+
+        try:
+            await self.app(scope, limited_receive, send)
+        except _RequestBodyTooLargeError:
+            response = StreamingResponse(
+                iter([b"Request body too large for code execution endpoint."]),
+                status_code=413,
+                media_type="text/plain",
+            )
+            await response(scope, receive, send)
+            return
 
 # Static files
 BASE_DIR = Path(__file__).resolve().parent
@@ -28,6 +104,10 @@ app.mount(
 )
 
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
+app.add_middleware(
+    RunRequestBodyLimitMiddleware,
+    max_body_bytes=MAX_RUN_REQUEST_BODY_BYTES,
+)
 
 app.include_router(health_router)
 app.include_router(exercises_router)
