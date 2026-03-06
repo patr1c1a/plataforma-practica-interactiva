@@ -44,6 +44,25 @@ class TestWebRoutes(unittest.TestCase):
             response.headers.get("content-security-policy", ""),
         )
 
+    def test_external_assets_use_sri(self) -> None:
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            'src="https://unpkg.com/htmx.org@1.9.12"',
+            response.text,
+        )
+        self.assertIn(
+            'src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"',
+            response.text,
+        )
+        self.assertIn(
+            'href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"',
+            response.text,
+        )
+        self.assertGreaterEqual(response.text.count('integrity="sha384-'), 5)
+        self.assertGreaterEqual(response.text.count('crossorigin="anonymous"'), 5)
+
     def test_exercises_list_endpoint(self) -> None:
         response = self.client.get("/exercises")
 
