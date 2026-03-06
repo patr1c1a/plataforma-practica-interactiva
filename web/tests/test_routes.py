@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+import re
 
 try:
     from fastapi.testclient import TestClient
@@ -62,6 +63,16 @@ class TestWebRoutes(unittest.TestCase):
         )
         self.assertGreaterEqual(response.text.count('integrity="sha384-'), 5)
         self.assertGreaterEqual(response.text.count('crossorigin="anonymous"'), 5)
+
+    def test_target_blank_links_include_noopener_noreferrer(self) -> None:
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        target_blank_links = re.findall(r"<a[^>]*target=\"_blank\"[^>]*>", response.text)
+
+        self.assertGreaterEqual(len(target_blank_links), 1)
+        for link_tag in target_blank_links:
+            self.assertIn('rel="noopener noreferrer"', link_tag)
 
     def test_exercises_list_endpoint(self) -> None:
         response = self.client.get("/exercises")
