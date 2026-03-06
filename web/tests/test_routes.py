@@ -25,6 +25,25 @@ class TestWebRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok"})
 
+    def test_security_headers_are_present(self) -> None:
+        response = self.client.get("/health")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers.get("x-content-type-options"), "nosniff")
+        self.assertEqual(response.headers.get("x-frame-options"), "DENY")
+        self.assertEqual(
+            response.headers.get("referrer-policy"),
+            "strict-origin-when-cross-origin",
+        )
+        self.assertIn(
+            "frame-ancestors 'none'",
+            response.headers.get("content-security-policy", ""),
+        )
+        self.assertIn(
+            "form-action 'self'",
+            response.headers.get("content-security-policy", ""),
+        )
+
     def test_exercises_list_endpoint(self) -> None:
         response = self.client.get("/exercises")
 

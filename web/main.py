@@ -21,6 +21,21 @@ app = FastAPI()
 MAX_RUN_REQUEST_BODY_BYTES = int(
     os.getenv("RUN_MAX_REQUEST_BODY_BYTES", "65536")
 )
+DEFAULT_CONTENT_SECURITY_POLICY = (
+    "default-src 'self'; "
+    "script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; "
+    "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; "
+    "img-src 'self' data:; "
+    "font-src 'self' https:; "
+    "connect-src 'self'; "
+    "frame-ancestors 'none'; "
+    "base-uri 'self'; "
+    "form-action 'self'"
+)
+CONTENT_SECURITY_POLICY = os.getenv(
+    "SECURITY_CONTENT_SECURITY_POLICY",
+    DEFAULT_CONTENT_SECURITY_POLICY,
+).strip()
 
 
 class _RequestBodyTooLargeError(Exception):
@@ -93,6 +108,27 @@ class RunRequestBodyLimitMiddleware:
             )
             await response(scope, receive, send)
             return
+
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+    response.headers.setdefault("Content-Security-Policy", CONTENT_SECURITY_POLICY)
+
+    forwarded_proto = request.headers.get("x-forwarded-proto", "").split(",")[0].strip().lower()
+    request_is_https = request.url.scheme == "https" or forwarded_proto == "https"
+    if request_is_https:
+        response.headers.setdefault(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains",
+        )
+
+    return response
 
 # Static files
 BASE_DIR = Path(__file__).resolve().parent
