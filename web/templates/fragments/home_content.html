@@ -1,53 +1,54 @@
 <section class="hero">
-    <h1>Plataforma de pr&aacute;ctica de algoritmia b&aacute;sica</h1>
+    <h1>Pr&aacute;ctica de algoritmia b&aacute;sica</h1>
     <p class="hero-subtitle">
-        Continuaci&oacute;n pr&aacute;ctica del curso gratuito de Programaci&oacute;n Desde Cero.
+        Continuaci&oacute;n pr&aacute;ctica del <a
+            href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+            rel="noopener noreferrer"><span class="emphasis">curso gratuito de Programaci&oacute;n Desde
+                Cero</span></a>.
     </p>
     <div class="hero-actions">
-        <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
-            rel="noopener noreferrer"
-            class="button-secondary">
-            Ver curso
+        <a href="/exercises" class="button-secondary">
+            Ejercicios
         </a>
 
         <a href="/offline" class="button-secondary">
             Versi&oacute;n offline
+        </a>
+
+        <a href="https://payhip.com/b/WSi0z" target="_blank" rel="noopener noreferrer" class="button-secondary">
+            Libro 24 desaf&iacute;os
         </a>
     </div>
 </section>
 
 <section class="platform-explanation">
     <div class="card">
-        <h2>&iquest;C&oacute;mo est&aacute; pensada esta plataforma?</h2>
+        <h2>&iquest;Est&aacute;s buscando practicar algoritmos?</h2>
         <p>
-            Esta plataforma ofrece desafíos de programaci&oacute;n de nivel inicial en <span
-                class="emphasis">Python</span>, divididos en categorías
-            temáticas para ayudarte a practicar ciertos tipos y estructuras de datos.
+            Estos desaf&iacute;os con <span class="emphasis">Python</span> son
+            ideales para quienes ya dominan lo b&aacute;sico de programaci&oacute;n o como continuaci&oacute;n del <a
+                href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+                rel="noopener noreferrer"><span class="emphasis">curso gratuito</span></a>
+            del canal Programaci&oacute;n Desde Cero.
         </p>
         <p>
-            El orden sugerido es el siguiente: <span class="emphasis">Números</span> > <span
-                class="emphasis">Strings</span> > <span class="emphasis">Listas y Tuplas</span> > <span
-                class="emphasis">Conjuntos y
-                Diccionarios</span>, lo que significa que se sugiere (pero no es obligatorio) resolver los ejercicios
-            utilizando estos tipos de datos con el fin de afianzar el pensamiento algorítmico.
-        </p>
-        <p>
-            La plataforma est&aacute; pensada para quienes ya conocen los fundamentos b&aacute;sicos de
-            programaci&oacute;n (por ejemplo quienes completaron el
-            <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
-                rel="noopener noreferrer">
-                curso gratuito
-            </a>
-            del canal Programaci&oacute;n Desde Cero).
-        </p>
-        <p>
-            En la era de la IA, entender c&oacute;digo y detectar errores sigue siendo una habilidad esencial.
+            "¿Y si necesito ejercicios más desafiantes o más explicados?". El siguiente
+            escal&oacute;n est&aacute; en el libro digital <a href="https://patriciaemiguel.com/libro24desafios/"
+                target="_blank" rel="noopener noreferrer"><span class="emphasis">"24 D&iacute;as, 24 Desaf&iacute;os de
+                    C&oacute;digo"</span></a>.
         </p>
     </div>
 </section>
 
 <section class="categories-section">
     <h2>Categor&iacute;as de Ejercicios</h2>
+
+    <p class="hero-quote">
+        <em>Orden sugerido para resolver los ejercicios: <span
+                class="emphasis">N&uacute;meros</span> > <span class="emphasis">Strings</span> > <span
+                class="emphasis">Listas y Tuplas</span> > <span class="emphasis">Conjuntos y
+                Diccionarios</span>.</em>
+    </p>
 
     <div class="categories-grid">
         {% for category in category_cards %}
@@ -65,7 +66,19 @@
     </div>
 </section>
 
+<section class="home-book-section">
+    <p>
+        Continuar con desaf&iacute;os del siguiente nivel en el libro
+        <a href="https://patriciaemiguel.com/libro24desafios/" target="_blank">
+            "24 D&iacute;as, 24 Desaf&iacute;os de C&oacute;digo"
+        </a>.
+    </p>
+</section>
+
 <section class="home-repository-link">
+    <p class="hero-quote">
+        <em>En la era de la IA, entender c&oacute;digo y detectar errores sigue siendo una habilidad esencial.</em>
+    </p>
     <p>
         Repositorio del proyecto:
         <a href="https://github.com/programacion-desde-cero/plataforma-ejercicios" target="_blank"

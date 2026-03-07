@@ -69,6 +69,24 @@ a:hover {
   margin-top: 2rem;
 }
 
+.home-book-section {
+  margin-top: 2rem;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--accent);
+  background-color: var(--surface-elevated);
+  border-radius: 6px;
+}
+
+.home-book-section p {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.home-book-section a {
+  font-weight: 700;
+}
+
 .offline-actions {
   display: flex;
   gap: 0.8rem;
@@ -333,6 +351,11 @@ header {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.hero-quote {
+  margin-top: 1rem;
+  color: var(--text-secondary);
 }
 
 .button-secondary {
