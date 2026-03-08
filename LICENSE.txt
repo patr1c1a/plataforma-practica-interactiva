@@ -1,0 +1,45 @@
+Copyright (c) 2026 Patricia E. Miguel
+
+All rights reserved.
+
+This repository contains the source code of the platform "Práctica Interactiva - Programación Desde Cero".
+
+No part of this codebase may be copied, modified, distributed, sublicensed, or used to create
+derivative works without explicit written permission from the author.
+
+Exception:
+
+The educational exercise materials contained in the directory:
+
+    content/python/
+
+are distributed under a separate license described in the LICENSE files within that directory.
+Those materials may be downloaded and used locally for educational purposes as specified there.
+
+All other parts of this repository, including the web platform code and infrastructure code,
+remain proprietary.
+
+-----
+
+Copyright (c) 2026 Patricia E. Miguel
+
+Todos los derechos reservados.
+
+Este repositorio contiene el código fuente de la plataforma "Práctica Interactiva - Programación Desde Cero".
+
+Ninguna parte de este código puede ser copiada, modificada, distribuida, sublicenciada
+ni utilizada para crear trabajos derivados sin el permiso explícito y por escrito
+de la autora.
+
+Excepción:
+
+El material educativo contenido en el directorio:
+
+    content/python/
+
+se distribuye bajo una licencia diferente, especificada en los archivos LICENSE
+dentro de ese directorio. Dicho material puede descargarse y utilizarse localmente
+con fines educativos según lo indicado en esas licencias.
+
+Todas las demás partes de este repositorio, incluyendo el código de la plataforma web
+y cualquier componente de infraestructura, permanecen bajo licencia propietaria.

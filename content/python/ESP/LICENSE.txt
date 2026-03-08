@@ -1,0 +1,38 @@
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+This material is part of the educational project "Programación Desde Cero" by Patricia E. Miguel.
+
+You are free to:
+
+- Download and use the exercises locally.
+- Modify the solutions for learning purposes.
+- Share the material for educational use.
+
+Under the following terms:
+
+- Attribution: You must give appropriate credit to Patricia E. Miguel.
+- NonCommercial: You may not use this material for commercial purposes.
+- ShareAlike: If you modify or adapt the material, you must distribute your contributions under the same license.
+
+Full license text: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+-----
+
+Licencia Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional
+(CC BY-NC-SA 4.0)
+
+Este material forma parte del proyecto educativo "Programación Desde Cero" de Patricia E. Miguel.
+
+Usted es libre de:
+
+- Descargar y utilizar los ejercicios localmente.
+- Modificar las soluciones con fines de aprendizaje.
+- Compartir el material con fines educativos.
+
+Bajo las siguientes condiciones:
+
+- Atribución (BY): Debe otorgar el crédito correspondiente a Patricia E. Miguel.
+- No Comercial (NC): No puede utilizar este material con fines comerciales.
+- Compartir Igual (SA): Si modifica o adapta el material, debe distribuir sus contribuciones bajo la misma licencia.
+
+Texto completo de la licencia: https://creativecommons.org/licenses/by-nc-sa/4.0/
