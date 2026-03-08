@@ -731,6 +731,23 @@
         }
     });
 
+    document.body.addEventListener("htmx:beforeRequest", function (event) {
+        const requestSource = event.detail.elt;
+        if (!requestSource) return;
+
+        if (
+            requestSource.tagName !== "FORM" ||
+            requestSource.getAttribute("hx-target") !== "#result"
+        ) {
+            return;
+        }
+
+        const resultContainer = document.getElementById("result");
+        if (resultContainer) {
+            resultContainer.innerHTML = "";
+        }
+    });
+
     document.body.addEventListener("htmx:configRequest", function (event) {
         const textarea = document.getElementById("code-editor");
 
@@ -752,4 +769,3 @@
     });
 
 })();
-
