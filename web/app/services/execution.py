@@ -60,6 +60,61 @@ class ExecutionResult(TypedDict, total=False):
     raw_output: str
     failed_cases: list[str]
 
+UNITTEST_RUNNER_FILENAME = "_run_selected_tests.py"
+SUBTESTS_EXECUTED_MARKER = "SUBTESTS_EXECUTED:"
+
+UNITTEST_RUNNER_SCRIPT = f"""\
+import importlib
+import io
+import sys
+import unittest
+
+category = sys.argv[1]
+function_name = sys.argv[2]
+module_name = f"tests.tests_{{category}}"
+module = importlib.import_module(module_name)
+loader = unittest.TestLoader()
+suite = loader.loadTestsFromModule(module)
+
+def filter_suite(input_suite):
+    selected = unittest.TestSuite()
+    for item in input_suite:
+        if isinstance(item, unittest.TestSuite):
+            nested = filter_suite(item)
+            if nested.countTestCases():
+                selected.addTest(nested)
+            continue
+
+        if f".test_{{function_name}}" in item.id():
+            selected.addTest(item)
+
+    return selected
+
+selected_suite = filter_suite(suite)
+
+class CountingResult(unittest.TextTestResult):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.subtests_executed = 0
+
+    def addSubTest(self, test, subtest, err):
+        self.subtests_executed += 1
+        super().addSubTest(test, subtest, err)
+
+stream = io.StringIO()
+runner = unittest.TextTestRunner(
+    stream=stream,
+    verbosity=2,
+    resultclass=CountingResult,
+)
+result = runner.run(selected_suite)
+
+executed = result.subtests_executed if result.subtests_executed > 0 else result.testsRun
+sys.stdout.write("{SUBTESTS_EXECUTED_MARKER} {{}}\\n".format(executed))
+sys.stdout.write(stream.getvalue())
+sys.exit(0 if result.wasSuccessful() else 1)
+"""
+
 
 def _error_result(status: str, message: str) -> ExecutionResult:
     return {
@@ -168,12 +223,9 @@ def _build_unittest_command(category: str, function_name: str) -> list[str]:
         "python",
         "-S",
         "-B",
-        "-m",
-        "unittest",
-        "-v",
-        f"tests/tests_{category}.py",
-        "-k",
-        f"test_{function_name}",
+        UNITTEST_RUNNER_FILENAME,
+        category,
+        function_name,
     ]
 
 
@@ -322,6 +374,20 @@ def _parse_execution_result(raw_output: str, returncode: int) -> tuple[str, list
     return execution_status, failed_test_cases
 
 
+def _extract_subtests_executed(raw_output: str) -> tuple[int | None, str]:
+    marker_pattern = re.compile(
+        rf"^\s*{re.escape(SUBTESTS_EXECUTED_MARKER)}\s*(\d+)\s*$",
+        re.MULTILINE,
+    )
+    match = marker_pattern.search(raw_output)
+    if not match:
+        return None, raw_output
+
+    executed = int(match.group(1))
+    cleaned_output = marker_pattern.sub("", raw_output, count=1)
+    return executed, cleaned_output
+
+
 def _sanitize_unittest_output(raw_output: str) -> str:
     sanitized_lines: list[str] = []
 
@@ -358,6 +424,19 @@ def _sanitize_unittest_output(raw_output: str) -> str:
         return "No hay salida adicional."
 
     return sanitized_output
+
+
+def _build_user_facing_output(raw_output: str) -> str:
+    subtests_executed, cleaned_output = _extract_subtests_executed(raw_output)
+    sanitized_output = _sanitize_unittest_output(cleaned_output)
+
+    if subtests_executed is None:
+        return sanitized_output
+
+    if sanitized_output == "No hay salida adicional.":
+        return f"Tests ejecutados: {subtests_executed}"
+
+    return f"Tests ejecutados: {subtests_executed}\n\n{sanitized_output}"
 
 
 def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
@@ -415,6 +494,8 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
             return _error_result("error", str(value_error))
 
         exercise_path.write_text(updated_code, encoding="utf-8")
+        runner_path = tmp_path / UNITTEST_RUNNER_FILENAME
+        runner_path.write_text(UNITTEST_RUNNER_SCRIPT, encoding="utf-8")
 
         execution_result = _run_sandboxed_unittest(tmp_path, category, function_name)
         if isinstance(execution_result, dict):
@@ -425,7 +506,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
             raw_output=raw_output,
             returncode=execution_result.returncode,
         )
-        user_facing_output = _sanitize_unittest_output(raw_output)
+        user_facing_output = _build_user_facing_output(raw_output)
 
         return {
             "status": execution_status,

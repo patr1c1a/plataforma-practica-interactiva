@@ -4,6 +4,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 from web.app.services.execution import (
+    _build_user_facing_output,
+    _extract_subtests_executed,
     _run_sandboxed_unittest,
     _sanitize_unittest_output,
     run_tests,
@@ -161,6 +163,32 @@ class TestExecutionService(unittest.TestCase):
         self.assertNotIn("self.assertEqual(", sanitized)
         self.assertIn("AssertionError:", sanitized)
         self.assertIn("FAILED (failures=1)", sanitized)
+
+    def test_extract_subtests_executed_reads_marker_and_cleans_output(self) -> None:
+        raw_output = (
+            "SUBTESTS_EXECUTED: 7\n"
+            "AssertionError: x != y\n"
+            "FAILED (failures=1)\n"
+        )
+
+        executed, cleaned = _extract_subtests_executed(raw_output)
+
+        self.assertEqual(executed, 7)
+        self.assertNotIn("SUBTESTS_EXECUTED:", cleaned)
+        self.assertIn("AssertionError:", cleaned)
+
+    def test_build_user_facing_output_prefixes_executed_tests_count(self) -> None:
+        raw_output = (
+            "SUBTESTS_EXECUTED: 5\n"
+            "AssertionError: True != False\n"
+            "FAILED (failures=3)\n"
+        )
+
+        user_output = _build_user_facing_output(raw_output)
+
+        self.assertTrue(user_output.startswith("Tests ejecutados: 5"))
+        self.assertIn("AssertionError:", user_output)
+        self.assertIn("FAILED (failures=3)", user_output)
 
 
 if __name__ == "__main__":
