@@ -1,5 +1,6 @@
 import ast
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -321,6 +322,44 @@ def _parse_execution_result(raw_output: str, returncode: int) -> tuple[str, list
     return execution_status, failed_test_cases
 
 
+def _sanitize_unittest_output(raw_output: str) -> str:
+    sanitized_lines: list[str] = []
+
+    for line in raw_output.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        if re.match(
+            r"^test_[A-Za-z_]\w* \(tests\.[^)]+\)(?: \([^)]*\))? \.\.\.(?: (ok|FAIL|ERROR))?$",
+            stripped,
+        ):
+            continue
+
+        if re.match(r"^(FAIL|ERROR): test_[A-Za-z_]\w* \(tests\.[^)]+\).*$", stripped):
+            continue
+
+        if stripped.startswith("Traceback (most recent call last):"):
+            continue
+
+        if re.match(r'^\s*File ".*", line \d+, in .+$', line):
+            continue
+
+        if re.match(r"^self\.assert[A-Za-z_]\w*\(.*\)$", stripped):
+            continue
+
+        if re.match(r"^Ran \d+ test[s]? in .+$", stripped):
+            continue
+
+        sanitized_lines.append(stripped)
+
+    sanitized_output = "\n".join(sanitized_lines).strip()
+    if not sanitized_output:
+        return "No hay salida adicional."
+
+    return sanitized_output
+
+
 def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
     base_content = Path("content/python/ESP")
 
@@ -386,11 +425,12 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
             raw_output=raw_output,
             returncode=execution_result.returncode,
         )
+        user_facing_output = _sanitize_unittest_output(raw_output)
 
         return {
             "status": execution_status,
             "failed_cases": failed_test_cases,
-            "raw_output": raw_output,
+            "raw_output": user_facing_output,
         }
 
 

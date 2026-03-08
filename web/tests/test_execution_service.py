@@ -3,7 +3,11 @@ import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
-from web.app.services.execution import _run_sandboxed_unittest, run_tests
+from web.app.services.execution import (
+    _run_sandboxed_unittest,
+    _sanitize_unittest_output,
+    run_tests,
+)
 
 
 class TestExecutionService(unittest.TestCase):
@@ -93,6 +97,70 @@ class TestExecutionService(unittest.TestCase):
 
         self.assertIsInstance(result, dict)
         self.assertEqual(result["status"], "timeout")
+
+    def test_sanitize_unittest_output_hides_internal_test_names_and_paths(self) -> None:
+        raw_output = (
+            "test_es_bisiesto (tests.tests_numeros.TestsFuncionesNumeros.test_es_bisiesto) ... FAIL\n"
+            "FAIL: test_es_bisiesto (tests.tests_numeros.TestsFuncionesNumeros.test_es_bisiesto)\n"
+            "Traceback (most recent call last):\n"
+            "  File \"/workspace/tests/tests_numeros.py\", line 93, in test_es_bisiesto\n"
+            "    self.assertEqual(es_bisiesto(numero=1900), False)\n"
+            "AssertionError: True != False : es_bisiesto(numero=1900)\n"
+            "Ran 1 test in 0.005s\n"
+            "FAILED (failures=3)\n"
+        )
+
+        sanitized = _sanitize_unittest_output(raw_output)
+
+        self.assertNotIn("test_es_bisiesto (tests.tests_numeros", sanitized)
+        self.assertNotIn("/workspace/tests/tests_numeros.py", sanitized)
+        self.assertNotIn("Ran 1 test", sanitized)
+        self.assertIn("AssertionError:", sanitized)
+        self.assertIn("FAILED (failures=3)", sanitized)
+
+    def test_sanitize_unittest_output_returns_fallback_message_when_empty(self) -> None:
+        raw_output = (
+            "test_menor (tests.tests_numeros.TestsFuncionesNumeros.test_menor) ... ok\n"
+            "Ran 1 test in 0.003s\n"
+            "OK\n"
+        )
+
+        sanitized = _sanitize_unittest_output(raw_output)
+
+        self.assertEqual(sanitized, "OK")
+
+    def test_sanitize_unittest_output_hides_subtest_lines_with_argument_context(self) -> None:
+        raw_output = (
+            "test_mcd_euclides (tests.tests_numeros.TestsFuncionesNumeros.test_mcd_euclides) ...\n"
+            "test_mcd_euclides (tests.tests_numeros.TestsFuncionesNumeros.test_mcd_euclides) "
+            "(prueba='Argumentos usados: m=60, n=24') ... FAIL\n"
+            "test_mcd_euclides (tests.tests_numeros.TestsFuncionesNumeros.test_mcd_euclides) "
+            "(prueba='Argumentos usados: m=24, n=60') ... FAIL\n"
+            "AssertionError: 24 != 12 : mcd_euclides(m=24, n=60)\n"
+            "FAILED (failures=2)\n"
+        )
+
+        sanitized = _sanitize_unittest_output(raw_output)
+
+        self.assertNotIn("tests.tests_numeros.TestsFuncionesNumeros", sanitized)
+        self.assertNotIn("test_mcd_euclides", sanitized)
+        self.assertIn("AssertionError:", sanitized)
+        self.assertIn("FAILED (failures=2)", sanitized)
+
+    def test_sanitize_unittest_output_hides_assert_source_lines(self) -> None:
+        raw_output = (
+            "Traceback (most recent call last):\n"
+            "  File \"/workspace/tests/tests_numeros.py\", line 93, in test_es_bisiesto\n"
+            "    self.assertEqual(es_bisiesto(numero=1900), False, prueba)\n"
+            "AssertionError: True != False : Argumentos usados: numero=1900\n"
+            "FAILED (failures=1)\n"
+        )
+
+        sanitized = _sanitize_unittest_output(raw_output)
+
+        self.assertNotIn("self.assertEqual(", sanitized)
+        self.assertIn("AssertionError:", sanitized)
+        self.assertIn("FAILED (failures=1)", sanitized)
 
 
 if __name__ == "__main__":
