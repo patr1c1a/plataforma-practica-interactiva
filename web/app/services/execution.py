@@ -92,7 +92,7 @@ def _validate_user_submission(
         if isinstance(node, ast.ClassDef):
             return _error_result(
                 "error",
-                "No se permiten clases en la resolucion.",
+                "No se permiten clases en la resolución.",
             )
         if not isinstance(node, ast.FunctionDef):
             return _error_result(
@@ -102,7 +102,7 @@ def _validate_user_submission(
         if node.decorator_list:
             return _error_result(
                 "error",
-                "No se permiten decoradores en el codigo enviado.",
+                "No se permiten decoradores en el código enviado.",
             )
 
     user_function_names = {
@@ -111,44 +111,44 @@ def _validate_user_submission(
     if not user_function_names:
         return _error_result(
             "error",
-            "El codigo enviado no contiene una definicion de funcion valida.",
+            "El código enviado no contiene una definición de función válida.",
         )
     if target_function_name not in user_function_names:
         return _error_result(
             "error",
-            f"Debe definir la funcion '{target_function_name}'.",
+            f"Debe definir la función '{target_function_name}'.",
         )
 
     for node in ast.walk(parsed_user_ast):
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             return _error_result(
                 "error",
-                "No esta permitido importar modulos externos.",
+                "No está permitido importar módulos externos.",
             )
 
         if isinstance(node, (ast.Global, ast.Nonlocal, ast.Lambda)):
             return _error_result(
                 "error",
-                "Se detectaron construcciones no permitidas en el codigo enviado.",
+                "Se detectaron construcciones no permitidas en el código enviado.",
             )
 
         if isinstance(node, ast.Name):
             if node.id in BLOCKED_NAMES:
                 return _error_result(
                     "error",
-                    f"No esta permitido usar '{node.id}'.",
+                    f"No está permitido usar '{node.id}'.",
                 )
             if node.id.startswith("__"):
                 return _error_result(
                     "error",
-                    "No esta permitido usar identificadores especiales.",
+                    "No está permitido usar identificadores especiales.",
                 )
 
         if isinstance(node, ast.Attribute):
             if node.attr in BLOCKED_ATTRIBUTE_NAMES or node.attr.startswith("__"):
                 return _error_result(
                     "error",
-                    "No esta permitido acceder a atributos internos.",
+                    "No está permitido acceder a atributos internos.",
                 )
 
         if isinstance(node, ast.Call):
@@ -156,7 +156,7 @@ def _validate_user_submission(
             if call_name in BLOCKED_NAMES:
                 return _error_result(
                     "error",
-                    f"No esta permitido usar '{call_name}'.",
+                    f"No está permitido usar '{call_name}'.",
                 )
 
     return None
@@ -241,14 +241,14 @@ def _run_sandboxed_unittest(
             return _error_result(
                 "error",
                 (
-                    "Docker no esta instalado o no esta en PATH. "
+                    "Docker no está instalado o no está en PATH. "
                     "Para desarrollo local, exporta EXECUTION_SANDBOX_PROVIDER=local."
                 ),
             )
         except subprocess.TimeoutExpired:
             return _error_result(
                 "timeout",
-                "La ejecucion excedio el tiempo limite.",
+                "La ejecución excedió el tiempo límite.",
             )
 
     if SANDBOX_PROVIDER == "local":
@@ -256,8 +256,8 @@ def _run_sandboxed_unittest(
             return _error_result(
                 "error",
                 (
-                    "Configuracion insegura: EXECUTION_SANDBOX_PROVIDER=local "
-                    "no esta permitido en produccion. Usa docker."
+                    "Configuración insegura: EXECUTION_SANDBOX_PROVIDER=local "
+                    "no está permitido en producción. Usa docker."
                 ),
             )
 
@@ -266,7 +266,7 @@ def _run_sandboxed_unittest(
         except subprocess.TimeoutExpired:
             return _error_result(
                 "timeout",
-                "La ejecucion excedio el tiempo limite.",
+                "La ejecución excedió el tiempo límite.",
             )
 
     return _error_result(
@@ -330,20 +330,20 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
     if not src_file.exists() or not test_file.exists():
         return _error_result(
             "error",
-            "Error interno: categoria o archivo de tests no encontrados.",
+            "Error interno: categoría o archivo de tests no encontrados.",
         )
 
     if len(user_code) > MAXIMUM_ALLOWED_CODE_LENGTH:
         return _error_result(
             "error",
-            "El codigo excede el tamano maximo permitido.",
+            "El código excede el tamaño máximo permitido.",
         )
 
     try:
         parsed_user_ast = ast.parse(user_code)
     except SyntaxError as syntax_error:
         formatted_error_message = (
-            f"Error de sintaxis en la linea {syntax_error.lineno}:\n"
+            f"Error de sintaxis en la línea {syntax_error.lineno}:\n"
             f"{syntax_error.msg}"
         )
         return _error_result("syntax_error", formatted_error_message)
@@ -408,13 +408,13 @@ def _replace_function_definition(
 
     if not user_function_definitions:
         raise ValueError(
-            "El codigo enviado no contiene una definicion de funcion valida."
+            "El código enviado no contiene una definición de función válida."
         )
 
     user_functions_by_name = {func.name: func for func in user_function_definitions}
 
     if target_function_name not in user_functions_by_name:
-        raise ValueError(f"Debe definir la funcion '{target_function_name}'.")
+        raise ValueError(f"Debe definir la función '{target_function_name}'.")
 
     updated_module_body = []
 
