@@ -149,6 +149,21 @@ class TestWebRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 413)
         run_tests_mock.assert_not_called()
 
+    @patch("web.app.routers.exercises.run_tests")
+    def test_run_exercise_endpoint_rejects_oversized_body_with_fragment_for_htmx(self, run_tests_mock) -> None:
+        oversized_code = "a" * 70000
+
+        response = self.client.post(
+            "/exercises/numeros/menor/run",
+            data={"code": oversized_code},
+            headers={"hx-request": "true"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('data-status="error"', response.text)
+        self.assertIn("demasiado grande", response.text)
+        run_tests_mock.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

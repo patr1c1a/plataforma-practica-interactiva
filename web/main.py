@@ -21,6 +21,9 @@ app = FastAPI()
 MAX_RUN_REQUEST_BODY_BYTES = int(
     os.getenv("RUN_MAX_REQUEST_BODY_BYTES", "65536")
 )
+OVERSIZED_RUN_REQUEST_MESSAGE = (
+    "El contenido enviado es demasiado grande para ejecutarse. "
+)
 DEFAULT_CONTENT_SECURITY_POLICY = (
     "default-src 'self'; "
     "script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; "
@@ -77,11 +80,7 @@ class RunRequestBodyLimitMiddleware:
             content_length_value is not None
             and content_length_value > self.max_body_bytes
         ):
-            response = StreamingResponse(
-                iter([b"Request body too large for code execution endpoint."]),
-                status_code=413,
-                media_type="text/plain",
-            )
+            response = self._build_oversized_response(scope, receive)
             await response(scope, receive, send)
             return
 
@@ -101,13 +100,34 @@ class RunRequestBodyLimitMiddleware:
         try:
             await self.app(scope, limited_receive, send)
         except _RequestBodyTooLargeError:
-            response = StreamingResponse(
-                iter([b"Request body too large for code execution endpoint."]),
-                status_code=413,
-                media_type="text/plain",
-            )
+            response = self._build_oversized_response(scope, receive)
             await response(scope, receive, send)
             return
+
+    def _build_oversized_response(self, scope, receive):
+        request = Request(scope, receive=receive)
+        request_from_htmx = request.headers.get("hx-request") == "true"
+
+        if request_from_htmx:
+            return templates.TemplateResponse(
+                request,
+                "fragments/execution_result.html",
+                {
+                    "request": request,
+                    "result": {
+                        "status": "error",
+                        "failed_cases": [],
+                        "raw_output": OVERSIZED_RUN_REQUEST_MESSAGE,
+                    },
+                },
+                status_code=200,
+            )
+
+        return StreamingResponse(
+            iter([b"Request body too large for code execution endpoint."]),
+            status_code=413,
+            media_type="text/plain",
+        )
 
 
 @app.middleware("http")
