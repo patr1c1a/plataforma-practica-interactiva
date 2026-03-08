@@ -1,4 +1,4 @@
-# Plataforma de Ejercicios de Programación
+# Práctica Interactiva - Programación Desde Cero
 
 Este repositorio contiene una plataforma educativa para practicar fundamentos de programación mediante ejercicios con validación automática basada en tests.
 
@@ -31,6 +31,10 @@ plataforma-ejercicios/
 ├── web/      # Versión web
 │
 ├── runtime/  # Directorios temporales de ejecución
+│
+├── requirements.txt  # Dependencias necesarias
+│
+├── LICENSE.md  # Licencia de uso
 │
 └── README.md
 ```
@@ -86,7 +90,8 @@ ESP/
 ├── src/ # Archivos con funciones incompletas
 ├── tests/ # Tests unitarios (no deben modificarse)
 ├── ejecutar_tests.py # Runner para ejecutar múltiples categorías
-└── soluciones_propuestas.md
+├── LICENSE.md # Licencia de uso
+└── README.md # Readme para usuarios de la versión offline
 ```
 
 Los ejercicios están organizados por categorías con dificultad incremental:
@@ -194,22 +199,49 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 
 - Activar el entorno virtual
 - Instalar dependencias: `pip install -r requirements.txt`
-- Asegurar Docker en ejecución (verificar imagen: `docker images | findstr plataforma-ejercicios-runner`).
 - Levantar la app (ejemplo): `uvicorn web.main:app --reload`
+- Docker **no es necesario** para levantar la app.
+- Docker sí es necesario para ejecutar código de usuarios cuando `EXECUTION_SANDBOX_PROVIDER=docker` (default).
+- Verificar imagen Docker disponible (opcional, recomendado): `docker images | findstr plataforma-ejercicios-runner`
 
 ### Configuración del sandbox
 
 - `EXECUTION_SANDBOX_PROVIDER`:
   - `docker` (default, recomendado para entorno expuesto a internet)
   - `local` (solo desarrollo local, sin aislamiento OS/container)
+- `EXECUTION_ALLOW_LOCAL_IN_PROD`:
+  - default: deshabilitado
+  - habilita `local` en producción **solo** si vale `1`, `true` o `yes`
+  - recomendado: mantener deshabilitado en internet público
 - `EXECUTION_DOCKER_IMAGE`: imagen a usar (default `plataforma-ejercicios-runner:latest`)
 - Limites opcionales:
   - `EXECUTION_DOCKER_CPUS` (default `0.5`)
   - `EXECUTION_DOCKER_MEMORY` (default `128m`)
   - `EXECUTION_DOCKER_PIDS` (default `64`)
 
+### Límites y protecciones web (entorno público)
+
+- Límite de requests de ejecución por cliente:
+  - `RUN_RATE_LIMIT_WINDOW_SECONDS` (default `60`)
+  - `RUN_RATE_LIMIT_MAX_REQUESTS` (default `20`)
+- Límite global de ejecuciones simultáneas:
+  - `RUN_MAX_CONCURRENT_EXECUTIONS` (default `4`)
+- Límite de tamaño de body para `/run`:
+  - `RUN_MAX_REQUEST_BODY_BYTES` (default `65536`)
+- CSP configurable:
+  - `SECURITY_CONTENT_SECURITY_POLICY` (si no se define, se usa una política segura por defecto)
+
 Correr sin Docker solo en local:
 
 `EXECUTION_SANDBOX_PROVIDER=local uvicorn web.main:app --reload`
+
+En PowerShell (Windows):
+
+`$env:EXECUTION_SANDBOX_PROVIDER="local"; uvicorn web.main:app --reload`
+
+## Salida de tests en versión web
+
+- La salida "Ver detalles" se sanitiza para no exponer internals de tests (rutas, nombres internos y frames de traceback).
+- Se muestra al inicio `Tests ejecutados: X`, donde `X` es la cantidad de subtests ejecutados para ese ejercicio.
 
 Si algún proceso queda en ejecución, es necesario matar los procesos Python (ejemplo en Windows: `taskkill /F /IM python.exe`).
