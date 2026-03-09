@@ -129,4 +129,4 @@ logical reasoning and programming fundamentals. This is why some functions sugge
 
 All the challenges in the project can be solved without the need of importing any libraries (so only the function bodies should be modified).
 
-Also, the challenge topics suggest specific data types and structures to help improve algorithmic thinking, even when there might be more efficient solutions. Feel free to solve the problems in any way you think best, as this is only a suggestion.
+Also, the challenge categories/topics suggest specific data types and structures to use, in order to help improve algorithmic thinking, even when there might be more efficient solutions. Feel free to solve the problems in any way you think best, as this is only a suggestion.
