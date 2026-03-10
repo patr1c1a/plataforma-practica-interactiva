@@ -229,6 +229,7 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
   - `EXECUTION_DOCKER_CPUS` (default `0.5`)
   - `EXECUTION_DOCKER_MEMORY` (default `128m`)
   - `EXECUTION_DOCKER_PIDS` (default `64`)
+  - El runner Docker se ejecuta con `--cap-drop ALL` y `--security-opt no-new-privileges`
 
 ### Límites y protecciones web (entorno público)
 
@@ -236,9 +237,10 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
   - `RUN_RATE_LIMIT_WINDOW_SECONDS` (default `60`)
   - `RUN_RATE_LIMIT_MAX_REQUESTS` (default `20`)
   - `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS` (default `5000`)
+  - `TRUST_X_FORWARDED_PROTO` (default deshabilitado)
   - `TRUST_X_FORWARDED_FOR` (default deshabilitado)
-  - `TRUSTED_PROXY_IPS` (lista de IPs confiables separadas por comas)
-  - Recomendado: habilitar `TRUST_X_FORWARDED_FOR` solo detrás de un reverse proxy confiable y configurando `TRUSTED_PROXY_IPS` (advertencia: si se activa `TRUST_X_FORWARDED_FOR` y se deja `TRUSTED_PROXY_IPS` vacío, la app confiará en `X-Forwarded-For` enviado por cualquier cliente, lo que es inseguro para internet público).
+  - `TRUSTED_PROXY_IPS` (lista de IPs confiables separadas por comas; aplica para `X-Forwarded-For` y `X-Forwarded-Proto`)
+  - Recomendado: habilitar `TRUST_X_FORWARDED_FOR` y/o `TRUST_X_FORWARDED_PROTO` solo detrás de un reverse proxy confiable y configurando `TRUSTED_PROXY_IPS` (advertencia: si se activan y `TRUSTED_PROXY_IPS` queda vacío, la app puede confiar en headers enviados por clientes no confiables, inseguro para internet público)
 - Límite global de ejecuciones simultáneas:
   - `RUN_MAX_CONCURRENT_EXECUTIONS` (default `4`)
 - Límite de tamaño de body para `/run`:

@@ -3,6 +3,7 @@ import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
+import web.app.services.execution as execution_module
 from web.app.services.execution import (
     _build_user_facing_output,
     _extract_subtests_executed,
@@ -189,6 +190,30 @@ class TestExecutionService(unittest.TestCase):
         self.assertTrue(user_output.startswith("Tests ejecutados: 5"))
         self.assertIn("AssertionError:", user_output)
         self.assertIn("FAILED (failures=3)", user_output)
+
+    @patch("web.app.services.execution.subprocess.run")
+    def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
+        self,
+        subprocess_run_mock,
+    ) -> None:
+        subprocess_run_mock.return_value = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout="",
+            stderr="",
+        )
+
+        execution_module._run_docker_unittest(
+            tmp_path=Path("."),
+            category="numeros",
+            function_name="menor",
+        )
+
+        command = subprocess_run_mock.call_args.args[0]
+        self.assertIn("--cap-drop", command)
+        self.assertIn("ALL", command)
+        self.assertIn("--security-opt", command)
+        self.assertIn("no-new-privileges", command)
 
 
 if __name__ == "__main__":

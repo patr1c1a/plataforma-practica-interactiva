@@ -39,6 +39,14 @@ CONTENT_SECURITY_POLICY = os.getenv(
     "SECURITY_CONTENT_SECURITY_POLICY",
     DEFAULT_CONTENT_SECURITY_POLICY,
 ).strip()
+TRUST_X_FORWARDED_PROTO = (
+    os.getenv("TRUST_X_FORWARDED_PROTO", "").strip().lower() in {"1", "true", "yes"}
+)
+TRUSTED_PROXY_IPS = {
+    value.strip()
+    for value in os.getenv("TRUSTED_PROXY_IPS", "").split(",")
+    if value.strip()
+}
 
 
 class _RequestBodyTooLargeError(Exception):
@@ -140,7 +148,13 @@ async def add_security_headers(request: Request, call_next):
     response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
     response.headers.setdefault("Content-Security-Policy", CONTENT_SECURITY_POLICY)
 
-    forwarded_proto = request.headers.get("x-forwarded-proto", "").split(",")[0].strip().lower()
+    remote_host = request.client.host if request.client and request.client.host else ""
+    forwarded_proto = ""
+    if TRUST_X_FORWARDED_PROTO and (not TRUSTED_PROXY_IPS or remote_host in TRUSTED_PROXY_IPS):
+        forwarded_proto = (
+            request.headers.get("x-forwarded-proto", "").split(",")[0].strip().lower()
+        )
+
     request_is_https = request.url.scheme == "https" or forwarded_proto == "https"
     if request_is_https:
         response.headers.setdefault(

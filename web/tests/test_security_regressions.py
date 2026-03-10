@@ -67,6 +67,18 @@ class TestSecurityRegressions(unittest.TestCase):
             "Traversal-like category names must be rejected.",
         )
 
+    def test_untrusted_x_forwarded_proto_does_not_enable_hsts(self) -> None:
+        response = self.client.get(
+            "/health",
+            headers={"x-forwarded-proto": "https"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(
+            response.headers.get("strict-transport-security"),
+            "HSTS should not be enabled from untrusted X-Forwarded-Proto.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
