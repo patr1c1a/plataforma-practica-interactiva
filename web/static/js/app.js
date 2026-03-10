@@ -591,7 +591,7 @@
         resetButton.dataset.initialized = "true";
 
         resetButton.addEventListener("click", function () {
-            const confirmed = confirm("Â¿EstÃ¡s seguro de que querÃ©s borrar todo el progreso?");
+            const confirmed = confirm("Esto borra todo el progreso. ¿Deseas continuar?");
             if (!confirmed) return;
 
             localStorage.removeItem(PROGRESS_STORAGE_KEY);
