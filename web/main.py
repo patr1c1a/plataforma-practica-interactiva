@@ -237,7 +237,7 @@ def offline_instructions(request: Request):
             "problem_description": None,
             "view": "offline",
             "offline_repo_url": (
-                "https://github.com/programacion-desde-cero/plataforma-ejercicios/"
+                "https://github.com/patr1c1a/plataforma-practica-interactiva/"
                 "tree/main/content/python/"
             ),
             "offline_download_esp_url": "/offline/download/esp",
