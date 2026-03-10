@@ -4,6 +4,10 @@
 
 This project is a tool you can use to practise programming challenges (or exercises) for beginners, using Python 3.
 
+It is designed to be the practical continuation of the free introductory programming course on the YouTube channel "Programación Desde Cero", and a preliminary step before tackling more complex exercises such as those in the book "[24 Días, 24 Desafíos de Código](https://patriciaemiguel.com/libro24desafios/)".
+
+The tool does not require an internet connection (it can be run completely offline). You just need to have Python installed and use a text editor (or an IDE) to solve the exercises, and a terminal to run the tests that verify them.
+
 Exercises are mainly intended to help develop algorithmic and logical reasoning skills as well as learn how to work with programming fundamentals. It doesn't focus on learning the perks of the Python language. That's why in most cases you're encouraged to build your own solution without using the built-in solutions that Python offers.
 
 Challenges are divided into categories (or topics) to help you practise with specific data types and structures, but that doesn't mean there can't be other possible solutions (which might even be more efficient).

@@ -4,6 +4,10 @@
 
 Este proyecto es una herramienta con la cual practicar desafíos (o ejercicios) de programación, desde un nivel inicial, usando Python 3.
 
+Puede entenderse como la continuación práctica del curso gratuito de introducción a la programación en el canal de youtube "Programación Desde Cero", y también como un paso previo a la resolución de ejercicios más complejos como los que se desarrollan en el libro "[24 Días, 24 Desafíos de Código](https://patriciaemiguel.com/libro24desafios/)".
+
+La herramienta no requiere conexión a internet (se puede ejecutar totalmente "offline"). Basta con tener Python instalado y usar un editor de texto (o un IDE) para resolver los ejercicios y una terminal para ejecutar las pruebas que los verifican.
+
 Los ejercicios se enfocan en desarrollar habilidades algorítmicas y de razonamiento lógico así como aprender a trabajar con las bases de la programación y los tipos de datos fundamentales. No se centra en aprender los detalles del lenguaje Python. Es por ello que se alienta a que desarrolles tus propias soluciones evitando utilizar algunas herramientas que provee el lenguaje.
 
 Los desafíos se dividen en temas para ayudarte a practicar ciertos tipos y estructuras de datos, pero eso no excluye
