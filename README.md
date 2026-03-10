@@ -235,6 +235,10 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 - Límite de requests de ejecución por cliente:
   - `RUN_RATE_LIMIT_WINDOW_SECONDS` (default `60`)
   - `RUN_RATE_LIMIT_MAX_REQUESTS` (default `20`)
+  - `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS` (default `5000`)
+  - `TRUST_X_FORWARDED_FOR` (default deshabilitado)
+  - `TRUSTED_PROXY_IPS` (lista de IPs confiables separadas por comas)
+  - Recomendado: habilitar `TRUST_X_FORWARDED_FOR` solo detrás de un reverse proxy confiable y configurando `TRUSTED_PROXY_IPS`
 - Límite global de ejecuciones simultáneas:
   - `RUN_MAX_CONCURRENT_EXECUTIONS` (default `4`)
 - Límite de tamaño de body para `/run`:

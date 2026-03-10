@@ -53,6 +53,7 @@ BLOCKED_ATTRIBUTE_NAMES = {
     "__closure__",
     "__getattribute__",
 }
+SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
 class ExecutionResult(TypedDict, total=False):
@@ -121,6 +122,10 @@ def _error_result(status: str, message: str) -> ExecutionResult:
         "status": status,
         "raw_output": message,
     }
+
+
+def _is_safe_identifier(value: str) -> bool:
+    return bool(SAFE_IDENTIFIER_PATTERN.fullmatch(value))
 
 
 def _is_production_environment() -> bool:
@@ -440,6 +445,12 @@ def _build_user_facing_output(raw_output: str) -> str:
 
 
 def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
+    if not _is_safe_identifier(category) or not _is_safe_identifier(function_name):
+        return _error_result(
+            "error",
+            "Error interno: identificador de categorÃ­a o funciÃ³n no vÃ¡lido.",
+        )
+
     base_content = Path("content/python/ESP")
 
     src_file = base_content / "src" / f"{category}.py"

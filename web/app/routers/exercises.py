@@ -1,4 +1,5 @@
 import os
+import re
 import time
 from collections import deque
 from threading import Lock
@@ -35,6 +36,18 @@ RUN_RATE_LIMIT_MAX_REQUESTS = int(
 RUN_MAX_CONCURRENT_EXECUTIONS = int(
     os.getenv("RUN_MAX_CONCURRENT_EXECUTIONS", "4")
 )
+RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS = int(
+    os.getenv("RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS", "5000")
+)
+TRUST_X_FORWARDED_FOR = (
+    os.getenv("TRUST_X_FORWARDED_FOR", "").strip().lower() in {"1", "true", "yes"}
+)
+TRUSTED_PROXY_IPS = {
+    value.strip()
+    for value in os.getenv("TRUSTED_PROXY_IPS", "").split(",")
+    if value.strip()
+}
+SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 _run_rate_limit_lock = Lock()
 _run_requests_by_client: dict[str, deque[float]] = {}
@@ -66,16 +79,53 @@ def render_with_optional_fragment(
 
 
 def _get_client_identifier(request: Request) -> str:
+    remote_host = request.client.host if request.client and request.client.host else "unknown"
+    if not TRUST_X_FORWARDED_FOR:
+        return remote_host
+
+    # Only trust forwarded headers when the immediate peer is a trusted proxy.
+    if TRUSTED_PROXY_IPS and remote_host not in TRUSTED_PROXY_IPS:
+        return remote_host
+
     x_forwarded_for = request.headers.get("x-forwarded-for")
-    if x_forwarded_for:
-        first_ip = x_forwarded_for.split(",")[0].strip()
-        if first_ip:
-            return first_ip
+    if not x_forwarded_for:
+        return remote_host
 
-    if request.client and request.client.host:
-        return request.client.host
+    first_ip = x_forwarded_for.split(",")[0].strip()
+    if not first_ip:
+        return remote_host
 
-    return "unknown"
+    return first_ip
+
+
+def _is_safe_identifier(value: str) -> bool:
+    return bool(SAFE_IDENTIFIER_PATTERN.fullmatch(value))
+
+
+def _cleanup_stale_rate_limit_entries(now: float) -> None:
+    cutoff = now - RUN_RATE_LIMIT_WINDOW_SECONDS
+    clients_to_remove: list[str] = []
+
+    for client_id, request_times in _run_requests_by_client.items():
+        while request_times and request_times[0] <= cutoff:
+            request_times.popleft()
+        if not request_times:
+            clients_to_remove.append(client_id)
+
+    for client_id in clients_to_remove:
+        _run_requests_by_client.pop(client_id, None)
+
+    tracked_clients = len(_run_requests_by_client)
+    if tracked_clients <= RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS:
+        return
+
+    overflow = tracked_clients - RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS
+    oldest_clients = sorted(
+        _run_requests_by_client.items(),
+        key=lambda item: item[1][-1] if item[1] else float("-inf"),
+    )[:overflow]
+    for client_id, _ in oldest_clients:
+        _run_requests_by_client.pop(client_id, None)
 
 
 def _try_start_execution(client_id: str) -> tuple[bool, int, str | None]:
@@ -83,6 +133,7 @@ def _try_start_execution(client_id: str) -> tuple[bool, int, str | None]:
     appended_timestamp = False
 
     with _run_rate_limit_lock:
+        _cleanup_stale_rate_limit_entries(now)
         request_times = _run_requests_by_client.setdefault(client_id, deque())
         cutoff = now - RUN_RATE_LIMIT_WINDOW_SECONDS
 
@@ -162,6 +213,9 @@ def list_exercises(request: Request):
 
 @router.get("/exercises/{category}")
 def list_category_exercises(request: Request, category: str):
+    if not _is_safe_identifier(category):
+        return HTMLResponse(status_code=404, content="Categoria no encontrada")
+
     functions = get_category_functions(category)
     if functions is None:
         return HTMLResponse(status_code=404, content="Categoria no encontrada")
@@ -190,8 +244,14 @@ def list_category_exercises(request: Request, category: str):
 
 @router.get("/exercises/{category}/{function_name}")
 def exercise_detail(request: Request, category: str, function_name: str):
+    if not _is_safe_identifier(category) or not _is_safe_identifier(function_name):
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
+
     all_exercises = get_exercise_groups()
     category_cards = get_ordered_category_cards(all_exercises)
+    functions = all_exercises.get(category)
+    if not functions or function_name not in functions:
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
 
     try:
         function_details = exercise_repository.get_function_details(category, function_name)
@@ -209,7 +269,11 @@ def exercise_detail(request: Request, category: str, function_name: str):
         for category_name, function_names in all_exercises.items()
         for function in function_names
     ]
-    current_index = ordered_exercises.index((category, function_name))
+    current_exercise = (category, function_name)
+    if current_exercise not in ordered_exercises:
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
+
+    current_index = ordered_exercises.index(current_exercise)
     previous_exercise = ordered_exercises[current_index - 1] if current_index > 0 else None
     next_exercise = (
         ordered_exercises[current_index + 1]
@@ -246,6 +310,13 @@ def exercise_detail(request: Request, category: str, function_name: str):
 def run_exercise(
     request: Request, category: str, function_name: str, code: str = Form(...)
 ):
+    if not _is_safe_identifier(category) or not _is_safe_identifier(function_name):
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
+
+    functions = get_category_functions(category)
+    if functions is None or function_name not in functions:
+        return HTMLResponse(status_code=404, content="Funcion no encontrada")
+
     client_id = _get_client_identifier(request)
     can_start, status_code, error_message = _try_start_execution(client_id)
     if not can_start:

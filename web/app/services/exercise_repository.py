@@ -1,4 +1,5 @@
 import ast
+import re
 from pathlib import Path
 from typing import TypedDict
 
@@ -18,6 +19,9 @@ class ExerciseFunctionDetails(TypedDict):
     signature: str
 
 
+SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
 class ExerciseRepository:
     def __init__(self, base_exercises_path: Path | None = None) -> None:
         self._base_exercises_path = base_exercises_path or BASE_EXERCISES_PATH
@@ -25,7 +29,16 @@ class ExerciseRepository:
     def get_function_details(
         self, category: str, function_name: str
     ) -> ExerciseFunctionDetails:
-        file_path = self._base_exercises_path / f"{category}.py"
+        if not SAFE_IDENTIFIER_PATTERN.fullmatch(category):
+            raise CategoryNotFoundError(category)
+        if not SAFE_IDENTIFIER_PATTERN.fullmatch(function_name):
+            raise FunctionNotFoundError(function_name)
+
+        base_path = self._base_exercises_path.resolve()
+        file_path = (self._base_exercises_path / f"{category}.py").resolve()
+        if base_path not in file_path.parents:
+            raise CategoryNotFoundError(category)
+
         if not file_path.exists():
             raise CategoryNotFoundError(category)
 
