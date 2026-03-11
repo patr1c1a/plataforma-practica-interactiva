@@ -15,7 +15,7 @@ EXECUTION_TIMEOUT_SECONDS = 10
 
 SANDBOX_PROVIDER = os.getenv("EXECUTION_SANDBOX_PROVIDER", "docker").strip().lower()
 DOCKER_IMAGE = os.getenv(
-    "EXECUTION_DOCKER_IMAGE", "plataforma-ejercicios-runner:latest"
+    "EXECUTION_DOCKER_IMAGE", "plataforma-practica-interactiva-runner:latest"
 ).strip()
 DOCKER_CPUS_LIMIT = os.getenv("EXECUTION_DOCKER_CPUS", "0.5").strip()
 DOCKER_MEMORY_LIMIT = os.getenv("EXECUTION_DOCKER_MEMORY", "128m").strip()

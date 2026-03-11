@@ -21,7 +21,7 @@ El foco del proyecto está puesto en el razonamiento algorítmico, la lectura de
 ## Estructura general del repositorio
 
 ```raw
-plataforma-ejercicios/
+plataforma-practica-interactiva/
 │
 ├── content/  # Contenido educativo (versión offline)
 │├── python/
@@ -201,7 +201,7 @@ La versión web ejecuta las pruebas de usuarios en un contenedor Docker aislado 
 
 Desde la raíz del proyecto:
 
-`docker build -t plataforma-ejercicios-runner:latest -f web/sandbox_runner/Dockerfile .`
+`docker build -t plataforma-practica-interactiva-runner:latest -f web/sandbox_runner/Dockerfile .`
 
 Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/Dockerfile.
 
@@ -212,7 +212,7 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 - Levantar la app (ejemplo): `uvicorn web.main:app --reload`
 - Docker no es necesario para levantar la app.
 - Docker sí es necesario para ejecutar código de usuarios cuando `EXECUTION_SANDBOX_PROVIDER=docker` (default).
-- Verificar imagen Docker disponible (opcional, recomendado): `docker images | findstr plataforma-ejercicios-runner`
+- Verificar imagen Docker disponible (opcional, recomendado): `docker images | findstr plataforma-practica-interactiva-runner`
 - Si algún proceso queda en ejecución, es necesario matar los procesos Python (ejemplo en Windows: `taskkill /F /IM python.exe`).
 
 ### Configuración del sandbox
@@ -224,7 +224,7 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
   - default: deshabilitado
   - habilita `local` en producción solo si vale `1`, `true` o `yes`
   - recomendado: mantener deshabilitado en internet público
-- `EXECUTION_DOCKER_IMAGE`: imagen a usar (default `plataforma-ejercicios-runner:latest`)
+- `EXECUTION_DOCKER_IMAGE`: imagen a usar (default `plataforma-practica-interactiva-runner:latest`)
 - Limites opcionales:
   - `EXECUTION_DOCKER_CPUS` (default `0.5`)
   - `EXECUTION_DOCKER_MEMORY` (default `128m`)
