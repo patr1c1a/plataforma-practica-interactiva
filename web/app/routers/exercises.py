@@ -84,7 +84,7 @@ def _get_client_identifier(request: Request) -> str:
         return remote_host
 
     # Only trust forwarded headers when the immediate peer is a trusted proxy.
-    if TRUSTED_PROXY_IPS and remote_host not in TRUSTED_PROXY_IPS:
+    if remote_host not in TRUSTED_PROXY_IPS:
         return remote_host
 
     x_forwarded_for = request.headers.get("x-forwarded-for")

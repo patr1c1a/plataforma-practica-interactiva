@@ -150,7 +150,7 @@ async def add_security_headers(request: Request, call_next):
 
     remote_host = request.client.host if request.client and request.client.host else ""
     forwarded_proto = ""
-    if TRUST_X_FORWARDED_PROTO and (not TRUSTED_PROXY_IPS or remote_host in TRUSTED_PROXY_IPS):
+    if TRUST_X_FORWARDED_PROTO and remote_host in TRUSTED_PROXY_IPS:
         forwarded_proto = (
             request.headers.get("x-forwarded-proto", "").split(",")[0].strip().lower()
         )
