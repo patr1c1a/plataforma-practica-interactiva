@@ -112,7 +112,7 @@
         if (!textarea) return;
 
         if (textarea._initialCode === undefined) {
-            textarea._initialCode = textarea.value;
+            textarea._initialCode = textarea.dataset.initialCode ?? textarea.defaultValue ?? "";
         }
 
         // If CodeMirror was already used, do not initialize again

@@ -93,10 +93,10 @@
 
 <h3>Código</h3>
 
-<form hx-post="/exercises/{{ category_name }}/{{ function_name }}/run" hx-target="#result" hx-swap="innerHTML"
-  hx-on::before-request="document.getElementById('result').innerHTML = ''">
+<form hx-post="/exercises/{{ category_name }}/{{ function_name }}/run" hx-target="#result" hx-swap="innerHTML">
   <textarea id="code-editor" name="code"
-    data-storage-key="exercise-{{ category_name }}-{{ function_name }}">{{ function_signature }}</textarea>
+    data-storage-key="exercise-{{ category_name }}-{{ function_name }}"
+    data-initial-code="{{ function_signature|e }}">{{ function_signature }}</textarea>
 
   <br><br>
 
