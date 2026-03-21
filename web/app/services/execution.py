@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from typing import TypedDict
@@ -20,6 +21,18 @@ DOCKER_IMAGE = os.getenv(
 DOCKER_CPUS_LIMIT = os.getenv("EXECUTION_DOCKER_CPUS", "0.5").strip()
 DOCKER_MEMORY_LIMIT = os.getenv("EXECUTION_DOCKER_MEMORY", "128m").strip()
 DOCKER_PIDS_LIMIT = os.getenv("EXECUTION_DOCKER_PIDS", "64").strip()
+LOCAL_SANDBOX_MAX_MEMORY_BYTES = int(
+    os.getenv("EXECUTION_LOCAL_MAX_MEMORY_BYTES", "0").strip() or "0"
+)
+LOCAL_SANDBOX_MAX_FILE_BYTES = int(
+    os.getenv("EXECUTION_LOCAL_MAX_FILE_BYTES", "0").strip() or "0"
+)
+LOCAL_SANDBOX_MAX_PROCESSES = int(
+    os.getenv("EXECUTION_LOCAL_MAX_PROCESSES", "0").strip() or "0"
+)
+LOCAL_SANDBOX_MAX_CPU_SECONDS = int(
+    os.getenv("EXECUTION_LOCAL_MAX_CPU_SECONDS", "0").strip() or "0"
+)
 ALLOW_LOCAL_IN_PRODUCTION = (
     os.getenv("EXECUTION_ALLOW_LOCAL_IN_PROD", "").strip().lower() in {"1", "true", "yes"}
 )
@@ -69,6 +82,9 @@ import importlib
 import io
 import sys
 import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 category = sys.argv[1]
 function_name = sys.argv[2]
@@ -225,13 +241,80 @@ def _validate_user_submission(
 
 def _build_unittest_command(category: str, function_name: str) -> list[str]:
     return [
-        "python",
+        sys.executable,
+        "-I",
         "-S",
         "-B",
         UNITTEST_RUNNER_FILENAME,
         category,
         function_name,
     ]
+
+
+def _build_local_subprocess_env() -> dict[str, str]:
+    allowed_host_env_names = {
+        "SYSTEMROOT",
+        "WINDIR",
+        "COMSPEC",
+        "PATHEXT",
+        "TMP",
+        "TEMP",
+        "TMPDIR",
+        "LANG",
+        "LC_ALL",
+    }
+    subprocess_env = {
+        key: value
+        for key, value in os.environ.items()
+        if key.upper() in allowed_host_env_names
+    }
+    subprocess_env.update(
+        {
+            "PYTHONIOENCODING": "utf-8",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "PYTHONNOUSERSITE": "1",
+        }
+    )
+    return subprocess_env
+
+
+def _build_local_preexec_fn():
+    if os.name == "nt":
+        return None
+
+    if (
+        LOCAL_SANDBOX_MAX_MEMORY_BYTES <= 0
+        and LOCAL_SANDBOX_MAX_FILE_BYTES <= 0
+        and LOCAL_SANDBOX_MAX_PROCESSES <= 0
+        and LOCAL_SANDBOX_MAX_CPU_SECONDS <= 0
+    ):
+        return None
+
+    def _apply_limits() -> None:
+        import resource
+
+        if LOCAL_SANDBOX_MAX_MEMORY_BYTES > 0:
+            resource.setrlimit(
+                resource.RLIMIT_AS,
+                (LOCAL_SANDBOX_MAX_MEMORY_BYTES, LOCAL_SANDBOX_MAX_MEMORY_BYTES),
+            )
+        if LOCAL_SANDBOX_MAX_FILE_BYTES > 0:
+            resource.setrlimit(
+                resource.RLIMIT_FSIZE,
+                (LOCAL_SANDBOX_MAX_FILE_BYTES, LOCAL_SANDBOX_MAX_FILE_BYTES),
+            )
+        if LOCAL_SANDBOX_MAX_PROCESSES > 0:
+            resource.setrlimit(
+                resource.RLIMIT_NPROC,
+                (LOCAL_SANDBOX_MAX_PROCESSES, LOCAL_SANDBOX_MAX_PROCESSES),
+            )
+        if LOCAL_SANDBOX_MAX_CPU_SECONDS > 0:
+            resource.setrlimit(
+                resource.RLIMIT_CPU,
+                (LOCAL_SANDBOX_MAX_CPU_SECONDS, LOCAL_SANDBOX_MAX_CPU_SECONDS),
+            )
+
+    return _apply_limits
 
 
 def _run_local_unittest(tmp_path: Path, category: str, function_name: str) -> subprocess.CompletedProcess[str]:
@@ -241,12 +324,8 @@ def _run_local_unittest(tmp_path: Path, category: str, function_name: str) -> su
         capture_output=True,
         text=True,
         timeout=EXECUTION_TIMEOUT_SECONDS,
-        env={
-            **os.environ,
-            "PYTHONIOENCODING": "utf-8",
-            "PYTHONDONTWRITEBYTECODE": "1",
-            "PYTHONNOUSERSITE": "1",
-        },
+        env=_build_local_subprocess_env(),
+        preexec_fn=_build_local_preexec_fn(),
     )
 
 
@@ -492,6 +571,8 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
         tmp_tests = tmp_path / "tests"
         tmp_src.mkdir()
         tmp_tests.mkdir()
+        (tmp_src / "__init__.py").write_text("", encoding="utf-8")
+        (tmp_tests / "__init__.py").write_text("", encoding="utf-8")
 
         shutil.copy(src_file, tmp_src / src_file.name)
         shutil.copy(test_file, tmp_tests / test_file.name)

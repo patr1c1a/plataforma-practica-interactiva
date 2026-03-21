@@ -1,6 +1,7 @@
 import unittest
 import subprocess
 from pathlib import Path
+import sys
 from unittest.mock import patch
 
 import web.app.services.execution as execution_module
@@ -214,6 +215,64 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("ALL", command)
         self.assertIn("--security-opt", command)
         self.assertIn("no-new-privileges", command)
+
+    @patch("web.app.services.execution.subprocess.run")
+    def test_local_unittest_command_uses_current_python_in_isolated_mode(
+        self,
+        subprocess_run_mock,
+    ) -> None:
+        subprocess_run_mock.return_value = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout="",
+            stderr="",
+        )
+
+        execution_module._run_local_unittest(
+            tmp_path=Path("."),
+            category="numeros",
+            function_name="menor",
+        )
+
+        command = subprocess_run_mock.call_args.args[0]
+        self.assertEqual(command[0], sys.executable)
+        self.assertIn("-I", command)
+        self.assertIn("-S", command)
+        self.assertIn("-B", command)
+
+    @patch.dict(
+        "web.app.services.execution.os.environ",
+        {
+            "SECRET_KEY": "top-secret",
+            "PYTHONPATH": "custom-path",
+            "SYSTEMROOT": r"C:\Windows",
+            "TMP": r"C:\Temp",
+        },
+        clear=True,
+    )
+    def test_local_subprocess_env_keeps_only_whitelisted_host_variables(self) -> None:
+        subprocess_env = execution_module._build_local_subprocess_env()
+
+        self.assertNotIn("SECRET_KEY", subprocess_env)
+        self.assertNotIn("PYTHONPATH", subprocess_env)
+        self.assertEqual(subprocess_env["SYSTEMROOT"], r"C:\Windows")
+        self.assertEqual(subprocess_env["TMP"], r"C:\Temp")
+        self.assertEqual(subprocess_env["PYTHONIOENCODING"], "utf-8")
+        self.assertEqual(subprocess_env["PYTHONNOUSERSITE"], "1")
+
+    def test_local_preexec_fn_is_disabled_without_local_limits(self) -> None:
+        with (
+            patch("web.app.services.execution.os.name", "posix"),
+            patch("web.app.services.execution.LOCAL_SANDBOX_MAX_MEMORY_BYTES", 0),
+            patch("web.app.services.execution.LOCAL_SANDBOX_MAX_FILE_BYTES", 0),
+            patch("web.app.services.execution.LOCAL_SANDBOX_MAX_PROCESSES", 0),
+            patch("web.app.services.execution.LOCAL_SANDBOX_MAX_CPU_SECONDS", 0),
+        ):
+            self.assertIsNone(execution_module._build_local_preexec_fn())
+
+    def test_local_preexec_fn_is_disabled_on_windows(self) -> None:
+        with patch("web.app.services.execution.os.name", "nt"):
+            self.assertIsNone(execution_module._build_local_preexec_fn())
 
 
 if __name__ == "__main__":

@@ -224,6 +224,12 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
   - default: deshabilitado
   - habilita `local` en producción solo si vale `1`, `true` o `yes`
   - recomendado: mantener deshabilitado en internet público
+- Restricción opcional para `local`:
+  - `EXECUTION_LOCAL_MAX_MEMORY_BYTES`: límite de memoria del proceso hijo en bytes (solo POSIX/Linux)
+  - `EXECUTION_LOCAL_MAX_FILE_BYTES`: tamaño máximo de archivos que puede generar el proceso hijo en bytes (solo POSIX/Linux).
+  - `EXECUTION_LOCAL_MAX_PROCESSES`: límite de procesos hijo/subprocesos (solo POSIX/Linux).
+  - `EXECUTION_LOCAL_MAX_CPU_SECONDS`: límite de CPU del proceso hijo en segundos (solo POSIX/Linux).
+  - recomendado si se expone a internet con `local`: definir límites conservadores y ejecutar el servicio con un usuario sin privilegios.
 - `EXECUTION_DOCKER_IMAGE`: imagen a usar (default `plataforma-practica-interactiva-runner:latest`)
 - Limites opcionales:
   - `EXECUTION_DOCKER_CPUS` (default `0.5`)
