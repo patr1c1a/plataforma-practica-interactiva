@@ -164,6 +164,18 @@ class TestWebRoutes(unittest.TestCase):
         self.assertIn("demasiado grande", response.text)
         run_tests_mock.assert_not_called()
 
+    @patch("web.app.routers.exercises.run_tests")
+    def test_run_exercise_endpoint_can_be_disabled_via_env_toggle(self, run_tests_mock) -> None:
+        with patch.object(exercises_router_module, "EXECUTION_ENABLED", False):
+            response = self.client.post(
+                "/exercises/numeros/menor/run",
+                data={"code": "def menor(numero1, numero2): return numero1"},
+            )
+
+        self.assertEqual(response.status_code, 503)
+        self.assertIn("temporalmente deshabilitada", response.text)
+        run_tests_mock.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

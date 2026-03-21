@@ -239,16 +239,26 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 
 ### Límites y protecciones web (entorno público)
 
+- `EXECUTION_ENABLED`:
+  - default: `true`
+  - si vale `0`, `false` o `no`, deshabilita temporalmente `/run` y responde `503`
+  - útil como kill switch operativo sin redeploy de código
 - Límite de requests de ejecución por cliente:
   - `RUN_RATE_LIMIT_WINDOW_SECONDS` (default `60`)
-  - `RUN_RATE_LIMIT_MAX_REQUESTS` (default `20`)
-  - `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS` (default `5000`)
+  - `RUN_RATE_LIMIT_MAX_REQUESTS`:
+    - default local/dev: `20`
+    - default producción: `8`
+  - `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS`:
+    - default local/dev: `5000`
+    - default producción: `2000`
   - `TRUST_X_FORWARDED_PROTO` (default deshabilitado)
   - `TRUST_X_FORWARDED_FOR` (default deshabilitado)
   - `TRUSTED_PROXY_IPS` (lista de IPs confiables separadas por comas; aplica para `X-Forwarded-For` y `X-Forwarded-Proto`)
   - Recomendado: habilitar `TRUST_X_FORWARDED_FOR` y/o `TRUST_X_FORWARDED_PROTO` solo detrás de un reverse proxy confiable y configurando `TRUSTED_PROXY_IPS` (advertencia: si se activan y `TRUSTED_PROXY_IPS` queda vacío, la app puede confiar en headers enviados por clientes no confiables, inseguro para internet público)
 - Límite global de ejecuciones simultáneas:
-  - `RUN_MAX_CONCURRENT_EXECUTIONS` (default `4`)
+  - `RUN_MAX_CONCURRENT_EXECUTIONS`:
+    - default local/dev: `4`
+    - default producción: `1`
 - Límite de tamaño de body para `/run`:
   - `RUN_MAX_REQUEST_BODY_BYTES` (default `65536`)
 - CSP configurable:

@@ -27,18 +27,7 @@ templates = Jinja2Templates(directory="web/templates")
 problem_description_parser = ProblemDescriptionParser()
 exercise_repository = ExerciseRepository()
 
-RUN_RATE_LIMIT_WINDOW_SECONDS = int(
-    os.getenv("RUN_RATE_LIMIT_WINDOW_SECONDS", "60")
-)
-RUN_RATE_LIMIT_MAX_REQUESTS = int(
-    os.getenv("RUN_RATE_LIMIT_MAX_REQUESTS", "20")
-)
-RUN_MAX_CONCURRENT_EXECUTIONS = int(
-    os.getenv("RUN_MAX_CONCURRENT_EXECUTIONS", "4")
-)
-RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS = int(
-    os.getenv("RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS", "5000")
-)
+PRODUCTION_ENVIRONMENT_NAMES = {"prod", "production"}
 TRUST_X_FORWARDED_FOR = (
     os.getenv("TRUST_X_FORWARDED_FOR", "").strip().lower() in {"1", "true", "yes"}
 )
@@ -48,6 +37,42 @@ TRUSTED_PROXY_IPS = {
     if value.strip()
 }
 SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def _is_production_environment() -> bool:
+    for variable_name in ("APP_ENV", "ENVIRONMENT", "FASTAPI_ENV", "PYTHON_ENV"):
+        value = os.getenv(variable_name, "").strip().lower()
+        if value in PRODUCTION_ENVIRONMENT_NAMES:
+            return True
+
+    return False
+
+
+def _get_int_env(variable_name: str, default_value: int) -> int:
+    raw_value = os.getenv(variable_name)
+    if raw_value is None:
+        return default_value
+
+    return int(raw_value.strip())
+
+
+IS_PRODUCTION_ENVIRONMENT = _is_production_environment()
+EXECUTION_ENABLED = (
+    os.getenv("EXECUTION_ENABLED", "true").strip().lower() in {"1", "true", "yes"}
+)
+RUN_RATE_LIMIT_WINDOW_SECONDS = _get_int_env("RUN_RATE_LIMIT_WINDOW_SECONDS", 60)
+RUN_RATE_LIMIT_MAX_REQUESTS = _get_int_env(
+    "RUN_RATE_LIMIT_MAX_REQUESTS",
+    8 if IS_PRODUCTION_ENVIRONMENT else 20,
+)
+RUN_MAX_CONCURRENT_EXECUTIONS = _get_int_env(
+    "RUN_MAX_CONCURRENT_EXECUTIONS",
+    1 if IS_PRODUCTION_ENVIRONMENT else 4,
+)
+RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS = _get_int_env(
+    "RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS",
+    2000 if IS_PRODUCTION_ENVIRONMENT else 5000,
+)
 
 _run_rate_limit_lock = Lock()
 _run_requests_by_client: dict[str, deque[float]] = {}
@@ -312,6 +337,12 @@ def run_exercise(
 ):
     if not _is_safe_identifier(category) or not _is_safe_identifier(function_name):
         return HTMLResponse(status_code=404, content="Funcion no encontrada")
+
+    if not EXECUTION_ENABLED:
+        return HTMLResponse(
+            status_code=503,
+            content="La ejecucion de codigo esta temporalmente deshabilitada.",
+        )
 
     functions = get_category_functions(category)
     if functions is None or function_name not in functions:
