@@ -101,11 +101,21 @@ SUBTESTS_EXECUTED_MARKER = "SUBTESTS_EXECUTED:"
 UNITTEST_RUNNER_SCRIPT = f"""\
 import importlib
 import io
+import socket
 import sys
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+
+def _disabled_socket(*args, **kwargs):
+    raise RuntimeError("El acceso de red no está permitido durante la ejecución.")
+
+
+socket.socket = _disabled_socket
+socket.create_connection = _disabled_socket
+socket.create_server = _disabled_socket
 
 category = sys.argv[1]
 function_name = sys.argv[2]

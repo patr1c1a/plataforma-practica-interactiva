@@ -11,6 +11,7 @@ from web.app.services.execution import (
     _extract_subtests_executed,
     _run_sandboxed_unittest,
     _sanitize_unittest_output,
+    UNITTEST_RUNNER_SCRIPT,
     run_tests,
 )
 
@@ -250,6 +251,11 @@ class TestExecutionService(unittest.TestCase):
         user_output = _build_safe_error_output(raw_output, "runtime_error")
 
         self.assertEqual(user_output, "ZeroDivisionError: division by zero")
+
+    def test_unittest_runner_script_disables_socket_creation(self) -> None:
+        self.assertIn("import socket", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("socket.socket = _disabled_socket", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("socket.create_connection = _disabled_socket", UNITTEST_RUNNER_SCRIPT)
 
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
