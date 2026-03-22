@@ -367,6 +367,7 @@ def _run_local_unittest(tmp_path: Path, category: str, function_name: str) -> su
         cwd=tmp_path,
         capture_output=True,
         text=True,
+        stdin=subprocess.DEVNULL,
         timeout=EXECUTION_TIMEOUT_SECONDS,
         env=_build_local_subprocess_env(),
         preexec_fn=_build_local_preexec_fn(),
@@ -410,6 +411,7 @@ def _run_docker_unittest(
         docker_command,
         capture_output=True,
         text=True,
+        stdin=subprocess.DEVNULL,
         timeout=EXECUTION_TIMEOUT_SECONDS,
     )
 

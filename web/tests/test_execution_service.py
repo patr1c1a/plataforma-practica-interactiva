@@ -304,6 +304,10 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("ALL", command)
         self.assertIn("--security-opt", command)
         self.assertIn("no-new-privileges", command)
+        self.assertEqual(
+            subprocess_run_mock.call_args.kwargs["stdin"],
+            subprocess.DEVNULL,
+        )
 
     @patch("web.app.services.execution.subprocess.run")
     def test_local_unittest_command_uses_current_python_in_isolated_mode(
@@ -328,6 +332,10 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("-I", command)
         self.assertIn("-S", command)
         self.assertIn("-B", command)
+        self.assertEqual(
+            subprocess_run_mock.call_args.kwargs["stdin"],
+            subprocess.DEVNULL,
+        )
 
     @patch.dict(
         "web.app.services.execution.os.environ",
