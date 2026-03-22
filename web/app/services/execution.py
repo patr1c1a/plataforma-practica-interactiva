@@ -130,11 +130,7 @@ def _blocked_builtin(*args, **kwargs):
     raise RuntimeError("La operacion solicitada no esta permitida durante la ejecucion.")
 
 
-builtins.open = _blocked_builtin
 builtins.input = _blocked_builtin
-builtins.eval = _blocked_builtin
-builtins.exec = _blocked_builtin
-builtins.compile = _blocked_builtin
 builtins.breakpoint = _blocked_builtin
 
 def filter_suite(input_suite):

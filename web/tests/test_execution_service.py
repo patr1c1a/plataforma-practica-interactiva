@@ -96,6 +96,24 @@ class TestExecutionService(unittest.TestCase):
         self.assertEqual(result["status"], "error")
         self.assertIn("raise", result["raw_output"])
 
+    def test_wrong_answer_keeps_multiple_failed_cases_without_internal_runner_noise(self) -> None:
+        with (
+            patch("web.app.services.execution.SANDBOX_PROVIDER", "local"),
+            patch("web.app.services.execution._is_production_environment", return_value=False),
+        ):
+            result = run_tests(
+                category="numeros",
+                function_name="menor",
+                user_code=(
+                    "def menor(numero1, numero2):\n"
+                    "    return 6\n"
+                ),
+            )
+
+        self.assertEqual(result["status"], "fail")
+        self.assertGreater(len(result["failed_cases"]), 1)
+        self.assertNotIn("RuntimeError: La operacion solicitada", result["raw_output"])
+
     def test_blocks_local_sandbox_in_production_by_default(self) -> None:
         with (
             patch("web.app.services.execution.SANDBOX_PROVIDER", "local"),
@@ -259,9 +277,9 @@ class TestExecutionService(unittest.TestCase):
 
     def test_unittest_runner_script_blocks_dangerous_builtins(self) -> None:
         self.assertIn("import builtins", UNITTEST_RUNNER_SCRIPT)
-        self.assertIn("builtins.open = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
-        self.assertIn("builtins.eval = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
-        self.assertIn("builtins.exec = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.input = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.breakpoint = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertNotIn("builtins.open = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
 
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
