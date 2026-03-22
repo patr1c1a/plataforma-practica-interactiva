@@ -110,6 +110,7 @@ import unittest
 import builtins
 from pathlib import Path
 import os
+import subprocess
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 os.environ.clear()
@@ -140,6 +141,13 @@ builtins.breakpoint = _blocked_builtin
 builtins.help = _blocked_builtin
 builtins.exit = _blocked_builtin
 builtins.quit = _blocked_builtin
+subprocess.run = _blocked_builtin
+subprocess.Popen = _blocked_builtin
+subprocess.call = _blocked_builtin
+subprocess.check_call = _blocked_builtin
+subprocess.check_output = _blocked_builtin
+os.system = _blocked_builtin
+os.popen = _blocked_builtin
 
 def filter_suite(input_suite):
     selected = unittest.TestSuite()

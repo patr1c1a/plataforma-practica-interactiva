@@ -323,6 +323,13 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("import os", UNITTEST_RUNNER_SCRIPT)
         self.assertIn("os.environ.clear()", UNITTEST_RUNNER_SCRIPT)
 
+    def test_unittest_runner_script_blocks_process_spawning_helpers(self) -> None:
+        self.assertIn("import subprocess", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("subprocess.run = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("subprocess.Popen = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("os.system = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("os.popen = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
         self,
