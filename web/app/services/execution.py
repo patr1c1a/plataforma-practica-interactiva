@@ -219,6 +219,11 @@ def _validate_user_submission(
                 "error",
                 "No se permiten clases en la resolución.",
             )
+        if isinstance(node, ast.AsyncFunctionDef):
+            return _error_result(
+                "error",
+                "No se permiten funciones async en el código enviado.",
+            )
         if not isinstance(node, ast.FunctionDef):
             return _error_result(
                 "error",
