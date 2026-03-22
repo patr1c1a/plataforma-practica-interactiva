@@ -97,6 +97,21 @@ class TestExecutionService(unittest.TestCase):
         self.assertEqual(result["status"], "error")
         self.assertIn("funciones async", result["raw_output"])
 
+    def test_blocks_nested_functions(self) -> None:
+        result = run_tests(
+            category="numeros",
+            function_name="menor",
+            user_code=(
+                "def menor(numero1, numero2):\n"
+                "    def auxiliar(valor):\n"
+                "        return valor\n"
+                "    return auxiliar(numero1)\n"
+            ),
+        )
+
+        self.assertEqual(result["status"], "error")
+        self.assertIn("funciones anidadas", result["raw_output"])
+
     def test_blocks_raise_statements(self) -> None:
         result = run_tests(
             category="numeros",

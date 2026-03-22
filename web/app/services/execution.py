@@ -256,6 +256,12 @@ def _validate_user_submission(
                 "No está permitido importar módulos externos.",
             )
 
+        if isinstance(node, ast.FunctionDef) and node not in parsed_user_ast.body:
+            return _error_result(
+                "error",
+                "No se permiten funciones anidadas en el código enviado.",
+            )
+
         if isinstance(node, (ast.Global, ast.Nonlocal, ast.Lambda)):
             return _error_result(
                 "error",
