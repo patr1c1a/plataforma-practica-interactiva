@@ -11,6 +11,7 @@ from web.app.services.execution import (
     _extract_subtests_executed,
     _run_sandboxed_unittest,
     _sanitize_unittest_output,
+    _truncate_execution_output,
     UNITTEST_RUNNER_SCRIPT,
     run_tests,
 )
@@ -269,6 +270,12 @@ class TestExecutionService(unittest.TestCase):
         user_output = _build_safe_error_output(raw_output, "runtime_error")
 
         self.assertEqual(user_output, "ZeroDivisionError: division by zero")
+
+    def test_truncate_execution_output_adds_security_notice(self) -> None:
+        with patch("web.app.services.execution.MAXIMUM_EXECUTION_OUTPUT_LENGTH", 20):
+            truncated_output = _truncate_execution_output("abcdefghijklmnopqrstuvwxyz")
+
+        self.assertIn("[Salida truncada por seguridad.]", truncated_output)
 
     def test_unittest_runner_script_disables_socket_creation(self) -> None:
         self.assertIn("import socket", UNITTEST_RUNNER_SCRIPT)

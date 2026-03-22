@@ -13,6 +13,9 @@ RUNTIME_TMP_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
 MAXIMUM_ALLOWED_CODE_LENGTH = 10_000
 EXECUTION_TIMEOUT_SECONDS = 10
+MAXIMUM_EXECUTION_OUTPUT_LENGTH = int(
+    os.getenv("EXECUTION_MAX_OUTPUT_CHARS", "12000").strip() or "12000"
+)
 
 SANDBOX_PROVIDER = os.getenv("EXECUTION_SANDBOX_PROVIDER", "docker").strip().lower()
 DOCKER_IMAGE = os.getenv(
@@ -584,6 +587,15 @@ def _extract_exception_summary(raw_output: str) -> str | None:
     return None
 
 
+def _truncate_execution_output(raw_output: str) -> str:
+    if len(raw_output) <= MAXIMUM_EXECUTION_OUTPUT_LENGTH:
+        return raw_output
+
+    suffix = "\n\n[Salida truncada por seguridad.]"
+    available_length = max(0, MAXIMUM_EXECUTION_OUTPUT_LENGTH - len(suffix))
+    return raw_output[:available_length] + suffix
+
+
 def _build_safe_error_output(raw_output: str, execution_status: str) -> str:
     subtests_executed, cleaned_output = _extract_subtests_executed(raw_output)
     exception_summary = _extract_exception_summary(cleaned_output)
@@ -674,6 +686,7 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
             return execution_result
 
         raw_output = execution_result.stdout + "\n" + execution_result.stderr
+        raw_output = _truncate_execution_output(raw_output)
         execution_status, failed_test_cases = _parse_execution_result(
             raw_output=raw_output,
             returncode=execution_result.returncode,
