@@ -137,6 +137,9 @@ def _blocked_builtin(*args, **kwargs):
 
 builtins.input = _blocked_builtin
 builtins.breakpoint = _blocked_builtin
+builtins.help = _blocked_builtin
+builtins.exit = _blocked_builtin
+builtins.quit = _blocked_builtin
 
 def filter_suite(input_suite):
     selected = unittest.TestSuite()

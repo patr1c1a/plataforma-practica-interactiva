@@ -286,6 +286,9 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("import builtins", UNITTEST_RUNNER_SCRIPT)
         self.assertIn("builtins.input = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
         self.assertIn("builtins.breakpoint = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.help = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.exit = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.quit = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
         self.assertNotIn("builtins.open = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
 
     def test_unittest_runner_script_clears_child_environment(self) -> None:
