@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 import web.app.services.execution as execution_module
 from web.app.services.execution import (
+    _build_safe_error_output,
     _build_user_facing_output,
     _extract_subtests_executed,
     _run_sandboxed_unittest,
@@ -64,6 +65,35 @@ class TestExecutionService(unittest.TestCase):
 
         self.assertEqual(result["status"], "error")
         self.assertIn("atributos internos", result["raw_output"])
+
+    def test_blocks_try_statements(self) -> None:
+        result = run_tests(
+            category="numeros",
+            function_name="menor",
+            user_code=(
+                "def menor(numero1, numero2):\n"
+                "    try:\n"
+                "        return numero1\n"
+                "    except Exception:\n"
+                "        return numero2\n"
+            ),
+        )
+
+        self.assertEqual(result["status"], "error")
+        self.assertIn("try/except", result["raw_output"])
+
+    def test_blocks_raise_statements(self) -> None:
+        result = run_tests(
+            category="numeros",
+            function_name="menor",
+            user_code=(
+                "def menor(numero1, numero2):\n"
+                "    raise ValueError('boom')\n"
+            ),
+        )
+
+        self.assertEqual(result["status"], "error")
+        self.assertIn("raise", result["raw_output"])
 
     def test_blocks_local_sandbox_in_production_by_default(self) -> None:
         with (
@@ -191,6 +221,35 @@ class TestExecutionService(unittest.TestCase):
         self.assertTrue(user_output.startswith("Tests ejecutados: 5"))
         self.assertIn("AssertionError:", user_output)
         self.assertIn("FAILED (failures=3)", user_output)
+
+    def test_safe_error_output_hides_internal_error_details(self) -> None:
+        raw_output = (
+            "Traceback (most recent call last):\n"
+            "  File \"/workspace/_run_selected_tests.py\", line 10, in <module>\n"
+            "    module = importlib.import_module(module_name)\n"
+            "ModuleNotFoundError: No module named 'tests'\n"
+        )
+
+        user_output = _build_safe_error_output(raw_output, "error")
+
+        self.assertEqual(
+            user_output,
+            "Se produjo un error al preparar o ejecutar las pruebas.",
+        )
+        self.assertNotIn("ModuleNotFoundError", user_output)
+        self.assertNotIn("tests", user_output)
+
+    def test_safe_error_output_keeps_allowed_runtime_exception_summary(self) -> None:
+        raw_output = (
+            "Traceback (most recent call last):\n"
+            "  File \"/workspace/src/numeros.py\", line 2, in menor\n"
+            "    return numero1 / numero2\n"
+            "ZeroDivisionError: division by zero\n"
+        )
+
+        user_output = _build_safe_error_output(raw_output, "runtime_error")
+
+        self.assertEqual(user_output, "ZeroDivisionError: division by zero")
 
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(

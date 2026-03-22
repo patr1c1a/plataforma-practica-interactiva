@@ -66,6 +66,27 @@ BLOCKED_ATTRIBUTE_NAMES = {
     "__closure__",
     "__getattribute__",
 }
+BLOCKED_NODE_MESSAGES: tuple[tuple[type[ast.AST], str], ...] = (
+    (ast.Try, "No se permiten bloques try/except/finally en el código enviado."),
+    (ast.Raise, "No se permite usar raise en el código enviado."),
+    (ast.With, "No se permiten context managers en el código enviado."),
+    (ast.AsyncWith, "No se permiten context managers en el código enviado."),
+    (ast.Delete, "No se permite borrar variables en el código enviado."),
+    (ast.Yield, "No se permiten generators en el código enviado."),
+    (ast.YieldFrom, "No se permiten generators en el código enviado."),
+    (ast.Await, "No se permite código async en el código enviado."),
+)
+SAFE_RUNTIME_EXCEPTION_NAMES = {
+    "AttributeError",
+    "IndexError",
+    "KeyError",
+    "NameError",
+    "OverflowError",
+    "RecursionError",
+    "TypeError",
+    "ValueError",
+    "ZeroDivisionError",
+}
 SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
@@ -208,6 +229,10 @@ def _validate_user_submission(
                 "error",
                 "Se detectaron construcciones no permitidas en el código enviado.",
             )
+
+        for blocked_node_type, blocked_message in BLOCKED_NODE_MESSAGES:
+            if isinstance(node, blocked_node_type):
+                return _error_result("error", blocked_message)
 
         if isinstance(node, ast.Name):
             if node.id in BLOCKED_NAMES:
@@ -527,6 +552,36 @@ def _build_user_facing_output(raw_output: str) -> str:
     return f"Tests ejecutados: {subtests_executed}\n\n{sanitized_output}"
 
 
+def _extract_exception_summary(raw_output: str) -> str | None:
+    for line in reversed(raw_output.splitlines()):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if re.match(r"^[A-Za-z_][A-Za-z0-9_]*(Error|Exception)(?::.*)?$", stripped):
+            return stripped
+
+    return None
+
+
+def _build_safe_error_output(raw_output: str, execution_status: str) -> str:
+    subtests_executed, cleaned_output = _extract_subtests_executed(raw_output)
+    exception_summary = _extract_exception_summary(cleaned_output)
+
+    if execution_status == "runtime_error":
+        base_message = "Se produjo un error durante la ejecución."
+        if exception_summary is not None:
+            exception_name = exception_summary.split(":", 1)[0].strip()
+            if exception_name in SAFE_RUNTIME_EXCEPTION_NAMES:
+                base_message = exception_summary
+    else:
+        base_message = "Se produjo un error al preparar o ejecutar las pruebas."
+
+    if subtests_executed is None:
+        return base_message
+
+    return f"Tests ejecutados: {subtests_executed}\n\n{base_message}"
+
+
 def run_tests(category: str, function_name: str, user_code: str) -> ExecutionResult:
     if not _is_safe_identifier(category) or not _is_safe_identifier(function_name):
         return _error_result(
@@ -602,7 +657,13 @@ def run_tests(category: str, function_name: str, user_code: str) -> ExecutionRes
             raw_output=raw_output,
             returncode=execution_result.returncode,
         )
-        user_facing_output = _build_user_facing_output(raw_output)
+        if execution_status in {"runtime_error", "error"}:
+            user_facing_output = _build_safe_error_output(
+                raw_output,
+                execution_status,
+            )
+        else:
+            user_facing_output = _build_user_facing_output(raw_output)
 
         return {
             "status": execution_status,

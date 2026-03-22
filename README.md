@@ -264,6 +264,36 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 - CSP configurable:
   - `SECURITY_CONTENT_SECURITY_POLICY` (si no se define, se usa una política segura por defecto)
 
+### Configuración recomendada para hosting público sin Docker
+
+Si se expone el proyecto en internet con `EXECUTION_SANDBOX_PROVIDER=local`, usar un host
+descartable, sin secretos, sin bases de datos ni credenciales compartidas con otros sistemas.
+
+Valores recomendados:
+
+- `EXECUTION_SANDBOX_PROVIDER=local`
+- `EXECUTION_ALLOW_LOCAL_IN_PROD=true`
+- `EXECUTION_ENABLED=true`
+- `RUN_MAX_CONCURRENT_EXECUTIONS=1`
+- `RUN_RATE_LIMIT_WINDOW_SECONDS=60`
+- `RUN_RATE_LIMIT_MAX_REQUESTS=8`
+- `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS=2000`
+- `RUN_MAX_REQUEST_BODY_BYTES=65536`
+
+Si el host es Linux/POSIX, además:
+
+- `EXECUTION_LOCAL_MAX_CPU_SECONDS=5`
+- `EXECUTION_LOCAL_MAX_PROCESSES=1`
+- `EXECUTION_LOCAL_MAX_MEMORY_BYTES=134217728`
+- `EXECUTION_LOCAL_MAX_FILE_BYTES=1048576`
+
+Operación recomendada:
+
+- Ejecutar la app con un usuario sin privilegios
+- No cargar secretos en variables de entorno
+- No compartir el host con otros servicios importantes
+- Usar `EXECUTION_ENABLED=false` como kill switch si hay abuso
+
 Correr sin Docker solo en local:
 
 `EXECUTION_SANDBOX_PROVIDER=local uvicorn web.main:app --reload`
