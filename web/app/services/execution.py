@@ -109,8 +109,10 @@ import sys
 import unittest
 import builtins
 from pathlib import Path
+import os
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+os.environ.clear()
 
 
 def _disabled_socket(*args, **kwargs):

@@ -288,6 +288,10 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("builtins.breakpoint = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
         self.assertNotIn("builtins.open = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
 
+    def test_unittest_runner_script_clears_child_environment(self) -> None:
+        self.assertIn("import os", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("os.environ.clear()", UNITTEST_RUNNER_SCRIPT)
+
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
         self,
