@@ -335,6 +335,7 @@ class TestExecutionService(unittest.TestCase):
             subprocess_run_mock.call_args.kwargs["stdin"],
             subprocess.DEVNULL,
         )
+        self.assertTrue(subprocess_run_mock.call_args.kwargs["close_fds"])
 
     @patch("web.app.services.execution.subprocess.run")
     def test_local_unittest_command_uses_current_python_in_isolated_mode(
@@ -363,6 +364,7 @@ class TestExecutionService(unittest.TestCase):
             subprocess_run_mock.call_args.kwargs["stdin"],
             subprocess.DEVNULL,
         )
+        self.assertTrue(subprocess_run_mock.call_args.kwargs["close_fds"])
 
     @patch.dict(
         "web.app.services.execution.os.environ",
