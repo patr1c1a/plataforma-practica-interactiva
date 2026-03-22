@@ -12,7 +12,8 @@ RUNTIME_TMP_DIRECTORY = Path("runtime/tmp")
 RUNTIME_TMP_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
 MAXIMUM_ALLOWED_CODE_LENGTH = 10_000
-EXECUTION_TIMEOUT_SECONDS = 10
+DEFAULT_EXECUTION_TIMEOUT_SECONDS = 10
+PRODUCTION_EXECUTION_TIMEOUT_SECONDS = 5
 MAXIMUM_EXECUTION_OUTPUT_LENGTH = int(
     os.getenv("EXECUTION_MAX_OUTPUT_CHARS", "12000").strip() or "12000"
 )
@@ -207,6 +208,20 @@ def _is_production_environment() -> bool:
             return True
 
     return False
+
+
+def _get_execution_timeout_seconds() -> int:
+    raw_timeout_value = os.getenv("EXECUTION_TIMEOUT_SECONDS")
+    if raw_timeout_value is not None:
+        return int(raw_timeout_value.strip())
+
+    if _is_production_environment():
+        return PRODUCTION_EXECUTION_TIMEOUT_SECONDS
+
+    return DEFAULT_EXECUTION_TIMEOUT_SECONDS
+
+
+EXECUTION_TIMEOUT_SECONDS = _get_execution_timeout_seconds()
 
 
 def _get_call_name(call_node: ast.Call) -> str | None:

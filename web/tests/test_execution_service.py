@@ -9,6 +9,7 @@ from web.app.services.execution import (
     _build_safe_error_output,
     _build_user_facing_output,
     _extract_subtests_executed,
+    _get_execution_timeout_seconds,
     _run_sandboxed_unittest,
     _sanitize_unittest_output,
     _truncate_execution_output,
@@ -27,6 +28,28 @@ class TestExecutionService(unittest.TestCase):
 
         self.assertEqual(result["status"], "syntax_error")
         self.assertIn("Error de sintaxis", result["raw_output"])
+
+    def test_execution_timeout_defaults_to_10_seconds_outside_production(self) -> None:
+        with (
+            patch("web.app.services.execution._is_production_environment", return_value=False),
+            patch.dict("web.app.services.execution.os.environ", {}, clear=True),
+        ):
+            self.assertEqual(_get_execution_timeout_seconds(), 10)
+
+    def test_execution_timeout_defaults_to_5_seconds_in_production(self) -> None:
+        with (
+            patch("web.app.services.execution._is_production_environment", return_value=True),
+            patch.dict("web.app.services.execution.os.environ", {}, clear=True),
+        ):
+            self.assertEqual(_get_execution_timeout_seconds(), 5)
+
+    def test_execution_timeout_can_be_overridden_by_env_var(self) -> None:
+        with patch.dict(
+            "web.app.services.execution.os.environ",
+            {"EXECUTION_TIMEOUT_SECONDS": "7"},
+            clear=True,
+        ):
+            self.assertEqual(_get_execution_timeout_seconds(), 7)
 
     def test_blocks_import_statements(self) -> None:
         result = run_tests(
