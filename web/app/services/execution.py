@@ -104,6 +104,7 @@ import io
 import socket
 import sys
 import unittest
+import builtins
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -123,6 +124,18 @@ module_name = f"tests.tests_{{category}}"
 module = importlib.import_module(module_name)
 loader = unittest.TestLoader()
 suite = loader.loadTestsFromModule(module)
+
+
+def _blocked_builtin(*args, **kwargs):
+    raise RuntimeError("La operacion solicitada no esta permitida durante la ejecucion.")
+
+
+builtins.open = _blocked_builtin
+builtins.input = _blocked_builtin
+builtins.eval = _blocked_builtin
+builtins.exec = _blocked_builtin
+builtins.compile = _blocked_builtin
+builtins.breakpoint = _blocked_builtin
 
 def filter_suite(input_suite):
     selected = unittest.TestSuite()

@@ -257,6 +257,12 @@ class TestExecutionService(unittest.TestCase):
         self.assertIn("socket.socket = _disabled_socket", UNITTEST_RUNNER_SCRIPT)
         self.assertIn("socket.create_connection = _disabled_socket", UNITTEST_RUNNER_SCRIPT)
 
+    def test_unittest_runner_script_blocks_dangerous_builtins(self) -> None:
+        self.assertIn("import builtins", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.open = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.eval = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+        self.assertIn("builtins.exec = _blocked_builtin", UNITTEST_RUNNER_SCRIPT)
+
     @patch("web.app.services.execution.subprocess.run")
     def test_docker_unittest_command_drops_caps_and_sets_no_new_privileges(
         self,
