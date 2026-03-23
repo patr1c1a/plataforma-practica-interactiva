@@ -267,7 +267,9 @@ Solo se deberá volver a correr este comando si se modifica web/sandbox_runner/D
 ### Configuración recomendada para hosting público sin Docker
 
 Si se expone el proyecto en internet con `EXECUTION_SANDBOX_PROVIDER=local`, usar un host
-descartable, sin secretos, sin bases de datos ni credenciales compartidas con otros sistemas.
+"descartable", sin secretos, sin bases de datos ni credenciales compartidas con otros sistemas.
+Esta configuración reduce riesgo operativo, pero no ofrece el mismo nivel de aislamiento que
+`EXECUTION_SANDBOX_PROVIDER=docker`.
 
 Valores recomendados:
 
@@ -279,6 +281,9 @@ Valores recomendados:
 - `RUN_RATE_LIMIT_MAX_REQUESTS=8`
 - `RUN_RATE_LIMIT_MAX_TRACKED_CLIENTS=2000`
 - `RUN_MAX_REQUEST_BODY_BYTES=65536`
+- `EXECUTION_TIMEOUT_SECONDS=5`
+- `EXECUTION_MAX_OUTPUT_CHARS=12000`
+- `PYTHON_ENV=production`
 
 Si el host es Linux/POSIX, además:
 
