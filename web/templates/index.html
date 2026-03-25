@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Práctica Interactiva - Programación Desde Cero</title>
 
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260324-mobile-nav-2">
 
-    <script src="/static/js/app.js" defer></script>
+    <script src="/static/js/app.js?v=20260324-mobile-nav-2" defer></script>
 
     <!-- HTMX from CDN -->
     <script src="https://unpkg.com/htmx.org@1.9.12"
@@ -48,55 +49,65 @@
                 </div>
             </a>
 
-            <nav class="header-navigation">
-                <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
-                    rel="noopener noreferrer"
-                    class="nav-link">
-                    Curso
-                </a>
-                <a href="https://patriciaemiguel.com/libro24desafios/" target="_blank" rel="noopener noreferrer" class="nav-link">
-                    Libro
-                </a>
+            <div class="header-actions">
+                <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú de navegación">
+                    <span class="mobile-menu-icon" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
 
-                <div class="dropdown">
-                    <button class="dropdown-toggle">Más &#9662;</button>
-                    <div class="dropdown-menu">
-                        <a href="https://www.patriciaemiguel.com" target="_blank" rel="noopener noreferrer">Blog</a>
-                        <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank"
-                            rel="noopener noreferrer">YouTube</a>
-                        <a href="https://www.instagram.com/programaciondesdecero" target="_blank"
-                            rel="noopener noreferrer">Instagram</a>
-                        <a href="https://www.facebook.com/ProgramacionDesdeCer0" target="_blank"
-                            rel="noopener noreferrer">Facebook</a>
-                        <a href="https://www.tiktok.com/@programaciondesdecero" target="_blank"
-                            rel="noopener noreferrer">TikTok</a>
-                        <a href="https://x.com/Programacion_0" target="_blank" rel="noopener noreferrer">X</a>
+                <nav id="site-nav" class="header-navigation">
+                    <a href="https://www.youtube.com/playlist?list=PLb_E6BNMg5j7-MJ0ctjvKQlv2PU7qbMDb" target="_blank"
+                        rel="noopener noreferrer"
+                        class="nav-link">
+                        Curso
+                    </a>
+                    <a href="https://patriciaemiguel.com/libro24desafios/" target="_blank" rel="noopener noreferrer" class="nav-link">
+                        Libro
+                    </a>
+
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">Más &#9662;</button>
+                        <div class="dropdown-menu">
+                            <a href="https://www.patriciaemiguel.com" target="_blank" rel="noopener noreferrer">Blog</a>
+                            <a href="https://www.youtube.com/c/ProgramacionDesdeCero" target="_blank"
+                                rel="noopener noreferrer">YouTube</a>
+                            <a href="https://www.instagram.com/programaciondesdecero" target="_blank"
+                                rel="noopener noreferrer">Instagram</a>
+                            <a href="https://www.facebook.com/ProgramacionDesdeCer0" target="_blank"
+                                rel="noopener noreferrer">Facebook</a>
+                            <a href="https://www.tiktok.com/@programaciondesdecero" target="_blank"
+                                rel="noopener noreferrer">TikTok</a>
+                            <a href="https://x.com/Programacion_0" target="_blank" rel="noopener noreferrer">X</a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="dropdown progress-dropdown">
-                    <button id="progress-button" class="dropdown-toggle">
-                        Progreso &#9662;
-                    </button>
-
-                    <div id="progress-panel" class="dropdown-menu">
-                        <button id="export-progress" class="dropdown-item">
-                            Exportar progreso
+                    <div class="dropdown progress-dropdown">
+                        <button id="progress-button" class="dropdown-toggle">
+                            Progreso &#9662;
                         </button>
 
-                        <label class="dropdown-item import-label">
-                            Importar progreso
-                            <input type="file" id="import-progress" accept="application/json">
-                        </label>
+                        <div id="progress-panel" class="dropdown-menu">
+                            <button id="export-progress" class="dropdown-item">
+                                Exportar progreso
+                            </button>
 
-                        <button id="reset-progress" class="dropdown-item danger-item">
-                            Reiniciar progreso
-                        </button>
+                            <label class="dropdown-item import-label">
+                                Importar progreso
+                                <input type="file" id="import-progress" accept="application/json">
+                            </label>
+
+                            <button id="reset-progress" class="dropdown-item danger-item">
+                                Reiniciar progreso
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <button id="theme-toggle" class="theme-toggle">&#127769;</button>
-            </nav>
+                    <button id="theme-toggle" class="theme-toggle">&#127769;</button>
+                </nav>
+            </div>
 
         </div>
     </header>
@@ -135,4 +146,3 @@
 </body>
 
 </html>
-

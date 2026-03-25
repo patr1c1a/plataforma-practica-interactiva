@@ -7,6 +7,7 @@
     function initializeApplication() {
         migrateExerciseCodeStorageToLocal();
         initializeTheme();
+        initializeMobileMenu();
         initializeDropdowns();
         initializeCodeEditor();
         initializeProgressPanel();
@@ -58,6 +59,44 @@
         if (activeCodeEditor) {
             const newEditorTheme = theme === "dark" ? "material-darker" : "default";
             activeCodeEditor.setOption("theme", newEditorTheme);
+        }
+    }
+
+    function initializeMobileMenu() {
+        const menuToggle = document.getElementById("mobile-menu-toggle");
+        const headerActions = document.querySelector(".header-actions");
+
+        if (!menuToggle || !headerActions) return;
+
+        const closeMobileMenu = function () {
+            headerActions.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            document.querySelectorAll(".dropdown").forEach(dropdown => {
+                dropdown.classList.remove("open");
+            });
+        };
+
+        if (menuToggle.dataset.initialized !== "true") {
+            menuToggle.dataset.initialized = "true";
+
+            menuToggle.addEventListener("click", function (event) {
+                event.stopPropagation();
+
+                const isOpen = headerActions.classList.toggle("open");
+                menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!headerActions.contains(event.target)) {
+                    closeMobileMenu();
+                }
+            });
+
+            window.addEventListener("resize", function () {
+                if (window.innerWidth > 720) {
+                    closeMobileMenu();
+                }
+            });
         }
     }
 
