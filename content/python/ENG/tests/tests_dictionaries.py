@@ -177,50 +177,6 @@ class TestsSetDictionaryFunctions(unittest.TestCase):
             with self.subTest(test_case=test_case):
                 self.assertEqual(a, b, test_case)
 
-    def test_billing_addresses(self):
-        test_cases = {
-            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Jocelyn Harris", 7, 699,'
-            '"218 Main St."), ("Stephan Carey", 7, 532.90, "355 Boulevard St."), ("Frances Adams", 12, 57.99, '
-            '"761 South Rd."), ("Jocelyn Harris", 15, 958, "218 Main St.")]': [
-                billing_addresses(
-                    [
-                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                        ("Jocelyn Harris", 7, 699, "218 Main St."),
-                        ("Stephan Carey", 7, 532.90, "355 Boulevard St."),
-                        ("Frances Adams", 12, 57.99, "761 South Rd."),
-                        ("Jocelyn Harris", 15, 958, "218 Main St."),
-                    ]
-                ),
-                {"355 Boulevard St.", "218 Main St.", "761 South Rd."},
-            ],
-            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Jocelyn Harris", 7, 699, '
-            '"218 Main St."), ("Frances Adams", 12, 57.99, "761 South Rd.")]': [
-                billing_addresses(
-                    [
-                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                        ("Jocelyn Harris", 7, 699, "218 Main St."),
-                        ("Frances Adams", 12, 57.99, "761 South Rd."),
-                    ]
-                ),
-                {"355 Boulevard St.", "218 Main St.", "761 South Rd."},
-            ],
-            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Stephan Carey", 5, 1250.23, '
-            '"355 Boulevard St."), ("Stephan Carey", 5, 1250.23, "355 Boulevard St.")]': [
-                billing_addresses(
-                    [
-                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                    ]
-                ),
-                {"355 Boulevard St."},
-            ],
-            "Argument used: sales=[]": [billing_addresses([]), set()],
-        }
-        for test_case, (a, b) in test_cases.items():
-            with self.subTest(test_case=test_case):
-                self.assertEqual(a, b, test_case)
-
     def test_add_movie(self):
         test_cases = {
             'Arguments used: movies={"Joker": ["Todd Phillips", 2019], "Avatar": ["James Cameron", 2009]},'
@@ -265,6 +221,50 @@ class TestsSetDictionaryFunctions(unittest.TestCase):
                 ),
                 {"Joker": ["Todd Phillips", 2019], "Avatar": ["James Cameron", 2009]},
             ],
+        }
+        for test_case, (a, b) in test_cases.items():
+            with self.subTest(test_case=test_case):
+                self.assertEqual(a, b, test_case)
+
+    def test_billing_addresses(self):
+        test_cases = {
+            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Jocelyn Harris", 7, 699,'
+            '"218 Main St."), ("Stephan Carey", 7, 532.90, "355 Boulevard St."), ("Frances Adams", 12, 57.99, '
+            '"761 South Rd."), ("Jocelyn Harris", 15, 958, "218 Main St.")]': [
+                billing_addresses(
+                    [
+                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                        ("Jocelyn Harris", 7, 699, "218 Main St."),
+                        ("Stephan Carey", 7, 532.90, "355 Boulevard St."),
+                        ("Frances Adams", 12, 57.99, "761 South Rd."),
+                        ("Jocelyn Harris", 15, 958, "218 Main St."),
+                    ]
+                ),
+                {"355 Boulevard St.", "218 Main St.", "761 South Rd."},
+            ],
+            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Jocelyn Harris", 7, 699, '
+            '"218 Main St."), ("Frances Adams", 12, 57.99, "761 South Rd.")]': [
+                billing_addresses(
+                    [
+                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                        ("Jocelyn Harris", 7, 699, "218 Main St."),
+                        ("Frances Adams", 12, 57.99, "761 South Rd."),
+                    ]
+                ),
+                {"355 Boulevard St.", "218 Main St.", "761 South Rd."},
+            ],
+            'Argument used: sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."), ("Stephan Carey", 5, 1250.23, '
+            '"355 Boulevard St."), ("Stephan Carey", 5, 1250.23, "355 Boulevard St.")]': [
+                billing_addresses(
+                    [
+                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                        ("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                    ]
+                ),
+                {"355 Boulevard St."},
+            ],
+            "Argument used: sales=[]": [billing_addresses([]), set()],
         }
         for test_case, (a, b) in test_cases.items():
             with self.subTest(test_case=test_case):
@@ -473,6 +473,33 @@ class TestsSetDictionaryFunctions(unittest.TestCase):
             with self.subTest(test_case=test_case):
                 self.assertEqual(a, b, test_case)
 
+    def test_invert_dictionary(self):
+        test_cases = {
+            "Argument used: dictionary={'a': 'x', 'b': 'y'}": [
+                invert_dictionary({"a": "x", "b": "y"}),
+                {"x": ["a"], "y": ["b"]},
+            ],
+            "Argument used: dictionary={'a': 'x', 'b': 'y', 'c': 'x'}": [
+                invert_dictionary({"a": "x", "b": "y", "c": "x"}),
+                {"x": ["a", "c"], "y": ["b"]},
+            ],
+            "AArgument used: dictionary={'one': '1'}": [
+                invert_dictionary({"one": "1"}),
+                {"1": ["one"]},
+            ],
+            "Argument used: dictionary={}": [
+                invert_dictionary({}),
+                {},
+            ],
+            "Argument used: dictionary={'a': 'x', 'b': 'x', 'c': 'x'}": [
+                invert_dictionary({"a": "x", "b": "x", "c": "x"}),
+                {"x": ["a", "b", "c"]},
+            ],
+        }
+        for test_case, (a, b) in test_cases.items():
+            with self.subTest(test_case=test_case):
+                self.assertEqual(a, b, test_case)
+
     def test_register_payment(self):
         test_cases = {
             'Arguments used: members={423:["Darlene Johnson", 4523114, True], 289:["Anna Brown", 6345112, False], 657:'
@@ -606,6 +633,33 @@ class TestsSetDictionaryFunctions(unittest.TestCase):
             'Argument used: members={}, member_name="Anna Brown"': [
                 delete_member({}, "Anna Brown"),
                 {},
+            ],
+        }
+        for test_case, (a, b) in test_cases.items():
+            with self.subTest(test_case=test_case):
+                self.assertEqual(a, b, test_case)
+
+    def test_group_by_length(self):
+        test_cases = {
+            "Argument used: strings=['a', 'bb', 'ccc', 'dd', 'e']": [
+                group_by_length(["a", "bb", "ccc", "dd", "e"]),
+                {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]},
+            ],
+            "Argument used: strings=['aa', 'bb', 'cc']": [
+                group_by_length(["aa", "bb", "cc"]),
+                {2: ["aa", "bb", "cc"]},
+            ],
+            "Argument used: strings=[]": [
+                group_by_length([]),
+                {},
+            ],
+            "Argument used: strings=['hello']": [
+                group_by_length(["hello"]),
+                {5: ["hello"]},
+            ],
+            "Argument used: strings=['x', 'yy', 'z', 'ww']": [
+                group_by_length(["x", "yy", "z", "ww"]),
+                {1: ["x", "z"], 2: ["yy", "ww"]},
             ],
         }
         for test_case, (a, b) in test_cases.items():

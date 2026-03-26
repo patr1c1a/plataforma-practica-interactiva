@@ -13,7 +13,7 @@ def hallar_repetidos(strings1, strings2):
         -strings1 (list; elementos: str): lista con strings a procesar.
         -strings2 (list; elementos: str): lista con strings a procesar.
     -Valor retornado:
-        (set; elementos: str) Los strings que coinciden en strings1 y strings2.
+        (set; elementos: str) Los strings que coinciden en 'strings1' y 'strings2'.
     """
     pass
 
@@ -70,28 +70,6 @@ def listar_apellidos(alumnos):
     pass
 
 
-def domicilios_facturacion(ventas):
-    """
-    Dada una lista con datos de las compras hechas por clientes de una empresa a lo largo de un mes, la cual contiene
-    tuplas con información de cada venta: (nombre del cliente, día del mes, monto de la compra, domicilio del cliente),
-    retorna los domicilios de cada cliente al cual se le debe enviar una factura de compra. Cada cliente puede haber
-    hecho más de una compra en el mes, por lo que cada domicilio debe aparecer una sola vez.
-    Ejemplo:
-        domicilios_facturacion(ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                                       (Jorge Russo", 7, 699, "Mirasol 218"),
-                                       ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"),
-                                       ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
-                                       ("Jorge Russo", 15, 958, "Mirasol 218")])
-        -> {'Calle Las Flores 355', 'Mirasol 218', 'La Mancha 761'}
-    -Parámetro:
-        -(list; elementos: tuple, con elementos heterogéneos) ventas: lista con tuplas representando cada una de las
-        ventas del mes.
-    -Valor retornado:
-        (set; elementos: str) Conjunto conteniendo los domicilios a los cuales se debe enviar la factura.
-    """
-    pass
-
-
 def agregar_pelicula(peliculas, pelicula):
     """
     Agrega datos de una película a un diccionario y lo retorna modificado. Si la película ya existe, la reemplaza con
@@ -110,6 +88,28 @@ def agregar_pelicula(peliculas, pelicula):
         director, año de estreno.
     -Valor retornado:
         (dict; clave: str; valor: list, con 2 elementos: str, int) El diccionario peliculas con el nuevo dato agregado.
+    """
+    pass
+
+
+def domicilios_facturacion(ventas):
+    """
+    Dada una lista con datos de las compras hechas por clientes de una empresa a lo largo de un mes, la cual contiene
+    tuplas con información de cada venta: (nombre del cliente, día del mes, monto de la compra, domicilio del cliente),
+    retorna los domicilios de cada cliente al cual se le debe enviar una factura de compra. Cada cliente puede haber
+    hecho más de una compra en el mes, por lo que cada domicilio debe aparecer una sola vez.
+    Ejemplo:
+        domicilios_facturacion(ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                                       (Jorge Russo", 7, 699, "Mirasol 218"),
+                                       ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"),
+                                       ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
+                                       ("Jorge Russo", 15, 958, "Mirasol 218")])
+        -> {'Calle Las Flores 355', 'Mirasol 218', 'La Mancha 761'}
+    -Parámetro:
+        -(list; elementos: tuple, con elementos heterogéneos) ventas: lista con tuplas representando cada una de las
+        ventas del mes.
+    -Valor retornado:
+        (set; elementos: str) Conjunto conteniendo los domicilios a los cuales se debe enviar la factura.
     """
     pass
 
@@ -208,6 +208,24 @@ def epoca_de_siembra(vegetales, mes):
     pass
 
 
+def invertir_diccionario(diccionario):
+    """
+    Dado un diccionario donde las claves son strings y los valores son strings, retorna un nuevo diccionario donde las
+    claves pasan a ser los valores y los valores pasan a ser las claves. Si un mismo valor aparece más de una vez en
+    el diccionario original, en el resultado ese valor deberá asociarse a una lista con todas las claves que lo tenían.
+    Ejemplos:
+        invertir_diccionario({"a": "x", "b": "y", "c": "x"}) 
+        -> {"x": ["a", "c"], "y": ["b"]}
+    -Parámetro:
+        -diccionario (dict; clave: str; valor: str): diccionario cuyas claves son strings y los valores son strings.
+        Los valores pueden repetirse en distintas claves.
+    -Valor retornado:
+        (dict; clave: str; valor: list, con elementos str) Diccionario donde las claves son los valores contenidos en
+        'diccionario' pasado por parámetro, y los valores son las claves de 'diccionario' pasado por parámetro.
+    """
+    pass
+
+
 def asentar_pago(socios, numero):
     """
     Dado un diccionario con la información de socios de un club y el número de un socio, modifica el diccionario para
@@ -224,7 +242,7 @@ def asentar_pago(socios, numero):
             657:["Lautaro Ruiz", 4767992, False]}
     -Parámetros:
         -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): diccionario con los datos de los 
-        ocios del club. Los números de socio son todos positivos.
+        socios del club. Los números de socio son todos positivos.
         -numero (int): número de socio a modificar.
     -Valor retornado:
         (dict; clave: int; valor: list, con 3 elementos: str, int, bool) Diccionario de socios en el cual se ha
@@ -272,6 +290,23 @@ def eliminar_socio(socios, nombre_socio):
     -Valor retornado:
         (dict; clave: int; valor: list, con 3 elementos: str, int, bool) Diccionario de socios del cual se ha eliminado
         el socio, en caso de existir.
+    """
+    pass
+
+
+def agrupar_por_longitud(cadenas):
+    """
+    Dada una lista de strings, agrupa las cadenas según su longitud. El resultado debe ser un diccionario donde:
+    las claves son las longitudes (int), y los valores son listas con las cadenas que tienen esa longitud.
+    El orden dentro de cada lista debe respetar el orden original.
+    Ejemplo:
+        agrupar_por_longitud(["a", "bb", "ccc", "dd", "e"])
+        -> {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]}
+    -Parámetro:
+        -cadenas (list; elementos: str): lista de cadenas, de distintas longitudes.
+    -Valor retornado:
+        (dict; clave: int; valor: list, con elementos str) Diccionario donde las claves son números enteros que
+        representan longitudes, y los valores son listas de los strings en 'cadenas' agrupados por longitud.
     """
     pass
 

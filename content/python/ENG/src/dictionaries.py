@@ -68,28 +68,6 @@ def unique_last_names(students):
     pass
 
 
-def billing_addresses(sales):
-    """
-    Given a list with information about some company sales during a one-month period, containing tuples with each sale:
-    (customer name, day of the month, order amount, billing address), returns all billing addresses from customers. Each
-    customer might have placed more than one order and on different days of the month, so their address should only
-    be included once.
-    Example:
-        billing_addresses(sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
-                                 ("Jocelyn Harris", 7, 699, "218 Main St."),
-                                 ("Stephan Carey", 7, 532.90, "355 Boulevard St."),
-                                 ("Frances Adams", 12, 57.99, "761 South Rd."),
-                                 ("Jocelyn Harris", 15, 958, "218 Main St.")])
-        -> {'355 Boulevard St.', '218 Main St.', '761 South Rd.'}
-    -Parameter:
-        -sales (list; elements: tuples containing str, int, float, str): list with tuples representing each sale during
-        a specific month.
-    -Returns:
-        (set; elements: str) A set with all billing addresses from customers who placed orders during a specific month.
-    """
-    pass
-
-
 def add_movie(movies, movie):
     """
     Adds movie information to a dictionary and returns the modified dictionary. If the movie is already present, it
@@ -109,6 +87,28 @@ def add_movie(movies, movie):
     -Returns:
         (dict; key: str; value: list containing 2 elements, str and int) The "movies" dictionary with the new movie
         added to it.
+    """
+    pass
+
+
+def billing_addresses(sales):
+    """
+    Given a list with information about some company sales during a one-month period, containing tuples with each sale:
+    (customer name, day of the month, order amount, billing address), returns all billing addresses from customers. Each
+    customer might have placed more than one order and on different days of the month, so their address should only
+    be included once.
+    Example:
+        billing_addresses(sales=[("Stephan Carey", 5, 1250.23, "355 Boulevard St."),
+                                 ("Jocelyn Harris", 7, 699, "218 Main St."),
+                                 ("Stephan Carey", 7, 532.90, "355 Boulevard St."),
+                                 ("Frances Adams", 12, 57.99, "761 South Rd."),
+                                 ("Jocelyn Harris", 15, 958, "218 Main St.")])
+        -> {'355 Boulevard St.', '218 Main St.', '761 South Rd.'}
+    -Parameter:
+        -sales (list; elements: tuples containing str, int, float, str): list with tuples representing each sale during
+        a specific month.
+    -Returns:
+        (set; elements: str) A set with all billing addresses from customers who placed orders during a specific month.
     """
     pass
 
@@ -168,8 +168,8 @@ def count_occurrences(lists_tuple):
 
 def highest_value(occurrences):
     """
-    Given a dictionary with positive int values that are unique, returns the key associated to the highest value. If the
-    dictionary is empty, it returns an empty string.
+    Given a dictionary with positive int values that are unique, returns the key associated to the highest value. If
+    the dictionary is empty, it returns an empty string.
     Suggestion: avoid using max().
     Example:
         highest_value(occurrences={"a": 1, "e": 7, "i": 4, "o": 9, "u": 3}) -> "o"
@@ -200,6 +200,24 @@ def sowing_season(vegetables, month):
     -Returns:
         (list; elements: str) List with vegetables that can be sown in the given month, preserving the order in which
         vegetables appear as dictionary keys.
+    """
+    pass
+
+
+def invert_dictionary(dictionary):
+    """
+    Given a dictionary where keys are strings and values are strings, returns a new dictionary where keys become
+    values and values become keys. If a value appears more than once in the original dictionary, in the result
+    that value must map to a list containing all keys that had it.
+    Example:
+        invert_dictionary({"a": "x", "b": "y", "c": "x"}) 
+        -> {"x": ["a", "c"], "y": ["b"]}
+    -Parameters:
+        -dictionary (dict; key: str; value: str): a dictionary containing string keys and values. The same value
+        can be associated to more than one key.
+    -Returns:
+        (dict; key: str; value: list of str) Dictionary where keys are the values in the parameter dictionary, and
+        values are the keys in the parameter dictionary.
     """
     pass
 
@@ -267,6 +285,23 @@ def delete_member(members, member_name):
     -Returns:
         (dict; key: int; value: list containing 3 elements: str, int, bool): Dictionary with member information where
         a member has been deleted, if it existed.
+    """
+    pass
+
+
+def group_by_length(strings):
+    """
+    Given a list of strings, groups them according to their length. The result must be a dictionary where:
+    keys are lengths (int), and values are lists containing the strings with that length.
+    The order inside each list must preserve the original order.
+    Example:
+        group_by_length(["a", "bb", "ccc", "dd", "e"])
+        -> {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]}
+    -Parameter:
+        -strings (list; elements: str): list of strings of various lengths.
+    -Returns:
+        (dict; key: int; value: list of str) Dictionary where the keys are integers representing lengths, and the
+        values are lists of the elements in 'strings' grouped by their length.
     """
     pass
 

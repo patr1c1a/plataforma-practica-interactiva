@@ -165,50 +165,6 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
             with self.subTest(prueba=prueba):
                 self.assertEqual(a, b, prueba)
 
-    def test_domicilios_facturacion(self):
-        pruebas = {
-            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Jorge Russo", 7, 699, '
-            '"Mirasol 218"), ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"), ("Julián Rodriguez", 12, 5715.99, '
-            '"La Mancha 761"), ("Jorge Russo", 15, 958, "Mirasol 218")]': [
-                domicilios_facturacion(
-                    [
-                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                        ("Jorge Russo", 7, 699, "Mirasol 218"),
-                        ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"),
-                        ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
-                        ("Jorge Russo", 15, 958, "Mirasol 218"),
-                    ]
-                ),
-                {"Calle Las Flores 355", "Mirasol 218", "La Mancha 761"},
-            ],
-            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Jorge Russo", 7, 699, '
-            '"Mirasol 218"), ("Julián Rodriguez", 12, 5715.99, "La Mancha 761")]': [
-                domicilios_facturacion(
-                    [
-                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                        ("Jorge Russo", 7, 699, "Mirasol 218"),
-                        ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
-                    ]
-                ),
-                {"Calle Las Flores 355", "Mirasol 218", "La Mancha 761"},
-            ],
-            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Nuria Costa", 5, '
-            '12780.78, "Calle Las Flores 355"), ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355")]': [
-                domicilios_facturacion(
-                    [
-                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
-                    ]
-                ),
-                {"Calle Las Flores 355"},
-            ],
-            "Argumento usado: ventas=[]": [domicilios_facturacion([]), set()],
-        }
-        for prueba, (a, b) in pruebas.items():
-            with self.subTest(prueba=prueba):
-                self.assertEqual(a, b, prueba)
-
     def test_agregar_pelicula(self):
         pruebas = {
             'Argumentos usados: peliculas={"Joker": ["Todd Phillips", 2019], "Avatar": ["James Cameron", 2009]}, '
@@ -254,6 +210,50 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
                 ),
                 {"Joker": ["Todd Phillips", 2019], "Avatar": ["James Cameron", 2009]},
             ],
+        }
+        for prueba, (a, b) in pruebas.items():
+            with self.subTest(prueba=prueba):
+                self.assertEqual(a, b, prueba)
+
+    def test_domicilios_facturacion(self):
+        pruebas = {
+            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Jorge Russo", 7, 699, '
+            '"Mirasol 218"), ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"), ("Julián Rodriguez", 12, 5715.99, '
+            '"La Mancha 761"), ("Jorge Russo", 15, 958, "Mirasol 218")]': [
+                domicilios_facturacion(
+                    [
+                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                        ("Jorge Russo", 7, 699, "Mirasol 218"),
+                        ("Nuria Costa", 7, 532.90, "Calle Las Flores 355"),
+                        ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
+                        ("Jorge Russo", 15, 958, "Mirasol 218"),
+                    ]
+                ),
+                {"Calle Las Flores 355", "Mirasol 218", "La Mancha 761"},
+            ],
+            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Jorge Russo", 7, 699, '
+            '"Mirasol 218"), ("Julián Rodriguez", 12, 5715.99, "La Mancha 761")]': [
+                domicilios_facturacion(
+                    [
+                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                        ("Jorge Russo", 7, 699, "Mirasol 218"),
+                        ("Julián Rodriguez", 12, 5715.99, "La Mancha 761"),
+                    ]
+                ),
+                {"Calle Las Flores 355", "Mirasol 218", "La Mancha 761"},
+            ],
+            'Argumento usado: ventas=[("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), ("Nuria Costa", 5, '
+            '12780.78, "Calle Las Flores 355"), ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355")]': [
+                domicilios_facturacion(
+                    [
+                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                        ("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"),
+                    ]
+                ),
+                {"Calle Las Flores 355"},
+            ],
+            "Argumento usado: ventas=[]": [domicilios_facturacion([]), set()],
         }
         for prueba, (a, b) in pruebas.items():
             with self.subTest(prueba=prueba):
@@ -462,10 +462,37 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
             with self.subTest(prueba=prueba):
                 self.assertEqual(a, b, prueba)
 
+    def test_invertir_diccionario(self):
+        pruebas = {
+            "Argumento usado: diccionario={'a': 'x', 'b': 'y'}": [
+                invertir_diccionario({"a": "x", "b": "y"}),
+                {"x": ["a"], "y": ["b"]},
+            ],
+            "Argumento usado: diccionario={'a': 'x', 'b': 'y', 'c': 'x'}": [
+                invertir_diccionario({"a": "x", "b": "y", "c": "x"}),
+                {"x": ["a", "c"], "y": ["b"]},
+            ],
+            "Argumento usado: diccionario={'uno': '1'}": [
+                invertir_diccionario({"uno": "1"}),
+                {"1": ["uno"]},
+            ],
+            "Argumento usado: diccionario={}": [
+                invertir_diccionario({}),
+                {},
+            ],
+            "Argumento usado: diccionario={'a': 'x', 'b': 'x', 'c': 'x'}": [
+                invertir_diccionario({"a": "x", "b": "x", "c": "x"}),
+                {"x": ["a", "b", "c"]},
+            ],
+        }
+        for prueba, (a, b) in pruebas.items():
+            with self.subTest(prueba=prueba):
+                self.assertEqual(a, b, prueba)
+
     def test_asentar_pago(self):
         pruebas = {
-            'Argumentos usados: socios={423:["Juana Saavedra", 4523114, True], 289:["Estela Gimenez", 6345112, False], '
-            '657:["Lautaro Ruiz", 4767992, False]}, numero=289': [
+            "Argumentos usados: socios={423:['Juana Saavedra', 4523114, True], 289:['Estela Gimenez', 6345112, False], "
+            "657:['Lautaro Ruiz', 4767992, False]}, numero=289": [
                 asentar_pago(
                     {
                         423: ["Juana Saavedra", 4523114, True],
@@ -480,8 +507,8 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
                     657: ["Lautaro Ruiz", 4767992, False],
                 },
             ],
-            'Argumentos usados: socios={423:["Juana Saavedra", 4523114, True], 289:["Estela Gimenez", 6345112, False], '
-            '657:["Lautaro Ruiz", 4767992, False]}, numero=423': [
+            "Argumentos usados: socios={423:['Juana Saavedra', 4523114, True], 289:['Estela Gimenez', 6345112, False], "
+            "657:['Lautaro Ruiz', 4767992, False]}, numero=423": [
                 asentar_pago(
                     {
                         423: ["Juana Saavedra", 4523114, True],
@@ -496,8 +523,8 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
                     657: ["Lautaro Ruiz", 4767992, False],
                 },
             ],
-            'Argumentos usados: socios={423:["Juana Saavedra", 4523114, True], 289:["Estela Gimenez", 6345112, False], '
-            '657:["Lautaro Ruiz", 4767992, False]}, numero=158': [
+            "Argumentos usados: socios={423:['Juana Saavedra', 4523114, True], 289:['Estela Gimenez', 6345112, False], "
+            "657:['Lautaro Ruiz', 4767992, False]}, numero=158": [
                 asentar_pago(
                     {
                         423: ["Juana Saavedra", 4523114, True],
@@ -595,6 +622,33 @@ class TestsFuncionesDiccionarios(unittest.TestCase):
             'Argumentos usados: socios={}, nombre_socio="Estela Gimenez"': [
                 eliminar_socio({}, "Estela Gimenez"),
                 {},
+            ],
+        }
+        for prueba, (a, b) in pruebas.items():
+            with self.subTest(prueba=prueba):
+                self.assertEqual(a, b, prueba)
+
+    def test_agrupar_por_longitud(self):
+        pruebas = {
+            "Argumento usado: cadenas=['a', 'bb', 'ccc', 'dd', 'e']": [
+                agrupar_por_longitud(["a", "bb", "ccc", "dd", "e"]),
+                {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]},
+            ],
+            "Argumento usado: cadenas=['aa', 'bb', 'cc']": [
+                agrupar_por_longitud(["aa", "bb", "cc"]),
+                {2: ["aa", "bb", "cc"]},
+            ],
+            "Argumento usado: cadenas=[]": [
+                agrupar_por_longitud([]),
+                {},
+            ],
+            "Argumento usado: cadenas=['hola']": [
+                agrupar_por_longitud(["hola"]),
+                {4: ["hola"]},
+            ],
+            "Argumento usado: cadenas=['x', 'yy', 'z', 'ww']": [
+                agrupar_por_longitud(["x", "yy", "z", "ww"]),
+                {1: ["x", "z"], 2: ["yy", "ww"]},
             ],
         }
         for prueba, (a, b) in pruebas.items():
