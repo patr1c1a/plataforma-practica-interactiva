@@ -196,15 +196,15 @@ class TestsNumberFunctions(unittest.TestCase):
 
     def test_get_month(self):
         test_cases = {
-            "Arguments used: consecutive_day=200, year=1969": [get_month(200, 1969), 7],
-            "Arguments used: consecutive_day=1, year=1981": [get_month(1, 1981), 1],
-            "Arguments used: consecutive_day=60, year=2020": [get_month(60, 2020), 2],
-            "Arguments used: consecutive_day=60, year=2018": [get_month(60, 2018), 3],
-            "Arguments used: consecutive_day=365, year=2014": [
+            "Arguments used: days_elapsed=200, year=1969": [get_month(200, 1969), 7],
+            "Arguments used: days_elapsed=1, year=1981": [get_month(1, 1981), 1],
+            "Arguments used: days_elapsed=60, year=2020": [get_month(60, 2020), 2],
+            "Arguments used: days_elapsed=60, year=2018": [get_month(60, 2018), 3],
+            "Arguments used: days_elapsed=365, year=2014": [
                 get_month(365, 2014),
                 12,
             ],
-            "Arguments used: consecutive_day=366, year=2020": [
+            "Arguments used: days_elapsed=366, year=2020": [
                 get_month(366, 2020),
                 12,
             ],

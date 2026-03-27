@@ -232,44 +232,44 @@ def mcd_euclides(m, n):
     pass
 
 
-def obtener_mes(dia_consecutivo, anio):
+def obtener_mes(dias_transcurridos, anio):
     """
     Obtiene el número de mes correspondiente, dada la cantidad de días transcurridos desde el 1 de enero de un año 
     en particular (teniendo en cuenta la posibilidad de que sea bisiesto).
     Sugerencia didáctica: separar el problema en partes, usando un algoritmo que obtenga la cantidad de días en un mes.
     Ejemplo:
-        obtener_mes(dia_consecutivo=200, anio=1969) -> 7
-        (el día consecutivo número 60 en un año bisiesto representa el 29 de febrero, mientras que en un año no bisiesto
-         representa el 1 de marzo).
+        obtener_mes(dias_transcurridos=200, anio=1969) -> 7
+        (el día consecutivo número 60 en un año bisiesto representa el 29 de febrero, mientras que en un año no
+        bisiesto representa el 1 de marzo).
     -Parámetros:
-        -dia_consecutivo (int): número de días transcurridos desde el 1 de enero (entre 1 y 366). Positivo.
-        -anio (int): número de año (bisiesto o no). Positivo.
+        -dias_transcurridos (int): Número de días transcurridos desde el 1 de enero (entre 1 y 366). Positivo.
+        -anio (int): Número de año (bisiesto o no). Positivo.
     -Valor retornado:
-        (int) Número de mes (entre 1 y 12) correspondiente al dia_consecutivo en el anio dado.
+        (int) Número de mes (entre 1 y 12) correspondiente a `dias_transcurridos` en el `anio` dado.
     """
     pass
 
 
 def es_disarium(numero):
     """
-    Evalúa si un número es un número "disarium". Un número es considerado "disarium" si la suma de sus dígitos, cada
-    uno elevado a su respectiva posición dentro del número (empezando con la posición 1 desde la izquierda), es igual
-    al número dado.
+    Evalúa si un número es "disarium". Un número es considerado "disarium" si, elevando cada dígito a su respectiva
+    posición dentro del número (la primera posición desde la izquierda se considera la 1) y luego sumando esos
+    resultados, se obtiene el número original.
     Sugerencia didáctica: separar el problema en partes, usando un algoritmo para contar los digitos de un número.
     Ejemplo:
         es_disarium(numero=518) -> True
         (518 es un número disarium, ya que 5**1=5, 1**2=1, 8**3=512, y 5+1+512=518).
     -Parámetro:
-        -numero (int): número cuyos dígitos se procesarán. Positivo.
+        -numero (int): Número cuyos dígitos se procesarán. Positivo.
     -Valor retornado:
-        (bool) True si numero es "disarium", False si no lo es.
+        (bool) True si `numero` es "disarium", False si no lo es.
     """
     pass
 
 
 def ordenar_monedas(cantidad):
     """
-    Indica cuántos "escalones" pueden formarse con una cantidad específica de monedas que se ordenarán en forma de
+    Indica cuántos "escalones" pueden formarse con una `cantidad` específica de monedas que se ordenarán en forma de
     "escalera", donde cada escalón "n" debe estar formado por exactamente "n" monedas. El último escalón puede estar
     incompleto.
     Ejemplo:
@@ -280,9 +280,9 @@ def ordenar_monedas(cantidad):
         ¤ ¤
         )
     -Parámetro:
-        -cantidad (int): cantidad de monedas a usar. Positivo.
+        -cantidad (int): Cantidad de monedas a usar. Positivo.
     -Valor retornado:
-        (int) Cantidad máxima de escalones completos que pueden formarse con la cantidad de monedas dada.
+        (int) Cantidad máxima de escalones completos que pueden formarse con la `cantidad` de monedas dada.
     """
     pass
 
@@ -295,8 +295,8 @@ def cantidad_unos_solos(numero):
         cantidad_unos_solos(numero=141211) -> 2
         cantidad_unos_solos(numero=11411211) -> 0
     -Parámetro:
-        -numero (int): número cuyos dígitos se evaluarán. Positivo.
+        -numero (int): Número cuyos dígitos se evaluarán. Positivo.
     -Valor retornado:
-        (int) Cantidad de dígitos 1 no consecutivos en numero.
+        (int) Cantidad de dígitos 1 no consecutivos en `numero`.
     """
     pass

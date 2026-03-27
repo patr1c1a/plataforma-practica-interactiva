@@ -10,10 +10,10 @@ def hallar_repetidos(strings1, strings2):
     Ejemplo:
         hallar_repetidos(strings1=["abc", "cde", "abc", "fff"], strings2=["cde", "aaa"]) -> {"cde"}
     -Parámetros:
-        -strings1 (list; elementos: str): lista con strings a procesar.
-        -strings2 (list; elementos: str): lista con strings a procesar.
+        -strings1 (list; elementos: str): Lista con strings a procesar.
+        -strings2 (list; elementos: str): Lista con strings a procesar.
     -Valor retornado:
-        (set; elementos: str) Los strings que coinciden en 'strings1' y 'strings2'.
+        (set; elementos: str) Los strings que coinciden en `strings1` y `strings2`.
     """
     pass
 
@@ -29,8 +29,8 @@ def solo_una_mascota(perros, gatos):
                           gatos=["Juan Sebastián Balsa", "Juan Jacobo Russo", "Ana Bologna", "Cristóbal Colombraro"])
         -> {"Lucrecia Borges", "Juan Jacobo Russo", "Ana Bologna"}
     -Parámetros:
-        -perros (list; elementos: str): lista con los nombres de dueños de perros.
-        -gatos(list; elementos: str): lista con los nombres de dueños de gatos.
+        -perros (list; elementos: str): Lista con los nombres de dueños de perros.
+        -gatos(list; elementos: str): Lista con los nombres de dueños de gatos.
     -Valor retornado:
         (set; elementos: str) Los nombres de aquellos dueños de mascota que solo tienen perros o solo tienen gatos
         pero no ambos.
@@ -45,7 +45,7 @@ def elementos_unicos(tuplas):
     Ejemplo:
         elementos_unicos(tuplas=[(1,2,3), (2,2,2,2), (3,4,5), (1,3,5,7,9)]) -> (1,2,3,4,5,7,9)
     -Parámetro:
-        -tuplas (list; elementos: tuple, con elementos int): lista conteniendo tuplas de números.
+        -tuplas (list; elementos: tuple, con elementos int): Lista conteniendo tuplas de números.
     -Valor retornado:
         (tuple; elementos: int) Tupla donde se combinan todos los números de las tuplas dadas, con una única
         ocurrencia de cada número.
@@ -63,7 +63,7 @@ def listar_apellidos(alumnos):
         listar_apellidos(alumnos=["Lara Ruiz", "Esteban Raúl Perez", "Francina Soto", "Lucas Perez"])
         -> {"Ruiz", "Perez", "Soto"}
     -Parámetro:
-        -alumnos (list; elementos: str): lista de alumnos.
+        -alumnos (list; elementos: str): Lista de alumnos.
     -Valor retornado:
         (set; elementos: str) Conjunto conteniendo los apellidos únicos en la lista alumnos.
     """
@@ -83,8 +83,8 @@ def agregar_pelicula(peliculas, pelicula):
             "Avatar": ["James Cameron", 2009],
             "Lord of the rings: The two towers": ["Peter Jackson", 2002]}
     -Parámetros:
-        -peliculas (dict; clave: str; valor: list, con 2 elementos: str, int): diccionario de películas.
-        -pelicula (tuple; 3 elementos: str, str, int): tupla con los datos de la película a agregar: nombre,
+        -peliculas (dict; clave: str; valor: list, con 2 elementos: str, int): Diccionario de películas.
+        -pelicula (tuple; 3 elementos: str, str, int): Tupla con los datos de la película a agregar: nombre,
         director, año de estreno.
     -Valor retornado:
         (dict; clave: str; valor: list, con 2 elementos: str, int) El diccionario peliculas con el nuevo dato agregado.
@@ -106,7 +106,7 @@ def domicilios_facturacion(ventas):
                                        ("Jorge Russo", 15, 958, "Mirasol 218")])
         -> {'Calle Las Flores 355', 'Mirasol 218', 'La Mancha 761'}
     -Parámetro:
-        -(list; elementos: tuple, con elementos heterogéneos) ventas: lista con tuplas representando cada una de las
+        -(list; elementos: tuple, con elementos heterogéneos) ventas: Lista con tuplas representando cada una de las
         ventas del mes.
     -Valor retornado:
         (set; elementos: str) Conjunto conteniendo los domicilios a los cuales se debe enviar la factura.
@@ -127,9 +127,9 @@ def mas_votados(votos, curso):
                     curso=3)
         -> {"lucas", "abril", "serena"}
     -Parámetros:
-        -votos (dict; clave: int; valor: list, con elementos str): diccionario con los votos de cada curso, donde las
+        -votos (dict; clave: int; valor: list, con elementos str): Diccionario con los votos de cada curso, donde las
         claves son los números de curso y los valores son listas conteniendo cada uno de los votos. 
-        -curso (int): número del curso del cual se buscarán los nombres de compañeros votados.
+        -curso (int): Número del curso del cual se buscarán los nombres de compañeros votados.
     -Valor retornado:
         (set; elementos: str) Conjunto con los nombres de los alumnos votados en el curso.
     """
@@ -144,7 +144,7 @@ def ocurrencias_digitos(digitos):
     Ejemplo:
         ocurrencias_digitos(digitos=[8, 9, 0, 4, 2, 2, 4, 1, 8, 2]) -> {0:1, 1:1, 2:3, 3:0, 4:2, 5:0, 6:0, 7:0, 8:2, 9:1}
     -Parámetro:
-        -digitos (list; elementos: int): lista cuyos elementos son dígitos numéricos (entre el 0 y el 9).
+        -digitos (list; elementos: int): Lista cuyos elementos son dígitos numéricos (entre el 0 y el 9).
     -Valor retornado:
         (dict; clave: int; valor: int) Diccionario contabilizando las ocurrencias de cada dígito, donde las claves son
         los dígitos del 0 al 9.
@@ -162,7 +162,7 @@ def contar_ocurrencias(listas):
                                    ["a", "u"]))
         -> {'i':3, '%':2, 'u':3, 's':1, '^':2, 'a':1}
     -Parámetro:
-        -listas (tuple; elementos: list, con elementos str): tupla conteniendo listas cuyos elementos son caracteres
+        -listas (tuple; elementos: list, con elementos str): Tupla conteniendo listas cuyos elementos son caracteres
         (strings de longitud 1).
     -Valor retornado: 
        (dict; clave: str; valor: int) Diccionario contabilizando las ocurrencias de cada letra.
@@ -178,7 +178,7 @@ def mayor_valor(ocurrencias):
     Ejemplo:
         mayor_valor(ocurrencias={"a":1, "e":7, "i":4, "o":9, "u":3}) -> "o"
     -Parámetro:
-        -ocurrencias (dict; clave: str; valor: int): diccionario cuyas claves son letras y los valores son las
+        -ocurrencias (dict; clave: str; valor: int): Diccionario cuyas claves son letras y los valores son las
         ocurrencias de cada una. Solo existe un único valor mayor que todos.
     -Valor retornado:
         (str) Clave que tiene asociado el mayor valor, o string vacío si el diccionario es vacío.
@@ -198,12 +198,12 @@ def epoca_de_siembra(vegetales, mes):
                          mes="marzo")
         -> ["espinaca", "ajo"]
     -Parámetros:
-        -vegetales (dict; clave: str; valor: list, con elementos str): diccionario donde las claves son los nombres de
+        -vegetales (dict; clave: str; valor: list, con elementos str): Diccionario donde las claves son los nombres de
         diversos vegetales y los valores son listas con los meses en que cada vegetal puede sembrarse. 
-        -mes (str): el mes para el cual se busca saber qué vegetales pueden sembrarse.
+        -mes (str): El mes para el cual se busca saber qué vegetales pueden sembrarse.
     -Valor retornado:
         (list; elementos: str) Lista con los vegetales que pueden sembrarse en el mes, respetando el orden en que los
-        vegetales aparecen como claves en el diccionario.
+        vegetales aparecen como claves en el diccionario `vegetales`.
     """
     pass
 
@@ -217,11 +217,11 @@ def invertir_diccionario(diccionario):
         invertir_diccionario({"a": "x", "b": "y", "c": "x"}) 
         -> {"x": ["a", "c"], "y": ["b"]}
     -Parámetro:
-        -diccionario (dict; clave: str; valor: str): diccionario cuyas claves son strings y los valores son strings.
+        -diccionario (dict; clave: str; valor: str): Diccionario cuyas claves son strings y los valores son strings.
         Los valores pueden repetirse en distintas claves.
     -Valor retornado:
         (dict; clave: str; valor: list, con elementos str) Diccionario donde las claves son los valores contenidos en
-        'diccionario' pasado por parámetro, y los valores son las claves de 'diccionario' pasado por parámetro.
+        'diccionario' pasado por parámetro, y los valores son las claves de `diccionario` pasado por parámetro.
     """
     pass
 
@@ -241,9 +241,9 @@ def asentar_pago(socios, numero):
             289:["Estela Gimenez", 6345112, True],
             657:["Lautaro Ruiz", 4767992, False]}
     -Parámetros:
-        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): diccionario con los datos de los 
+        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): Diccionario con los datos de los 
         socios del club. Los números de socio son todos positivos.
-        -numero (int): número de socio a modificar.
+        -numero (int): Número de socio a modificar.
     -Valor retornado:
         (dict; clave: int; valor: list, con 3 elementos: str, int, bool) Diccionario de socios en el cual se ha
         asentado el pago del socio correspondiente a numero, en caso de existir.
@@ -262,7 +262,7 @@ def socios_morosos(socios):
                                657:["Lautaro Ruiz", 4767992, False]})
         -> 2
     -Parámetro:
-        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): diccionario con los datos de los
+        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): Diccionario con los datos de los
         socios del club. Las claves son todos números positivos.
     -Valor retornado:
         (int) Cantidad de socios que no tienen los pagos al día.
@@ -283,10 +283,10 @@ def eliminar_socio(socios, nombre_socio):
                        nombre_socio="Estela Gimenez")
         -> {423:["Juana Saavedra", 4523114, True], 657:["Lautaro Ruiz", 4767992, False]}
     -Parámetros:
-        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): diccionario con los datos de los
+        -socios (dict; clave: int; valor: list, con 3 elementos: str, int, bool): Diccionario con los datos de los
         socios del club. Las claves son todos números positivos mayores que cero. Los nombres de socios no se repiten
         en los valores del diccionario.
-        -nombre_socio (str): nombre y apellido del socio a eliminar.
+        -nombre_socio (str): Nombre y apellido del socio a eliminar.
     -Valor retornado:
         (dict; clave: int; valor: list, con 3 elementos: str, int, bool) Diccionario de socios del cual se ha eliminado
         el socio, en caso de existir.
@@ -296,17 +296,17 @@ def eliminar_socio(socios, nombre_socio):
 
 def agrupar_por_longitud(cadenas):
     """
-    Dada una lista de strings, agrupa las cadenas según su longitud. El resultado debe ser un diccionario donde:
-    las claves son las longitudes (int), y los valores son listas con las cadenas que tienen esa longitud.
+    Dada una lista de strings, los agrupa según su longitud. El resultado debe ser un diccionario donde:
+    las claves son las longitudes (int), y los valores son listas con los strings que tienen esa longitud.
     El orden dentro de cada lista debe respetar el orden original.
     Ejemplo:
         agrupar_por_longitud(["a", "bb", "ccc", "dd", "e"])
         -> {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]}
     -Parámetro:
-        -cadenas (list; elementos: str): lista de cadenas, de distintas longitudes.
+        -cadenas (list; elementos: str): Lista de strings, de distintas longitudes.
     -Valor retornado:
         (dict; clave: int; valor: list, con elementos str) Diccionario donde las claves son números enteros que
-        representan longitudes, y los valores son listas de los strings en 'cadenas' agrupados por longitud.
+        representan longitudes, y los valores son listas de los strings en `cadenas`, agrupados por longitud.
     """
     pass
 
@@ -323,10 +323,10 @@ def romano_a_arabigo(romano):
     Ejemplo:
         romano_a_arabigo(romano="MCMLXXIV") -> 1974
     -Parámetro:
-        -romano (str): número romano a convertir. En mayúsculas. Es un número romano válido. Su equivalente en arábigo
+        -romano (str): Número romano a convertir. En mayúsculas. Es un número romano válido. Su equivalente en arábigo
         está entre 1 y 3999.
     -Valor retornado:
-        (int) Número arábigo en base 10, equivalente a romano.
+        (int) Número arábigo en base 10, equivalente a `romano`.
     """
     pass
 
@@ -337,18 +337,18 @@ def numero_telefonico(telefono):
     contendrá números, letras mayúsculas, '-', '(' y ')'. Solo se convertirán las letras, dejando los números y otros
     símbolos sin modificación.
     Las equivalencias utilizadas son:
-    A, B, C = 2
-    D, E, F = 3
-    G, H, I = 4
-    J, K, L = 5
-    M, N, O = 6
-    P, Q, R, S = 7
-    T, U, V = 8
-    W, X, Y, Z = 9
+    A-B-C=2;
+    D-E-F=3;
+    G-H-I=4;
+    J-K-L=5;
+    M-N-O=6;
+    P-Q-R-S=7;
+    T-U-V=8;
+    W-X-Y-Z=9;
     Ejemplo:
         numero_telefonico(telefono="(325)444-TEST") -> "(325)444-8378"
     -Parámetro:
-        -telefono (str): un número telefónico que puede contener letras mayúsculas, números, guiones y paréntesis.
+        -telefono (str): Un número telefónico que puede contener letras mayúsculas, números, guiones y paréntesis.
     -Valor retornado:
         (str) El número telefónico con sus letras convertidas a números.
     """
@@ -357,11 +357,11 @@ def numero_telefonico(telefono):
 
 def cadenas_isomorficas(cadena1, cadena2):
     """
-    Dadas dos cadenas de texto, define si son isomórficas o no. Dos cadenas, a y b, son isomórficas si puede
-    reemplazarse cada carácter de a para obtener b. Todas las ocurrencias de un carácter deben ser reemplazadas
-    con otro carácter, conservando su orden. No puede haber dos caracteres que sean reemplazados por el mismo carácter,
-    pero sí es válido que un carácter se reemplace a sí mismo. Se asume que ambas cadenas tienen igual longitud y están
-    compuestas por caracteres ascii válidos.
+    Dados dos strings, define si son isomórficos o no. Dos strings, `a` y `b`, son isomórficos si puede reemplazarse
+    cada carácter de `a` para obtener `b`. Todas las ocurrencias de un carácter deben ser reemplazadas con otro
+    carácter, conservando su orden. No puede haber dos caracteres que sean reemplazados por el mismo carácter, pero sí
+    es válido que un carácter se reemplace a sí mismo. Se asume que ambos strings tienen igual longitud y están
+    compuestos por caracteres ascii válidos.
     Ejemplos:
         cadenas_isomorficas(cadena1="papel", cadena2="vivaz") -> True
         (Pues pueden hacerse los reemplazos 'p'='v'; 'a'='i'; 'p'='v'; 'e'='a'; 'l'='z').
@@ -369,20 +369,20 @@ def cadenas_isomorficas(cadena1, cadena2):
         (Pues pueden hacerse los reemplazos 'p'='y'; 'a'='o'; 'p'='y'; pero al intentar reemplazar 'e'='o' sucede que
         la 'o' ya era reemplazo de la letra 'a').
     -Parámetros:
-        -cadena1 (str): una cadena de texto. len(cadena1) == len(cadena2).
-        -cadena2 (str): cadena para evaluar si es isomórfica con cadena1.
+        -cadena1 (str): String a comparar. len(cadena1) == len(cadena2).
+        -cadena2 (str): String para evaluar si es isomórfico con respecto `cadena1`.
     -Valor retornado:
-        (bool) True si las cadenas son isomórficas, False si no lo son.
+        (bool) True si los strings son isomórficos, False si no lo son.
     """
     pass
 
 
 def patron_de_palabras(patron, palabras):
     """
-    Dado un patrón y una cadena de texto compuesta por palabras, indica si la cadena sigue el patrón, de manera que
-    haya una biyección entre cada letra del patrón y cada palabra de la cadena. Se considera que la cadena "sigue" el
-    patrón si cada letra del mismo puede reemplazarse con una palabra de la cadena y una misma letra del patrón no
-    reemplaza a dos palabras diferentes. Cada palabra de la cadena debe tener una letra correspondiente en el
+    Dado un patrón y un string compuesto por palabras, indica si el string sigue el patrón, de manera que
+    haya una biyección entre cada letra del patrón y cada palabra del string. Se considera que el string "sigue" el
+    patrón si cada letra del mismo puede reemplazarse con una palabra del string y una misma letra del patrón no
+    reemplaza a dos palabras diferentes. Cada palabra del string debe tener una letra correspondiente en el
     patrón y cada letra del patrón debe corresponder a una palabra.
     Ejemplos:
         patron_de_palabras(patron="xyyx", palabras="casa mar mar casa") -> True
@@ -390,11 +390,11 @@ def patron_de_palabras(patron, palabras):
         patron_de_palabras(patron="xyyx", palabras="casa mar mar cerro") -> False
         (Pues 'x' no puede asociarse al mismo tiempo con 'casa' y con 'cerro').
     -Parámetros:
-        -patron (str): patrón a verificar. Solo contiene letras minúsculas.
-        -palabras (str): cadena con palabras. Las palabras estarán separadas por un único espacio y no habrá espacios al
-        inicio ni al final de la cadena. palabras contendrá solo letras minúsculas y el carácter ' '.
+        -patron (str): Patrón a verificar. Solo contiene letras minúsculas.
+        -palabras (str): String con palabras. Las palabras estarán separadas por un único espacio y no habrá espacios
+        al inicio ni al final del string. `palabras` contendrá solo letras minúsculas y el carácter ' '.
     -Valor retornado:
-        (bool) True si las palabras de la cadena siguen el patrón dado. False en caso contrario o si alguno de los
+        (bool) True si las palabras del string siguen el patrón dado. False en caso contrario o si alguno de los
         strings es vacío.
     """
     pass

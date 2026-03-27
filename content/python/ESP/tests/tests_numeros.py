@@ -208,27 +208,27 @@ class TestsFuncionesNumeros(unittest.TestCase):
 
     def test_obtener_mes(self):
         pruebas = {
-            "Argumentos usados: dia_consecutivo=200, anio=1969": [
+            "Argumentos usados: dias_transcurridos=200, anio=1969": [
                 obtener_mes(200, 1969),
                 7,
             ],
-            "Argumentos usados: dia_consecutivo=1, anio=1981": [
+            "Argumentos usados: dias_transcurridos=1, anio=1981": [
                 obtener_mes(1, 1981),
                 1,
             ],
-            "Argumentos usados: dia_consecutivo=60, anio=2020": [
+            "Argumentos usados: dias_transcurridos=60, anio=2020": [
                 obtener_mes(60, 2020),
                 2,
             ],
-            "Argumentos usados: dia_consecutivo=60, anio=2018": [
+            "Argumentos usados: dias_transcurridos=60, anio=2018": [
                 obtener_mes(60, 2018),
                 3,
             ],
-            "Argumentos usados: dia_consecutivo=365, anio=2014": [
+            "Argumentos usados: dias_transcurridos=365, anio=2014": [
                 obtener_mes(365, 2014),
                 12,
             ],
-            "Argumentos usados: dia_consecutivo=366, anio=2020": [
+            "Argumentos usados: dias_transcurridos=366, anio=2020": [
                 obtener_mes(366, 2020),
                 12,
             ],

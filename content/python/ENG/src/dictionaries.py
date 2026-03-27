@@ -10,8 +10,8 @@ def find_duplicates(strings1, strings2):
     Examples:
         find_duplicates(strings1=["abc", "cde", "abc", "fff"], strings2=["cde", "aaa"]) -> {"cde"}
     -Parameters:
-        -strings1 (list; elements: str): list with strings.
-        -strings2 (list; elements: str): list with strings.
+        -strings1 (list; elements: str): List with strings.
+        -strings2 (list; elements: str): List with strings.
     -Returns:
         (set; elements: str) Every string that is included in both strings1 and strings2.
     """
@@ -29,8 +29,8 @@ def only_one_pet_type(dogs, cats):
                           cats=["John Sebastian Batch", "Jon Jack Russo", "Anna Bologna", "Christopher Colum"])
         -> {"Lucrezia Georgia", "Jon Jack Russo", "Anna Bologna"}
     -Parameters:
-        -dogs (list; elements: str): list with dog owner names.
-        -cats (list; elements: str): list with cat owner names.
+        -dogs (list; elements: str): List with dog owner names.
+        -cats (list; elements: str): List with cat owner names.
     -Returns:
         (set; elements: str) Names of pet owners that either have dog(s) or cat(s) but not both pet types.
     """
@@ -45,7 +45,7 @@ def unique_elements(tuples):
     Example:
         unique_elements(tuples=[(1, 2, 3), (2, 2, 2, 2), (3, 4, 5), (1, 3, 5, 7, 9)]) -> (1, 2, 3, 4, 5, 7, 9)
     -Parameter:
-        -tuples (list; elements: tuples containing int elements): list containing tuples with numbers.
+        -tuples (list; elements: tuples containing int elements): List containing tuples with numbers.
     -Returns:
         (tuple; elements: int) Tuple where all numbers from tuples in the list are combined and unique.
     """
@@ -61,9 +61,9 @@ def unique_last_names(students):
         unique_last_names(students=["Maude Baker", "Milton Llewellyn Davis", "Leela Evans", "Keelan Davis"])
         -> {"Baker", "Davis", "Evans"}
     -Parameter:
-        -students (list; elements: str): list with student names.
+        -students (list; elements: str): List with student names.
     -Returns:
-        (set; elements: str) Set with unique last names from the students list.
+        (set; elements: str) Set with unique last names from the `students` list.
     """
     pass
 
@@ -81,8 +81,8 @@ def add_movie(movies, movie):
             "Avatar": ["James Cameron", 2009],
             "Lord of the rings: The two towers": ["Peter Jackson", 2002]}
     -Parameters:
-        -movies (dict; key: str; value: list containing 2 elements, str and int): dictionary with movies.
-        -movie (tuple; elements: str, str, int): tuple with information of the movie that will be added: title, director
+        -movies (dict; key: str; value: List containing 2 elements, str and int): dictionary with movies.
+        -movie (tuple; elements: str, str, int): Tuple with information about the movie that will be added: title, director
         name, release year.
     -Returns:
         (dict; key: str; value: list containing 2 elements, str and int) The "movies" dictionary with the new movie
@@ -105,7 +105,7 @@ def billing_addresses(sales):
                                  ("Jocelyn Harris", 15, 958, "218 Main St.")])
         -> {'355 Boulevard St.', '218 Main St.', '761 South Rd.'}
     -Parameter:
-        -sales (list; elements: tuples containing str, int, float, str): list with tuples representing each sale during
+        -sales (list; elements: tuples containing str, int, float, str): List with tuples, each representing a sale during
         a specific month.
     -Returns:
         (set; elements: str) A set with all billing addresses from customers who placed orders during a specific month.
@@ -126,10 +126,10 @@ def most_voted(votes, grade):
                    grade=3)
         -> {"liam", "sophie", "isabella"}
     -Parameters:
-        -votes (dict; key: int, value: list containing str): the votes issued in each grade.
-        -grade (int): the ID number of a class (to get the names of class students that were voted for).
+        -votes (dict; key: int, value: list containing str): The votes issued in each grade.
+        -grade (int): The ID number of a class (to get the names of class students that were voted for).
     -Returns:
-        (set; elements: str), The students that were voted for in the given grade.
+        (set; elements: str) The students that were voted for in the given grade.
     """
     pass
 
@@ -139,9 +139,10 @@ def digit_occurrence(digits):
     Given a list with numbers, returns occurrences for each digit (from 0 to 9). Digits that are not in the list will
     have a 0 occurrence value.
     Example:
-        digit_occurrence(digits=[8, 9, 0, 4, 2, 2, 4, 1, 8, 2]) -> {0: 1, 1: 1, 2: 3, 3: 0, 4: 2, 5: 0, 6: 0, 7: 0, 8: 2, 9: 1}
+        digit_occurrence(digits=[8, 9, 0, 4, 2, 2, 4, 1, 8, 2]) 
+        -> {0: 1, 1: 1, 2: 3, 3: 0, 4: 2, 5: 0, 6: 0, 7: 0, 8: 2, 9: 1}
     -Parameter:
-        -digits (list; elements: int): list containing only integer digits (from 0 to 9).
+        -digits (list; elements: int): List containing only integer digits (from 0 to 9).
     -Returns:
         (dict; key: int; value: int) Dictionary with occurrences of each digit, where keys are numbers from 0 to 9.
     """
@@ -158,7 +159,7 @@ def count_occurrences(lists_tuple):
                                        ["a", "u"]))
         ->  {'i': 3, '%': 2, 'u': 3, 's': 1, '^': 2, 'a': 1}
     -Parameter:
-        -lists (tuple; elements: list: containing str) tuple containing lists where the elements are characters (length 1
+        -lists (tuple; elements: list: containing str) Tuple containing lists where the elements are characters (length 1
         str).
     -Returns:
         (dict; key: str; value: int) Dictionary with occurrences of each character.
@@ -174,7 +175,7 @@ def highest_value(occurrences):
     Example:
         highest_value(occurrences={"a": 1, "e": 7, "i": 4, "o": 9, "u": 3}) -> "o"
     -Parameter:
-        -occurrences (dict; key: str; value: int): dictionary where the keys are strings representing letters in the
+        -occurrences (dict; key: str; value: int): Dictionary where the keys are strings representing letters in the
         English alphabet and values represent occurrences of each letter. There is only one highest value, as values
         are unique.
     -Returns:
@@ -194,12 +195,12 @@ def sowing_season(vegetables, month):
                       month="march"),
         -> ["spinach", "garlic"]
     -Parameters:
-        -vegetables (dict; key: str; value: list containing str): dictionary where keys are the names of vegetables and
+        -vegetables (dict; key: str; value: list containing str): Dictionary where keys are the names of vegetables and
         values are lists with the months in which each vegetable can be sown.
-        -month (str): month to find which vegetables can be sown.
+        -month (str): Month to find which vegetables can be sown.
     -Returns:
         (list; elements: str) List with vegetables that can be sown in the given month, preserving the order in which
-        vegetables appear as dictionary keys.
+        vegetables appear as dictionary keys in `vegetables`.
     """
     pass
 
@@ -213,11 +214,11 @@ def invert_dictionary(dictionary):
         invert_dictionary({"a": "x", "b": "y", "c": "x"}) 
         -> {"x": ["a", "c"], "y": ["b"]}
     -Parameters:
-        -dictionary (dict; key: str; value: str): a dictionary containing string keys and values. The same value
+        -dictionary (dict; key: str; value: str): Dictionary containing string keys and values. The same value
         can be associated to more than one key.
     -Returns:
-        (dict; key: str; value: list of str) Dictionary where keys are the values in the parameter dictionary, and
-        values are the keys in the parameter dictionary.
+        (dict; key: str; value: list of str) Dictionary where keys are the values in parameter `dictionary`, and
+        values are the keys in parameter `dictionary`.
     """
     pass
 
@@ -236,9 +237,9 @@ def register_payment(members, number):
            289: ["Anna Brown", 6345112, True],
            657: ["Steven Lloyd", 4767992, False]}
     -Parameters:
-        -members (dict; key: int; value: list containing 3 elements: str, int, bool): dictionary with information
+        -members (dict; key: int; value: list containing 3 elements: str, int, bool): Dictionary with information
         about club members. All keys are positive numbers.
-        -number (int): member number where the payment status will be modified.
+        -number (int): Member number where the payment status will be modified.
     -Returns:
         (dict; key: int; value: list containing 3 elements: str, int, bool) Dictionary with information about club
          members, where the fee status has been updated (if the member number exists and is False).
@@ -257,7 +258,7 @@ def late_payments(members):
                                657: ["Steven Lloyd", 4767992, False]}),
         -> 2
     -Parameter:
-        -members (dict; key: int; value: list containing 3 elements: str, int, bool): dictionary with information
+        -members (dict; key: int; value: list containing 3 elements: str, int, bool): Dictionary with information
         about club members. All keys are positive numbers.
     -Returns:
         (int) How many club members are late in fulfilling their membership fees.
@@ -279,9 +280,9 @@ def delete_member(members, member_name):
         -> {423: ["Darlene Johnson", 4523114, True],
             657: ["Steven Lloyd", 4767992, False]}
     -Parameters:
-        -members (dict; key: int; value: list containing 3 elements: str, int, bool): dictionary with information
+        -members (dict; key: int; value: list containing 3 elements: str, int, bool): Dictionary with information
         about club members. All keys are positive numbers. Member names are unique in the dictionary values.
-        -member_name (str): name and last name (word separator: space) of the member that will be deleted.
+        -member_name (str): Name and last name (word separator: space) of the member that will be deleted.
     -Returns:
         (dict; key: int; value: list containing 3 elements: str, int, bool): Dictionary with member information where
         a member has been deleted, if it existed.
@@ -298,10 +299,10 @@ def group_by_length(strings):
         group_by_length(["a", "bb", "ccc", "dd", "e"])
         -> {1: ["a", "e"], 2: ["bb", "dd"], 3: ["ccc"]}
     -Parameter:
-        -strings (list; elements: str): list of strings of various lengths.
+        -strings (list; elements: str): List of strings of various lengths.
     -Returns:
         (dict; key: int; value: list of str) Dictionary where the keys are integers representing lengths, and the
-        values are lists of the elements in 'strings' grouped by their length.
+        values are lists of the elements in `strings` grouped by their length.
     """
     pass
 
@@ -328,21 +329,21 @@ def roman_to_arabic(roman):
 
 def phone_number(phone):
     """
-    Given a phone number containing letters, returns its numeric form. The given phone number will only contain numbers,
-    upper case letters, '-', '(' and ')'. Only letters will be converted, leaving numbers and other symbols unchanged.
-    The letter-number correspondence is as follows:
-    A, B, C = 2
-    D, E, F = 3
-    G, H, I = 4
-    J, K, L = 5
-    M, N, O = 6
-    P, Q, R, S = 7
-    T, U, V = 8
-    W, X, Y, Z = 9
+    Given a phone number containing letters, returns its numeric form. The given phone number will only contain
+    numbers, upper case letters, '-', '(' and ')'. Only letters will be converted, leaving numbers and other symbols
+    unchanged. The letter-number correspondence is as follows:
+    A-B-C=2;
+    D-E-F=3;
+    G-H-I=4;
+    J-K-L=5;
+    M-N-O=6;
+    P-Q-R-S=7;
+    T-U-V;=8;
+    W-X-Y-Z=9;
     Example:
         phone_number(phone="(325)444-TEST") -> "(325)444-8378"
     -Parameter:
-        -phone (str): a phone number that might contain upper-case letters, numbers, hyphens and parentheses.
+        -phone (str): A phone number that might contain upper-case letters, numbers, hyphens and parentheses.
     -Returns:
         (str) The phone number with its letters converted into its numeric form.
     """
@@ -362,8 +363,8 @@ def isomorphic_strings(string1, string2):
         (Since we can replace: 'p'='y'; 'a'='o'; p'='y'; but when we try to replace 'e' with 'o' we find that 'o' was
         already a replacement for 'a').
     -Parameters:
-        -string1 (str): a string to be processed. len(string1) == len(string2).
-        -string2 (str): a second string, to verify if it's isomorphic in relation to string1.
+        -string1 (str): A string to be processed. len(string1) == len(string2).
+        -string2 (str): A second string, to verify if it's isomorphic with respect to `string1`.
     -Returns:
         (bool) True if strings are isomorphic, False if they aren't.
     """
@@ -383,8 +384,8 @@ def word_pattern(pattern, words):
         word_pattern(pattern="xyyx", words="home sea sea hill") -> False
         (Since 'x' cannot be matched both to 'home' and 'hill' at the same time).
     -Parameters:
-        -pattern (str): a pattern that only contains lower case letters.
-        -words (str): a string with words, which will be separated by a single space. There will be no leading or
+        -pattern (str): A pattern that only contains lower case letters.
+        -words (str): A string with words, which will be separated by a single space. There will be no leading or
         trailing spaces in the string. Words will only contain lower case letters and the ' ' character.
     -Returns:
         (bool) True if the words in the string follow the given pattern. False if they don't or any string is empty.
