@@ -213,7 +213,7 @@ def _download_offline_folder(language: str) -> StreamingResponse:
         media_type="application/zip",
         headers={
             "Content-Disposition": (
-                f'attachment; filename="plataforma-practica-interactiva-{language}.zip"'
+                f'attachment; filename="practica-interactiva-{language}.zip"'
             )
         },
     )
