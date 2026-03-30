@@ -547,7 +547,7 @@
 
             const a = document.createElement("a");
             a.href = url;
-            a.download = "progreso-plataforma.json";
+            a.download = "progreso-practica.json";
             a.click();
 
             URL.revokeObjectURL(url);
