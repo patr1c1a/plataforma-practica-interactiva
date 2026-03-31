@@ -13,7 +13,7 @@ def menor(numero1, numero2):
         -numero1 (numérico): Uno de los números a procesar.
         -numero2 (numérico): Otro de los números a procesar.
     -Valor retornado:
-        (numérico) El menor de los dos números. numero1 si ambos son iguales.
+        (numérico) El menor de los dos números. `numero1` si ambos son iguales.
     """
     pass
 
