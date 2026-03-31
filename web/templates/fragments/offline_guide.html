@@ -1,27 +1,31 @@
 <section class="offline-guide">
     <h1>Versión offline</h1>
     <p>
-        Esta versión replica una forma de trabajo más cercana a un entorno profesional, usando cualquier <span class="emphasis">IDE o editor de texto</span> para resolver los ejercicios.
+        Esta versión replica una forma de trabajo más cercana a un entorno profesional, usando cualquier <span
+            class="emphasis">IDE o editor de texto</span> para resolver los ejercicios.
     </p>
     <p>
-        Acá vas a ejecutar tests reales y trabajar con salidas en la terminal. La versión web simplifica el feedback. La versión offline muestra los errores reales.
+        Acá vas a ejecutar tests reales y trabajar con salidas en la terminal. La versión web simplifica el feedback. La
+        versión offline muestra los errores reales.
     </p>
 
     <h2>1. Descargar contenido offline</h2>
     <div class="offline-actions">
         <a href="{{ offline_download_esp_url }}" class="button-secondary">Descargar en español</a>
         <a href="{{ offline_download_eng_url }}" class="button-secondary">Descargar en inglés</a>
-        <a href="{{ offline_repo_url }}" target="_blank" rel="noopener noreferrer" class="button-secondary">Ver en GitHub</a>
+        <a href="{{ offline_repo_url }}" target="_blank" rel="noopener noreferrer" class="button-secondary">Ver en
+            GitHub</a>
     </div>
 
-    <h2>2. En la terminal, entrar a ESP o ENG</h2>
-    <pre><code>cd ESP</code></pre>
-    <br />
-    <pre><code>cd ENG</code></pre>
+    <h2>2. En el IDE, abrir la carpeta (ESP o ENG)</h2>
+    <p>
+        También es posible usar solo un editor de texto, aunque un IDE aporta mayor funcionalidad.
+    </p>
 
     <h2>3. Resolver ejercicios</h2>
     <p>
-        Completar las funciones en la carpeta <code>src/</code>, reemplazando <code>pass</code> por tu solución. No es
+        Completar las funciones en la subcarpeta <code>src/</code>, reemplazando <code>pass</code> por tu solución. No
+        es
         indispensable completarlas a todas: se puede resolver cada ejercicio individualmente y luego correr sus tests.
     </p>
     <p>Los ejercicios están organizados por categorías con dificultad incremental:</p>
@@ -51,14 +55,20 @@ pass
     </code></pre>
 
     <p>
-        Es recomendable usar las pruebas de la carpeta <code>tests/</code> para guiarte en el proceso de
+        Es recomendable usar las pruebas de la subcarpeta <code>tests/</code> para guiarte en el proceso de
         escribir el algoritmo (pero no se espera que modifiques esos tests de ninguna forma). Solo se debe agregar
         contenido a las funciones, sin modificar nada más (nombre, parámetros o documentación de las funciones) ni el
         resto del archivo.
     </p>
 
     <h2>4. Ejecutar tests</h2>
-    <p>De una función puntual:</p>
+    <p>Entrar a la carpeta en la terminal (ESP o ENG)</p>
+    <pre><code>cd ESP</code></pre>
+    <br />
+    <pre><code>cd ENG</code></pre>
+
+
+    <p>Ejecutar tests de una función puntual:</p>
     <pre><code>python -m unittest -v tests/tests_numeros.py -k test_menor</code></pre>
     <p>Todos los tests de una categoría:</p>
     <pre><code>python -m unittest -v tests/tests_numeros.py</code></pre>
@@ -68,4 +78,7 @@ pass
         Cuando los tests pasen, la salida mostrará "ok". Si algún test falla, mostrará qué función se ejecutó, qué
         argumentos se usaron para invocarlo, qué retornó y cuál era el valor de retorno esperado.
     </p>
+
+    <h2>Instrucciones detalladas</h2>
+    <p>Para instrucciones más detalladas, ver el archivo "readme" dentro de la carpeta (ESP o ENG) descargada.</p>
 </section>
