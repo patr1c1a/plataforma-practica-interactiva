@@ -81,7 +81,7 @@ Finalmente, ejecutar las pruebas de los ejercicios completados, para evaluar si 
 
 Es posible correr las pruebas para una sola función (esto es, un solo ejercicio), para todas las funciones de una categoría temática, o para todas las categorías a la vez.
 
-Para ejecutar las pruebas se puede utilizar una terminal o también configurar el IDE de preferencia. En el caso de la terminal, se deberá cambia al directorio ("CD") de la carpeta del proyecto (ejemplo: si el proyecto se encuentra en C:/miusuario/proyecto será esa la carpeta donde deberás situarte) y luego ejecutar el comando de python correspondiente.
+Para ejecutar las pruebas se puede utilizar una terminal o también configurar el IDE de preferencia. En el caso de la terminal, se deberá cambia al directorio ("CD") de la carpeta del proyecto (ejemplo: si el proyecto se encuentra en C:/ESP será esa la carpeta donde deberás situarte) y luego ejecutar el comando de python correspondiente.
 
 **Nota 1:** dependiendo de cómo se haya instalado Python, podría ser necesario reemplazar el comando "python" por "python3" o algún otro comando.
 
@@ -93,9 +93,9 @@ En una terminal o línea de comandos, ejecutar el siguiente comando:
 
 `python -m unittest -v ruta/al/archivo.py -k funcion_de_pruebas`
 
-donde _ruta/al/archivo.py_ debe reemplazarse con la ruta desde la carpeta raíz del proyecto hasta el archivo de pruebas que contiene las pruebas que se ejecutarán (ej.: **ESP/tests/tests_numeros.py**) y _funcion_de_pruebas_ debe  reemplazarse con la función de pruebas a ejecutar (ej.: **test_valor_absoluto**). Por ejemplo, para ejecutar las pruebas de la función del ejercicio **valor_absoluto** de la categoría _numeros_:
+donde _ruta/al/archivo.py_ debe reemplazarse con la ruta desde la carpeta raíz del proyecto hasta el archivo de pruebas que contiene las pruebas que se ejecutarán (ej.: **tests/tests_numeros.py**) y _funcion_de_pruebas_ debe  reemplazarse con la función de pruebas a ejecutar (ej.: **test_valor_absoluto**). Por ejemplo, para ejecutar las pruebas de la función del ejercicio **valor_absoluto** de la categoría _numeros_:
 
-`python -m unittest -v ESP/tests/tests_numeros.py -k test_valor_absoluto`
+`python -m unittest -v tests/tests_numeros.py -k test_valor_absoluto`
 
 **Para hacer lo mismo utilizando una configuración de Pycharm:** selecciona la opción "Module name" (al editar configuraciones) y luego da clic en "..." para abrir un nuevo diálogo donde deberás escribir el nombre del archivo de la categoría a ejecutar (ej.: tests_numeros) y seleccionarlo del menú desplegable. Luego, en "Additional Arguments", ingresar "-k test_nombre_funcion" (reemplazando con el nombre de la función a ejecutar). Verifica que la opción "Add contents to PYTHONPATH" esté tildada.
 
@@ -103,9 +103,9 @@ donde _ruta/al/archivo.py_ debe reemplazarse con la ruta desde la carpeta raíz 
 
 `python -m unittest -v ruta/al/archivo.py`
 
-donde _ruta/al/archivo.py_ debe reemplazarse con la ruta desde la carpeta raíz del proyecto hasta el archivo de pruebas que contiene las pruebas que se ejecutarán (ej.: **ESP/tests/tests_numeros.py**). Por ejemplo, para ejecutar las pruebas de los ejercicios de la categoría _numeros_:
+donde _ruta/al/archivo.py_ debe reemplazarse con la ruta desde la carpeta raíz del proyecto hasta el archivo de pruebas que contiene las pruebas que se ejecutarán (ej.: **tests/tests_numeros.py**). Por ejemplo, para ejecutar las pruebas de los ejercicios de la categoría _numeros_:
 
-`python -m unittest -v ESP/tests/tests_numeros.py`
+`python -m unittest -v tests/tests_numeros.py`
 
 **Para hacer lo mismo utilizando una configuración de Pycharm:** selecciona la opción "Module name" y luego da clic en "..."  para abrir un nuevo diálogo donde deberás escribir el nombre del archivo de la categoría a ejecutar (ej.: **tests_numeros**) y seleccionarlo del menú desplegable. Verifica que la opción "Add contents to PYTHONPATH" esté tildada.
 
@@ -119,7 +119,7 @@ Para ejecutar las pruebas de más de una categoría (o incluso todas las categor
 
 A continuación, corre **ejecutar_tests.py** usando:
 
-`python ESP/ejecutar_tests.py`
+`python ejecutar_tests.py`
 
 Si se utiliza Pycharm, será suficiente con correr el archivo **ejecutar_tests.py**, seleccionándolo y luego presionando Ctrl+Mayús+F10 o simplemente dando clic al botón "Run".
 

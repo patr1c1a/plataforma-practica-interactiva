@@ -78,7 +78,7 @@ Finally, run the tests for the completed exercises, to know if they pass or fail
 
 Tests can be executed for a single function (just one exercise), for all functions in a category (file) or for all categories at once.
 
-To run the tests you can use a terminal or configure your preferred IDE. If you use a terminal, you'll need to change directory ("CD") to the project folder (example: if the project is placed in c:/myuser/project that's the folder you'll need to change to) and then run the python command.
+To run the tests you can use a terminal or configure your preferred IDE. If you use a terminal, you'll need to change directory ("CD") to the project folder (example: if the project is placed in C:/ENG that's the folder you'll need to change to) and then run the python command.
 
 **Note 1:** depending on your Python installation, you might need to replace the "python" command with "python3" or something else.
 
@@ -90,9 +90,9 @@ In a terminal or command line interface, run the following command:
 
 `python -m unittest -v path/to/file.py -k test_function`
 
-where _path/to/file.py_ must be replaced with the path from the root folder to the test file containing the tests to be executed (e.g.: **ENG/tests/tests_numbers.py**) and _test_function_ must be replaced with the test function to be executed (e.g.: **test_absolute_value**). For instance, to run tests for function **absolute_value** in the _numbers_ category:
+where _path/to/file.py_ must be replaced with the path from the root folder to the test file containing the tests to be executed (e.g.: **tests/tests_numbers.py**) and _test_function_ must be replaced with the test function to be executed (e.g.: **test_absolute_value**). For instance, to run tests for function **absolute_value** in the _numbers_ category:
 
-`python -m unittest -v ENG/tests/tests_numbers.py -k test_absolute_value`
+`python -m unittest -v tests/tests_numbers.py -k test_absolute_value`
 
 **To do the same by using a Pycharm configuration:** select the "Module name" option (while editing configurations) and click on "..." to open a new dialog where you'll need to enter the name of the category file you want to execute (e.g.: tests_numbers) and select it from the dropdown. Then, in "Additional Arguments", enter "-k test_function_name" (replace with the name of the function to execute). Check the option "Add contents to PYTHONPATH" is checked.
 
@@ -100,9 +100,9 @@ where _path/to/file.py_ must be replaced with the path from the root folder to t
 
 `python -m unittest -v path/to/file.py`
 
-where _path/to/file.py_ must be replaced with the path from the root folder to the test file containing the tests to be executed (e.g.: **ENG/tests/tests_numbers.py**). For instance, to run all tests for all exercises in the _numbers_ category:
+where _path/to/file.py_ must be replaced with the path from the root folder to the test file containing the tests to be executed (e.g.: **tests/tests_numbers.py**). For instance, to run all tests for all exercises in the _numbers_ category:
 
-`python -m unittest -v ENG/tests/tests_numbers.py`
+`python -m unittest -v tests/tests_numbers.py`
 
 **To do the same by using a Pycharm configuration:** select the "Module name" option and then click on "..." to open a new dialog where you'll need to enter the name of the category file you want to execute (e.g.: tests_numbers) and select it from the dropdown. Check the option "Add contents to PYTHONPATH" is checked.
 
@@ -116,7 +116,7 @@ To run tests for more than one category (or all categories) at the same time, ex
 
 Next, execute **run_tests.py** with:
 
-`python ENG/run_tests.py`
+`python run_tests.py`
 
 If you're using Pycharm, you can just run the **run_tests.py** file, by selecting it and then pressing Ctrl+Shift+F10 or simply clicking the "Run" button.
 
