@@ -105,6 +105,10 @@ a:hover {
   overflow-x: auto;
 }
 
+.offline-actions-footer {
+  margin-top: 4.5rem;
+}
+
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
