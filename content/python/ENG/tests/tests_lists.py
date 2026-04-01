@@ -1,4 +1,4 @@
-###########################
+﻿###########################
 # DO NOT MODIFY THIS FILE #
 ###########################
 
@@ -21,19 +21,19 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_greatest_element(self):
         test_cases = {
-            'Argument used: strings=["x", "y", "z"]': [
+            "Argument used: strings=['x', 'y', 'z']": [
                 greatest_element(["x", "y", "z"]),
                 "z",
             ],
-            'Argument used: strings=["z", "y", "x"]': [
+            "Argument used: strings=['z', 'y', 'x']": [
                 greatest_element(["z", "y", "z"]),
                 "z",
             ],
-            'Argument used: strings=["abc", "cba", "cab", "bca"]': [
+            "Argument used: strings=['abc', 'cba', 'cab', 'bca']": [
                 greatest_element(["abc", "cba", "cab", "bca"]),
                 "cba",
             ],
-            'Argument used: strings=["abc", "abc", "abc"]': [
+            "Argument used: strings=['abc', 'abc', 'abc']": [
                 greatest_element(["abc", "abc", "abc"]),
                 "abc",
             ],
@@ -66,7 +66,7 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_no_duplicates(self):
         test_cases = {
-            'Argument used: might_have_duplicates=[3, False, "a", 1, 1, 2, 4, False, 4]': [
+            "Argument used: might_have_duplicates=[3, False, 'a', 1, 1, 2, 4, False, 4]": [
                 no_duplicates([3, False, "a", 1, 1, 2, 4, False, 4]),
                 [3, "a", 2],
             ],
@@ -74,7 +74,7 @@ class TestsListFunctions(unittest.TestCase):
                 no_duplicates([1, 1, 1]),
                 [],
             ],
-            'Argument used: might_have_duplicates=["hello", True, 5.1]': [
+            "Argument used: might_have_duplicates=['hello', True, 5.1]": [
                 no_duplicates(["hello", True, 5.1]),
                 ["hello", True, 5.1],
             ],
@@ -215,27 +215,27 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_uno_round(self):
         test_cases = {
-            'Arguments used: hand=["red 2", "blue 5", "green 1"], card_discard_pile="red 3"': [
+            "Arguments used: hand=['red 2', 'blue 5', 'green 1'], card_discard_pile='red 3'": [
                 uno_round(["red 2", "blue 5", "green 1"], "red 3"),
                 True,
             ],
-            'Arguments used: hand=["red 2", "blue 5", "green 1"], card_discard_pile="yellow 3"': [
+            "Arguments used: hand=['red 2', 'blue 5', 'green 1'], card_discard_pile='yellow 3'": [
                 uno_round(["red 2", "blue 5", "green 1"], "yellow 3"),
                 False,
             ],
-            'Arguments used: hand=["green 4"], card_discard_pile="yellow 4"': [
+            "Arguments used: hand=['green 4'], card_discard_pile='yellow 4'": [
                 uno_round(["green 4"], "yellow 4"),
                 True,
             ],
-            'Arguments used: hand=["green 1"], card_discard_pile="green 6': [
+            "Arguments used: hand=['green 1'], card_discard_pile='green 6'": [
                 uno_round(["green 1"], "green 6"),
                 True,
             ],
-            'Arguments used: hand=["green 1"], card_discard_pile="blue 5"': [
+            "Arguments used: hand=['green 1'], card_discard_pile='blue 5'": [
                 uno_round(["green 1"], "blue 5"),
                 False,
             ],
-            'Argument used: hand=[], card_discard_pile="blue 5"': [
+            "Argument used: hand=[], card_discard_pile='blue 5'": [
                 uno_round([], "blue 5"),
                 False,
             ],
@@ -262,7 +262,7 @@ class TestsListFunctions(unittest.TestCase):
                 discard_excess_occurrences([1, 1, 1, 1, 1, 1], 0),
                 [],
             ],
-            'Arguments used: nums=["a", "a", "a"], maximum=1': [
+            "Arguments used: nums=['a', 'a', 'a'], maximum=1": [
                 discard_excess_occurrences(["a", "a", "a"], 1),
                 ["a"],
             ],
@@ -372,15 +372,15 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_unnest(self):
         test_cases = {
-            'Argument used: nested_lists=[[1, 0, 4], ["a", "b"], [True, False, True, True]]': [
+            "Argument used: nested_lists=[[1, 0, 4], ['a', 'b'], [True, False, True, True]]": [
                 unnest([[1, 0, 4], ["a", "b"], [True, False, True, True]]),
                 [1, 0, 4, "a", "b", True, False, True, True],
             ],
-            'Argument used: nested_lists=[[], ["a", "b"]]': [
+            "Argument used: nested_lists=[[], ['a', 'b']]": [
                 unnest([[], ["a", "b"]]),
                 ["a", "b"],
             ],
-            'Argument used: nested_lists=[["a", "b"], []]': [
+            "Argument used: nested_lists=[['a', 'b'], []]": [
                 unnest([["a", "b"], []]),
                 ["a", "b"],
             ],
@@ -396,8 +396,8 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_how_many_passed(self):
         test_cases = {
-            'Argument used: exam_results=[["Joan Taylor", 331, 6], ["Louisa Kay", 112, 3], ["Adam Burton", 256, 8], '
-            '["Martin Smith", 209, 7]]': [
+            "Argument used: exam_results=[['Joan Taylor', 331, 6], ['Louisa Kay', 112, 3], ['Adam Burton', 256, 8], "
+            "['Martin Smith', 209, 7]]": [
                 how_many_passed(
                     [
                         ["Joan Taylor", 331, 6],
@@ -408,7 +408,7 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 3,
             ],
-            'Argument used: exam_results=[["Joan Taylor", 331, 6], ["Luisa Kay", 112, 6], ["Adam Burton", 256, 6]]': [
+            "Argument used: exam_results=[['Joan Taylor', 331, 6], ['Luisa Kay', 112, 6], ['Adam Burton', 256, 6]]": [
                 how_many_passed(
                     [
                         ["Joan Taylor", 331, 6],
@@ -418,8 +418,8 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 3,
             ],
-            'Argument used: exam_results=[["Joan Taylor", 331, 1], ["Luisa Kay", 112, 5], ["Adam Burton", 256, 2], '
-            '["Martin Smith", 209, 4]]': [
+            "Argument used: exam_results=[['Joan Taylor', 331, 1], ['Luisa Kay', 112, 5], ['Adam Burton', 256, 2], "
+            "['Martin Smith', 209, 4]]": [
                 how_many_passed(
                     [
                         ["Joan Taylor", 331, 1],
@@ -430,7 +430,7 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 0,
             ],
-            'Argument used: exam_results=[["Joan Taylor", 331, 6]]': [
+            "Argument used: exam_results=[['Joan Taylor', 331, 6]]": [
                 how_many_passed([["Joan Taylor", 331, 6]]),
                 1,
             ],
@@ -459,8 +459,8 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_find_country(self):
         test_cases = {
-            'Arguments used: cities=[("Buenos Aires", "Argentina"), ("Glasgow", "Scotland"), ("Liverpool", "England"), '
-            '("Madrid", "Spain")], city_name="Glasgow"': [
+            "Arguments used: cities=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Scotland'), ('Liverpool', 'England'), "
+            "('Madrid', 'Spain')], city_name='Glasgow'": [
                 find_country(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -472,8 +472,8 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 "Scotland",
             ],
-            'Arguments used: cities=[("Buenos Aires", "Argentina"), ("Glasgow", "Scotland"), ("Liverpool", "England"), '
-            '("Madrid", "Spain")], city_name="Montevideo"': [
+            "Arguments used: cities=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Scotland'), ('Liverpool', 'England'), "
+            "('Madrid', 'Spain')], city_name='Montevideo'": [
                 find_country(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -485,7 +485,7 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 None,
             ],
-            'Arguments used: cities=[], city_name="Glasgow"': [
+            "Arguments used: cities=[], city_name='Glasgow'": [
                 find_country([], "Glasgow"),
                 None,
             ],
@@ -496,8 +496,8 @@ class TestsListFunctions(unittest.TestCase):
 
     def test_find_destination(self):
         test_cases = {
-            'Arguments used: [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], cities=[("Buenos Aires", "Argentina"),'
-            '("Glasgow", "Scotland"), ("Liverpool", "England"), ("Madrid", "Spain")], ticket_number=100': [
+            "Arguments used: [(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow')], cities=[('Buenos Aires', 'Argentina'),"
+            "('Glasgow', 'Scotland'), ('Liverpool', 'England'), ('Madrid', 'Spain')], ticket_number=100": [
                 find_destination(
                     [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
                     [
@@ -510,9 +510,9 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 "Argentina",
             ],
-            'Arguments used: tickets=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow"), (130, "Madrid")],'
-            'cities=[("Buenos Aires", "Argentina"), ("Glasgow", "Scotland"), ("Liverpool", "England"), '
-            '("Madrid", "Spain")], ticket_number=100': [
+            "Arguments used: tickets=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow'), (130, 'Madrid')],"
+            "cities=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Scotland'), ('Liverpool', 'England'), "
+            "('Madrid', 'Spain')], ticket_number=100": [
                 find_destination(
                     [
                         (100, "Buenos Aires"),
@@ -530,8 +530,8 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 "Spain",
             ],
-            'Arguments used: tickets=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], cities=[("Buenos '
-            'Aires", "Argentina"), ("Glasgow", "Scotland"), ("Liverpool", "England"), ("Madrid", "Spain")], '
+            "Arguments used: tickets=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow')], cities=[('Buenos "
+            "Aires', 'Argentina'), ('Glasgow', 'Scotland'), ('Liverpool', 'England'), ('Madrid', 'Spain')], "
             "ticket_number=140": [
                 find_destination(
                     [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
@@ -545,8 +545,8 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 None,
             ],
-            'Arguments used: tickets=[(100, "Montevideo"), (110, "Madrid"), (120, "Glasgow")], cities=[("Buenos Aires",'
-            '"Argentina"), ("Glasgow","Scotland"), ("Liverpool", "England"), ("Madrid", "Spain")], ticket_number=100': [
+            "Arguments used: tickets=[(100, 'Montevideo'), (110, 'Madrid'), (120, 'Glasgow')], cities=[('Buenos Aires',"
+            "'Argentina'), ('Glasgow','Scotland'), ('Liverpool', 'England'), ('Madrid', 'Spain')], ticket_number=100": [
                 find_destination(
                     [(100, "Montevideo"), (110, "Madrid"), (120, "Glasgow")],
                     [
@@ -559,14 +559,14 @@ class TestsListFunctions(unittest.TestCase):
                 ),
                 None,
             ],
-            'Arguments used: tickets=[], cities=[("Buenos Aires", "Argentina"), ("Glasgow", "Scotland")], '
+            "Arguments used: tickets=[], cities=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Scotland')], "
             "ticket_number=100": [
                 find_destination(
                     [], [("Buenos Aires", "Argentina"), ("Glasgow", "Scotland")], 100
                 ),
                 None,
             ],
-            'Arguments used: tickets=[], cities=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], '
+            "Arguments used: tickets=[], cities=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow')], "
             "ticket_number=100": [
                 find_destination(
                     [], [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], 100

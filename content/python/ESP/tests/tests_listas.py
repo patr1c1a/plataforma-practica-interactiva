@@ -27,19 +27,19 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_mayor_elemento(self):
         pruebas = {
-            'Argumento usado: strings=["x", "y", "z"]': [
+            "Argumento usado: strings=['x', 'y', 'z']": [
                 mayor_elemento(["x", "y", "z"]),
                 "z",
             ],
-            'Argumento usado: strings=["z", "y", "x"]': [
+            "Argumento usado: strings=['z', 'y', 'x']": [
                 mayor_elemento(["z", "y", "z"]),
                 "z",
             ],
-            'Argumento usado: strings=["abc", "cba", "cab", "bca"]': [
+            "Argumento usado: strings=['abc', 'cba', 'cab', 'bca']": [
                 mayor_elemento(["abc", "cba", "cab", "bca"]),
                 "cba",
             ],
-            'Argumento usado: strings=["abc", "abc", "abc"]': [
+            "Argumento usado: strings=['abc', 'abc', 'abc']": [
                 mayor_elemento(["abc", "abc", "abc"]),
                 "abc",
             ],
@@ -72,7 +72,7 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_elementos_unicos(self):
         pruebas = {
-            'Argumento usado: puede_tener_duplicados=[3, False, "a", 1, 1, 2, 2, False, 4]': [
+            "Argumento usado: puede_tener_duplicados=[3, False, 'a', 1, 1, 2, 2, False, 4]": [
                 elementos_unicos([3, False, "a", 1, 1, 2, 4, False, 4]),
                 [3, "a", 2],
             ],
@@ -80,7 +80,7 @@ class TestsFuncionesListas(unittest.TestCase):
                 elementos_unicos([1, 1, 1]),
                 [],
             ],
-            'Argumento usado: puede_tener_duplicados=["hola", True, 5.1]': [
+            "Argumento usado: puede_tener_duplicados=['hola', True, 5.1]": [
                 elementos_unicos(["hola", True, 5.1]),
                 ["hola", True, 5.1],
             ],
@@ -230,27 +230,27 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_jugada_uno(self):
         pruebas = {
-            'Argumentos usados: mano=["rojo 2", "azul 5", "verde 1"], carta_descubierta="rojo 3': [
+            "Argumentos usados: mano=['rojo 2', 'azul 5', 'verde 1'], carta_descubierta='rojo 3'": [
                 jugada_uno(["rojo 2", "azul 5", "verde 1"], "rojo 3"),
                 True,
             ],
-            'Argumentos usados: mano=["rojo 2", "azul 5", "verde 1"], carta_descubierta="amarillo 3': [
+            "Argumentos usados: mano=['rojo 2', 'azul 5', 'verde 1'], carta_descubierta='amarillo 3'": [
                 jugada_uno(["rojo 2", "azul 5", "verde 1"], "amarillo 3"),
                 False,
             ],
-            'Argumentos usados: mano=["verde 4"], carta_descubierta="amarillo 4': [
+            "Argumentos usados: mano=['verde 4'], carta_descubierta='amarillo 4'": [
                 jugada_uno(["verde 4"], "amarillo 4"),
                 True,
             ],
-            'Argumentos usados: mano=["verde 1"], carta_descubierta="verde 6': [
+            "Argumentos usados: mano=['verde 1'], carta_descubierta='verde 6'": [
                 jugada_uno(["verde 1"], "verde 6"),
                 True,
             ],
-            'Argumentos usados: mano=["verde 1"], carta_descubierta="azul 5"': [
+            "Argumentos usados: mano=['verde 1'], carta_descubierta='azul 5'": [
                 jugada_uno(["verde 1"], "azul 5"),
                 False,
             ],
-            'Argumentos usados: mano=[], carta_descubierta="azul 5"': [
+            "Argumentos usados: mano=[], carta_descubierta='azul 5'": [
                 jugada_uno([], "azul 5"),
                 False,
             ],
@@ -277,7 +277,7 @@ class TestsFuncionesListas(unittest.TestCase):
                 descartar_ocurrencias_extra([1, 1, 1, 1, 1, 1], 0),
                 [],
             ],
-            'Argumentos usados: numeros=["a", "a", "a"], n=1': [
+            "Argumentos usados: numeros=['a', 'a', 'a'], n=1": [
                 descartar_ocurrencias_extra(["a", "a", "a"], 1),
                 ["a"],
             ],
@@ -390,15 +390,15 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_desanidar(self):
         pruebas = {
-            'Argumento usado: listas=[[1, 0, 4], ["a", "b"], [True, False, True, True]]': [
+            "Argumento usado: listas=[[1, 0, 4], ['a', 'b'], [True, False, True, True]]": [
                 desanidar([[1, 0, 4], ["a", "b"], [True, False, True, True]]),
                 [1, 0, 4, "a", "b", True, False, True, True],
             ],
-            'Argumento usado: listas=[[], ["a", "b"]]': [
+            "Argumento usado: listas=[[], ['a', 'b']]": [
                 desanidar([[], ["a", "b"]]),
                 ["a", "b"],
             ],
-            'Argumento usado: listas=[["a", "b"], []]': [
+            "Argumento usado: listas=[['a', 'b'], []]": [
                 desanidar([["a", "b"], []]),
                 ["a", "b"],
             ],
@@ -414,8 +414,8 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_cantidad_aprobados(self):
         pruebas = {
-            'Argumento usado: resultados_examen=[["Mario Perez", 331, 6], ["Luisa Rey", 112, 3], ["Fernanda Torres", '
-            '256, 8], ["Martín Sotomayor", 209, 7]]': [
+            "Argumento usado: resultados_examen=[['Mario Perez', 331, 6], ['Luisa Rey', 112, 3], ['Fernanda Torres', "
+            "256, 8], ['Martín Sotomayor', 209, 7]]": [
                 cantidad_aprobados(
                     [
                         ["Mario Perez", 331, 6],
@@ -426,8 +426,8 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 3,
             ],
-            'Argumento usado: resultados_examen=[["Mario Perez", 331, 6], ["Luisa Rey", 112, 6], '
-            '["Fernanda Torres", 256, 6]]': [
+            "Argumento usado: resultados_examen=[['Mario Perez', 331, 6], ['Luisa Rey', 112, 6], "
+            "['Fernanda Torres', 256, 6]]": [
                 cantidad_aprobados(
                     [
                         ["Mario Perez", 331, 6],
@@ -437,8 +437,8 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 3,
             ],
-            'Argumento usado: resultados_examen=[["Mario Perez", 331, 1], ["Luisa Rey", 112, 5], ["Fernanda Torres", '
-            '256, 2], ["Martín Sotomayor", 209, 4]]': [
+            "Argumento usado: resultados_examen=[['Mario Perez', 331, 1], ['Luisa Rey', 112, 5], ['Fernanda Torres', "
+            "256, 2], ['Martín Sotomayor', 209, 4]]": [
                 cantidad_aprobados(
                     [
                         ["Mario Perez", 331, 1],
@@ -449,7 +449,7 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 0,
             ],
-            'Argumento usado: resultados_examen=[["Mario Perez", 331, 6]]': [
+            "Argumento usado: resultados_examen=[['Mario Perez', 331, 6]]": [
                 cantidad_aprobados([["Mario Perez", 331, 6]]),
                 1,
             ],
@@ -478,8 +478,8 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_buscar_pais(self):
         pruebas = {
-            'Argumentos usados: ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), '
-            '("Liverpool", "Inglaterra"), ("Madrid", "España")], nombre_ciudad="Glasgow"': [
+            "Argumentos usados: ciudades=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), "
+            "('Liverpool', 'Inglaterra'), ('Madrid', 'España')], nombre_ciudad='Glasgow'": [
                 buscar_pais(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -491,8 +491,8 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 "Escocia",
             ],
-            'Argumentos usados: ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), '
-            '("Liverpool", "Inglaterra"), ("Madrid", "España")], nombre_ciudad="Montevideo"': [
+            "Argumentos usados: ciudades=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), "
+            "('Liverpool', 'Inglaterra'), ('Madrid', 'España')], nombre_ciudad='Montevideo'": [
                 buscar_pais(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -504,7 +504,7 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 None,
             ],
-            'Argumentos usados: ciudades=[], nombre_ciudad="Glasgow"': [
+            "Argumentos usados: ciudades=[], nombre_ciudad='Glasgow'": [
                 buscar_pais([], "Glasgow"),
                 None,
             ],
@@ -515,9 +515,9 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_buscar_destino(self):
         pruebas = {
-            'Argumentos usados: boletos=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], '
-            'ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), ("Liverpool", "Inglaterra"), '
-            '("Madrid", "España")], numero_boleto=100': [
+            "Argumentos usados: boletos=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow')], "
+            "ciudades=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), ('Liverpool', 'Inglaterra'), "
+            "('Madrid', 'España')], numero_boleto=100": [
                 buscar_destino(
                     [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
                     [
@@ -530,9 +530,9 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 "Argentina",
             ],
-            'Argumentos usados: boletos=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow"), (130, "Madrid")], '
-            'ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), ("Liverpool", "Inglaterra"), '
-            '("Madrid", "España")], numero_boleto=130': [
+            "Argumentos usados: boletos=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow'), (130, 'Madrid')], "
+            "ciudades=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), ('Liverpool', 'Inglaterra'), "
+            "('Madrid', 'España')], numero_boleto=130": [
                 buscar_destino(
                     [
                         (100, "Buenos Aires"),
@@ -550,9 +550,9 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 "España",
             ],
-            'Argumentos usados: boletos=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), '
-            '("Liverpool", "Inglaterra"), ("Madrid", "España")], ciudades=[(100, "Buenos Aires"), (110, "Madrid"), '
-            '(120, "Glasgow")], numero_boleto=140': [
+            "Argumentos usados: boletos=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), "
+            "('Liverpool', 'Inglaterra'), ('Madrid', 'España')], ciudades=[(100, 'Buenos Aires'), (110, 'Madrid'), "
+            "(120, 'Glasgow')], numero_boleto=140": [
                 buscar_destino(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -565,9 +565,9 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 None,
             ],
-            'Argumentos usados: boletos=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), '
-            '("Liverpool", "Inglaterra"), ("Madrid", "España")], ciudades=[(100, "Montevideo"), (110, "Madrid"), '
-            '(120, "Glasgow")], numero_boleto=100': [
+            "Argumentos usados: boletos=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia'), "
+            "('Liverpool', 'Inglaterra'), ('Madrid', 'España')], ciudades=[(100, 'Montevideo'), (110, 'Madrid'), "
+            "(120, 'Glasgow')], numero_boleto=100": [
                 buscar_destino(
                     [
                         ("Buenos Aires", "Argentina"),
@@ -580,14 +580,14 @@ class TestsFuncionesListas(unittest.TestCase):
                 ),
                 None,
             ],
-            'Argumentos usados: boletos=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia")], ciudades=[], '
+            "Argumentos usados: boletos=[('Buenos Aires', 'Argentina'), ('Glasgow', 'Escocia')], ciudades=[], "
             "numero_boleto=100": [
                 buscar_destino(
                     [("Buenos Aires", "Argentina"), ("Glasgow", "Escocia")], [], 100
                 ),
                 None,
             ],
-            'Argumentos usados: boletos=[], ciudades=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], '
+            "Argumentos usados: boletos=[], ciudades=[(100, 'Buenos Aires'), (110, 'Madrid'), (120, 'Glasgow')], "
             "numero_boleto=100": [
                 buscar_destino(
                     [], [(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], 100
