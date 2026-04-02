@@ -5,7 +5,7 @@
 
 def menor(numero1, numero2):
     """
-    Retorna el menor de dos números.
+    Retorna el menor de dos números: `numero1` y `numero2`.
     Ejemplos:
         menor(numero1=3, numero2=1) -> 1
         menor(numero1=3, numero2=3) -> 3
@@ -20,7 +20,7 @@ def menor(numero1, numero2):
 
 def valor_absoluto(numero):
     """
-    Retorna el valor absoluto de un número.
+    Retorna el valor absoluto de `numero`.
     Ejemplos:
         valor_absoluto(numero=3) -> 3
         valor_absoluto(numero=-10) -> 10
@@ -34,7 +34,7 @@ def valor_absoluto(numero):
 
 def buscar_mes(fecha):
     """
-    Dada una fecha completa (incluyendo día, mes y año), retorna el mes.
+    Dada `fecha` (que es una fecha completa incluyendo día, mes y año) retorna el mes.
     Ejemplos:
         buscar_mes(fecha=31122020) -> 12
         buscar_mes(fecha=5091946) -> 9
@@ -49,7 +49,7 @@ def buscar_mes(fecha):
 
 def sumar_multiplos(inferior, superior, n):
     """
-    Suma los múltiplos de n que se encuentran en un intervalo cerrado de números enteros.
+    Suma los múltiplos de `n` que se encuentran en un intervalo cerrado de números enteros con límites `inferior` y `superior`.
     Ejemplos:
         sumar_multiplos(inferior=0, superior=30, n=5) -> 105
         sumar_multiplos(inferior=-30, superior=0, n=5) -> -105
@@ -65,7 +65,7 @@ def sumar_multiplos(inferior, superior, n):
 
 def es_capicua(numero):
     """
-    Evalúa si un número es capicúa o no. Los números capicúa son aquellos que se leen de igual manera, tanto de
+    Evalúa si `numero` es un número capicúa o no. Los números capicúa son aquellos que se leen de igual manera, tanto de
     izquierda a derecha como de derecha a izquierda.
     Sugerencia didáctica: usar números únicamente, evitando otros tipos de datos.
     Ejemplos:
@@ -81,22 +81,22 @@ def es_capicua(numero):
 
 def es_bisiesto(anio):
     """
-    Evalúa si un año es bisiesto según el calendario Gregoriano.
+    Evalúa si `anio` es un año bisiesto según el calendario Gregoriano.
     Ejemplos:
         es_bisiesto(anio=2020) -> True
         es_bisiesto(anio=1800) -> False
     -Parámetro:
         -anio (int): Año a evaluar. Número positivo.
     -Valor retornado:
-        (bool) True si el año es bisiesto. False si no lo es.
+        (bool) True si `anio` es un año bisiesto. False si no lo es.
     """
     pass
 
 
 def dias_en_mes(mes, anio):
     """
-    Calcula la cantidad de días que tiene un mes determinado, en un año determinado (para el caso de que se trate
-    de febrero en un año bisiesto).
+    Calcula la cantidad de días que tiene un mes determinado (dado por `mes`), en un año determinado (dado por `anio`).
+    Si se trata de febrero en un año bisiesto, se tiene en cuenta el día extra.
     Sugerencia didáctica: separar el problema en partes, usando un algoritmo que determine si un año es bisiesto.
     Ejemplo:
         dias_en_mes(mes=11, anio=1981) -> 30
@@ -111,7 +111,7 @@ def dias_en_mes(mes, anio):
 
 def contar_digitos(numero):
     """
-    Cuenta la cantidad de dígitos en un número.
+    Cuenta la cantidad de dígitos en `numero`.
     Ejemplo:
         contar_digitos(numero=120) -> 3
     -Parámetro:
@@ -124,7 +124,7 @@ def contar_digitos(numero):
 
 def suma_digitos_cuadrados(numero):
     """
-    Calcula la suma de los cuadrados de cada uno de los dígitos de un número.
+    Calcula la suma de los cuadrados de cada uno de los dígitos de `numero`.
     Ejemplo:
         suma_digitos_cuadrados(numero=15) -> 26
     -Parámetro:
@@ -137,7 +137,7 @@ def suma_digitos_cuadrados(numero):
 
 def porcentaje_digitos_pares(numero):
     """
-    Calcula el porcentaje que representan los dígitos pares sobre el total de dígitos de un número.
+    Calcula el porcentaje que representan los dígitos pares sobre el total de dígitos de `numero`.
     Ejemplo:
         porcentaje_digitos_pares(numero=5555666555) -> 30.0
     -Parámetro:
@@ -150,8 +150,8 @@ def porcentaje_digitos_pares(numero):
 
 def es_pronico(numero):
     """
-    Evalúa si un número es un número "prónico". Un número es considerado "prónico" si es el producto de
-    dos números naturales consecutivos.
+    Evalúa si `numero` es un número "prónico". Un número es considerado "prónico" si es el producto de dos números
+    naturales consecutivos.
     Ejemplo:
         es_pronico(numero=56) -> True
         (56 puede expresarse como 7*8).
@@ -165,7 +165,7 @@ def es_pronico(numero):
 
 def es_primo(numero):
     """
-    Evalúa si un número es primo.
+    Evalúa si `numero` es un número primo.
     Ejemplo:
         es_primo(numero=7) -> True
     -Parámetro:
@@ -178,7 +178,7 @@ def es_primo(numero):
 
 def factorial(numero):
     """
-    Calcula el factorial de un número.
+    Calcula el factorial de `numero`.
     Ejemplo:
         factorial(numero=4) -> 24
     -Parámetro:
@@ -191,7 +191,7 @@ def factorial(numero):
 
 def suma_primeros_n_fibonacci(n):
     """
-    Calcula la sumatoria de los primeros n números de la sucesión de Fibonacci.
+    Calcula la sumatoria de los primeros `n` números de la sucesión de Fibonacci.
     Se considera que los dos primeros números en la sucesión son 0 y 1.
     Ejemplo:
         suma_primeros_n_fibonacci(n=6) -> 12
@@ -205,7 +205,7 @@ def suma_primeros_n_fibonacci(n):
 
 def mayor_divisor(numero):
     """
-    Calcula el mayor divisor entero de un número, exceptuando al propio número.
+    Calcula el mayor divisor entero de `numero`, exceptuando al propio número.
     Ejemplo:
         mayor_divisor(numero=182) -> 91
     -Parámetros:
@@ -218,9 +218,9 @@ def mayor_divisor(numero):
 
 def mcd_euclides(m, n):
     """
-    Calcula el máximo común divisor entre m y n usando el algoritmo de Euclides.
-    Método de Euclides: al dividir m por n (números enteros), se obtiene un cociente q y un residuo r. Se ha demostrado
-    que el máximo común divisor de m y n es el mismo que el de n y r.
+    Calcula el máximo común divisor entre `m` y `n` usando el algoritmo de Euclides.
+    Método de Euclides: al dividir `m` por `n` (números enteros), se obtiene un cociente "q" y un resto "r". Se ha
+    demostrado que el máximo común divisor de `m` y `n` es el mismo que el de `n` y "r".
     Ejemplo:
         mcd_euclides(m=60, n=24) -> 12
     -Parámetros:
@@ -234,13 +234,13 @@ def mcd_euclides(m, n):
 
 def obtener_mes(dias_transcurridos, anio):
     """
-    Obtiene el número de mes correspondiente, dada la cantidad de días transcurridos desde el 1 de enero de un año 
-    en particular (teniendo en cuenta la posibilidad de que sea bisiesto).
+    Dado `dias_transcurridos`, que representa la cantidad de días pasados desde el 1 de enero, y `anio`, que representa
+    el año en el que se contabilizan esos días, devuelve el número de mes correspondiente a ese día. Se considera la
+    posibilidad de que el año sea bisiesto. Por ejemplo, el día consecutivo número 60 en un año bisiesto representa el
+    29 de febrero, mientras que en un año no bisiesto representa el 1 de marzo.
     Sugerencia didáctica: separar el problema en partes, usando un algoritmo que obtenga la cantidad de días en un mes.
     Ejemplo:
         obtener_mes(dias_transcurridos=200, anio=1969) -> 7
-        (el día consecutivo número 60 en un año bisiesto representa el 29 de febrero, mientras que en un año no
-        bisiesto representa el 1 de marzo).
     -Parámetros:
         -dias_transcurridos (int): Número de días transcurridos desde el 1 de enero (entre 1 y 366). Positivo.
         -anio (int): Número de año (bisiesto o no). Positivo.
@@ -252,7 +252,7 @@ def obtener_mes(dias_transcurridos, anio):
 
 def es_disarium(numero):
     """
-    Evalúa si un número es "disarium". Un número es considerado "disarium" si, elevando cada dígito a su respectiva
+    Evalúa si `numero` es "disarium". Un número es considerado "disarium" si, elevando cada dígito a su respectiva
     posición dentro del número (la primera posición desde la izquierda se considera la 1) y luego sumando esos
     resultados, se obtiene el número original.
     Sugerencia didáctica: separar el problema en partes, usando un algoritmo para contar los digitos de un número.
@@ -289,7 +289,7 @@ def ordenar_monedas(cantidad):
 
 def cantidad_unos_solos(numero):
     """
-    Cuenta, de un número, la cantidad de dígitos 1 que no están seguidos de otro 1 consecutivo.
+    Dado `numero`, cuenta la cantidad de dígitos 1 que no están seguidos de otro 1 consecutivo.
     Sugerencia didáctica: evitar convertir el número o sus dígitos a otros tipos de datos.
     Ejemplos:
         cantidad_unos_solos(numero=141211) -> 2

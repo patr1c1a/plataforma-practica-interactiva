@@ -5,7 +5,7 @@
 
 def productoria_numeros(numeros):
     """
-    Retorna el producto de todos los números en una lista. La lista solo contendrá números.
+    Retorna el producto de todos los números en la lista `numeros`. La lista solo contendrá números.
     Ejemplo:
         productoria_numeros(numeros=[1, 2, 3, 4]) -> 24
     -Parámetros:
@@ -16,13 +16,13 @@ def productoria_numeros(numeros):
     pass
 
 
-def mayor_elemento(strings):
+def mayor_elemento(cadenas):
     """
-    Retorna el mayor elemento de una lista de strings.
+    Retorna el mayor elemento de una lista de strings `cadenas`.
     Ejemplo:
-        mayor_elemento(strings=["x", "y", "z"]) -> "z"
+        mayor_elemento(cadenas=["x", "y", "z"]) -> "z"
     -Parámetros:
-        -strings (list; elementos: str): La lista donde se buscará el mayor elemento.
+        -cadenas (list; elementos: str): La lista donde se buscará el mayor elemento.
     -Valor retornado:
         (str / None) El mayor de los strings contenidos en la lista. Si la lista está vacía, retorna None.
     """
@@ -31,10 +31,10 @@ def mayor_elemento(strings):
 
 def mayor_ganancia(precios):
     """
-    Dada una lista donde cada elemento representa el precio de las acciones de una empresa en un día determinado,
-    retorna la mayor ganancia posible, considerando que se compra al precio más bajo registrado y se vende al precio
-    más alto registrado. La lista no está en orden cronológico y las acciones pueden comprarse y venderse en cualquiera
-    de los precios que aparecen en ella. La lista contendrá al menos dos elementos.
+    Dada una lista `precios` donde cada elemento representa el precio de las acciones de una empresa en un día
+    determinado, retorna la mayor ganancia posible, considerando que se compra al precio más bajo registrado y se vende
+    al precio más alto registrado. La lista no está en orden cronológico y las acciones pueden comprarse y venderse en
+    cualquiera de los precios que aparecen en ella. La lista contendrá al menos dos elementos.
     Ejemplo:
         mayor_ganancia(precios=[70, 53, 15, 23, 41, 30]) -> 55
         (Si los precios son [70, 53, 15, 23, 41, 30] la diferencia entre el mayor y el menor precio es 70-15=55).
@@ -48,7 +48,8 @@ def mayor_ganancia(precios):
 
 def elementos_unicos(puede_tener_duplicados):
     """
-    Retorna una nueva lista con los elementos que no se repiten.
+    Dada una lista `puede_tener_duplicados` con elementos heterogéneos, retorna una nueva lista con los elementos que
+    no se repiten.
     Ejemplos:
         elementos_unicos(puede_tener_duplicados=[3, False, "a", 1, 1, 2, 4, False, 4]) -> [3, "a", 2]
         elementos_unicos(puede_tener_duplicados=[1, 1, 1]) -> []
@@ -62,7 +63,7 @@ def elementos_unicos(puede_tener_duplicados):
 
 def porcentaje_pares_impares(numeros):
     """
-    Dada una lista de números, retorna en una tupla el porcentaje de números pares e impares que contiene.
+    Dada una lista `numeros`, retorna en una tupla el porcentaje de números pares e impares que contiene.
     La lista contendrá al menos un elemento.
     Ejemplos:
         porcentaje_pares_impares(numeros=[-5, 3, 2, -4, 7]) -> (40.0, 60.0)
@@ -79,7 +80,7 @@ def porcentaje_pares_impares(numeros):
 
 def sumar_indice(numeros):
     """
-    A cada elemento de una lista de números, le suma el índice donde se encuentra.
+    A cada elemento de una lista `numeros`, le suma el índice donde se encuentra. La lista únicamente contiene números.
     Ejemplos:
         sumar_indice(numeros=[1, 2, 3, 4, 5, 6]) -> [1, 3, 5, 7, 9, 11]
         sumar_indice(numeros=[0, 0, 0]) -> [0, 1, 2]
@@ -93,8 +94,8 @@ def sumar_indice(numeros):
 
 def sumas_parciales(numeros):
     """
-    Retorna una nueva lista donde cada elemento es la suma parcial de sí mismo más todos los elementos anteriores
-    dentro de la lista original.
+    Dada una lista `numeros`, retorna una nueva lista donde cada elemento es la suma parcial de sí mismo más todos los
+    elementos anteriores dentro de la lista original.
     Ejemplo:
         sumas_parciales(numeros=[4, 6, 10, 7]) -> [4, 10, 20, 27]
         (Cada número es calculado como: 4, 6+4, 10+6+4, 7+10+6+4).
@@ -109,24 +110,24 @@ def sumas_parciales(numeros):
 
 def numeros_faltantes(numeros):
     """
-    Dada una lista de `n` elementos numéricos enteros, retorna una nueva lista cuyos elementos son los números entre 0
-    y `n-1` que no aparecen en la lista pasada por parámetro.
+    Dada una lista `numeros` que contiene "n" números enteros, retorna una nueva lista cuyos elementos son los números 
+    entre 0 y n-1 que no aparecen en la lista pasada por parámetro.
     Ejemplos:
         numeros_faltantes(numeros=[5, 0, 2, 9, 8, 12, 9]) -> [1, 3, 4, 6]
         (n=7, entonces: 1, 3, 4, 6 son los números entre 0 y 6 que no aparecen en la lista).
         numeros_faltantes(numeros=[3, 7, 15, 3, 9]) -> [0, 1, 2, 4]
     -Parámetro:
-        -numeros (list; elementos: int): Una lista de números, de longitud `n`.
+        -numeros (list; elementos: int): Una lista de números, de longitud n.
     -Valor retornado:
-        (list; elementos: int) Una nueva lista donde los elementos son los números entre 0 y `n-1` que no aparecen en
-        numeros.
+        (list; elementos: int) Una nueva lista donde los elementos son los números entre 0 y n-1 que no aparecen en
+        `numeros`.
     """
     pass
 
 
 def cuantos_numeros_menores(numeros):
     """
-    Dada una lista con números, por cada `numeros[i]` indica cuántos números en la lista son menores que él.
+    Dada una lista `numeros`, por cada `numeros[i]` indica cuántos números en la lista son menores que él.
     Ejemplo:
         cuantos_numeros_menores(numeros=[6, 3, 3, 4, 2]) -> [4, 1, 1, 3, 0]
         (i=0 almacena el número 6 y hay otros cuatro elementos en nums que son menores que 6: 3, 3, 4, 1.
@@ -135,7 +136,7 @@ def cuantos_numeros_menores(numeros):
     -Parámetros:
         -numeros (list; elementos: numéricos): Lista de números.
     -Valor retornado:
-        (list; elementos: numéricos) Una nueva lista donde cada elemento `i` es la cantidad de elementos menores que
+        (list; elementos: numéricos) Una nueva lista donde cada elemento "i" es la cantidad de elementos menores que
         `numeros[i]` existentes en `numeros`.
     """
     pass
@@ -143,7 +144,7 @@ def cuantos_numeros_menores(numeros):
 
 def dos_maximos(numeros):
     """
-    Retorna los dos números más grandes contenidos en una lista.
+    Retorna los dos números más grandes contenidos en una lista `numeros`.
     La lista contendrá al menos dos elementos.
     Ejemplo:
         dos_maximos(numeros=[5, 3, 6, 2, 8]) -> (8, 6)
@@ -158,11 +159,11 @@ def dos_maximos(numeros):
 
 def jugada_uno(mano, carta_descubierta):
     """
-    Dada una "mano" de cartas que tiene un jugador del juego "Uno" y la carta que está descubierta sobre la mesa,
-    retorna True si el jugador puede hacer una jugada, o False en caso contrario.
+    Dada una `mano` de cartas que tiene un jugador del juego "Uno" y la carta que está descubierta sobre la mesa 
+    (`carta_descubierta`), retorna True si el jugador puede hacer una jugada, o False en caso contrario.
     El jugador puede hacer una jugada si:
-    * tiene una carta con el mismo color que la carta descubierta, o
-    * tiene una carta con el mismo número que la carta descubierta.
+    tiene una carta con el mismo color que la carta descubierta, o
+    tiene una carta con el mismo número que la carta descubierta.
     Las cartas se representan por un string con el color y el número, separados por un espacio. El número es un dígito
     entre 0 y 9. La cantidad de cartas en una mano puede variar y puede ser 0.
     Ejemplos:
@@ -197,9 +198,9 @@ def descartar_ocurrencias_extra(numeros, n):
 
 def es_desplazamiento(numeros1, numeros2, n):
     """
-    Dadas dos listas, indica si la primera de ellas es igual a la segunda con sus elementos desplazados (rotados) `n`
-    posiciones hacia la derecha, de manera circular (es decir: al llegar al final de la lista se retorna al principio).
-    Las dos listas tendrán la misma longitud.
+    Dadas dos listas (`numeros1` y `numeros2`), indica si la primera de ellas es igual a la segunda con sus elementos
+    desplazados (rotados) `n` posiciones hacia la derecha, de manera circular (es decir: al llegar al final de la lista
+    se retorna al principio). Se asume que las dos listas tienen la misma longitud.
     Ejemplos:
         es_desplazamiento(numeros1=[1, 2, 3, 4], numeros2=[3, 4, 1, 2], n=2) -> True
         es_desplazamiento(numeros1=[1, 2], numeros2=[3, 4], n=1) -> False
@@ -216,7 +217,7 @@ def es_desplazamiento(numeros1, numeros2, n):
 
 def suma_cada_n(numeros, n):
     """
-    Dada una lista de números y un número positivo `n`, retorna la suma de cada `n` elementos de la lista.
+    Dada una lista `numeros` y un número positivo `n`, retorna la suma de cada `n` elementos de la lista.
     `n` puede ser mayor que la longitud de la lista y no necesariamente es un múltiplo de esta longitud.
     `n` no puede ser 0.
     Si `n` es mayor que la longitud de la lista, retorna 0.
@@ -237,8 +238,8 @@ def suma_cada_n(numeros, n):
 
 def desplazar_ceros(numeros):
     """
-    Dada una lista con números enteros, desplaza todos los ceros hacia la derecha (el final de la lista), sin modificar
-    el orden relativo de los demás números.
+    Dada una lista `numeros` con números enteros, desplaza todos los ceros hacia la derecha (el final de la lista), sin
+    modificar el orden relativo de los demás números.
     Los desplazamientos deben hacerse sobre la lista original, sin utilizar una lista adicional.
     Ejemplos:
         desplazar_ceros(numeros=[5, 8, 0, 3, 0, 0, 4]) -> [5, 8, 3, 4, 0, 0, 0]
@@ -254,7 +255,8 @@ def desplazar_ceros(numeros):
 
 def desanidar(listas):
     """
-    Dada una lista cuyos elementos son listas, retorna una nueva lista con un nivel menos de anidamiento.
+    Dada una lista `listas` (cuyos elementos son, a la vez, listas), retorna una nueva lista con un nivel menos de
+    anidamiento.
     Sugerencia didáctica: evitar usar bucles anidados.
     Ejemplos:
         desanidar(listas=[[1, 0, 4], ["a", "b"], [True, False, True, True]])
@@ -272,9 +274,9 @@ def desanidar(listas):
 
 def cantidad_aprobados(resultados_examen):
     """
-    Dada una lista con los resultados de cada alumno en un examen, retorna cuántos de ellos fueron aprobados. El
-    examen se aprueba con una calificación de 6 o más. Los datos de los alumnos están formados por listas que
-    contienen: nombre, número de identificación, calificación.
+    Dada una lista `resultados_examen` con los resultados de cada alumno en un examen, retorna cuántos de ellos están
+    aprobados. El examen se pasa con una calificación de 6 o más. Los datos de los alumnos están formados por listas
+    que contienen (en este orden): nombre, número de identificación, calificación.
     Ejemplo:
         cantidad_aprobados(resultados_examen=[["Mario Perez", 331, 6],
                                               ["Luisa Rey", 112, 3],
@@ -292,7 +294,7 @@ def cantidad_aprobados(resultados_examen):
 
 def suma_diagonal(matriz):
     """
-    Dada una matriz cuadrada (conformada por una lista de listas), retorna la suma de su diagonal principal.
+    Dada una `matriz` cuadrada (conformada por una lista de listas), retorna la suma de su diagonal principal.
     Ejemplo:
         suma_diagonal(matriz=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]) -> 15
         (Ya que la matriz puede leerse como:
@@ -301,18 +303,18 @@ def suma_diagonal(matriz):
          [7,8,9]]
         y esto retorna 15, pues 1+5+9=15).
     -Parámetro:
-        -matriz (list; elementos: list, con elementos numéricos): Lista de listas, formando una matriz de `n` columnas
-        y `n` filas.
+        -matriz (list; elementos: list, con elementos numéricos): Lista de listas, formando una matriz de "n" columnas
+        y "n" filas.
     -Valor retornado:
-        (numérico) Suma de la diagonal principal.
+        (numérico) Suma de la diagonal principal de `matriz`.
     """
     pass
 
 
 def buscar_pais(ciudades, nombre_ciudad):
     """
-    Dada una lista con tuplas conteniendo ciudad y país al que pertenece, y el nombre de una ciudad, retorna el país al
-    que la ciudad pertenece.
+    Dada una lista `ciudades` con tuplas conteniendo ciudad y país al que pertenece esa ciudad, y `nombre_ciudad`
+    representando el nombre de una ciudad, retorna el país al que `nombre_ciudad` pertenece.
     En caso de que la ciudad no exista en la lista, retornará None.
     Ejemplo:
         buscar_pais(ciudades=[("Buenos Aires", "Argentina"),
@@ -326,19 +328,20 @@ def buscar_pais(ciudades, nombre_ciudad):
         por una tupla en la forma: (nombre de ciudad, país al que pertenece).
         -nombre_ciudad (str): Nombre de una ciudad.
     -Valor retornado:
-        (str / None) Nombre del país al que corresponde la ciudad pasada por parámetro. None si la ciudad no existe en
-        la lista `ciudades`.
+        (str / None) Nombre del país al que corresponde la `nombre_ciudad` pasada por parámetro. None si la ciudad no
+        existe en la lista `ciudades`.
     """
     pass
 
 
 def buscar_destino(boletos, ciudades, numero_boleto):
     """
-    Dado el número de un boleto de viaje, retorna el país de destino.
-    La función recibe una lista con boletos de viaje (de cada boleto se tiene el número y la ciudad destino) y otra
-    lista con datos de ciudades (de cada una se tiene el nombre de ciudad y país donde está ubicada). Además, recibe un
-    número de boleto. De acuerdo el número de boleto ubicará la ciudad destino y, de acuerdo a la ciudad destino,
-    retornará el país al que pertenece. Si el número de boleto no se encuentra en la lista, retornará None.
+    Retorna el país de destino de un boleto de viaje.
+    La función recibe una lista con detalles de `boletos` de viaje donde, por cada boleto, almacena el número y la
+    ciudad destino; mientras que `ciudades` es otra lista con datos de ciudades: de cada una se tiene el nombre de
+    ciudad y país donde está ubicada. Además, se recibe un número de boleto. De acuerdo el número de boleto ubicará la
+    ciudad destino y, de acuerdo a la ciudad destino, retornará el país al que pertenece. Si el número de boleto no se
+    encuentra en la lista, retornará None.
     Sugerencia: separar el problema en partes, primero identificando la ciudad asociada al número de boleto, y luego
     determinando el país correspondiente.
     Ejemplo:

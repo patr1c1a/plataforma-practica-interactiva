@@ -5,7 +5,7 @@
 
 def cantidad_par_caracteres(cadena1, cadena2):
     """
-    Indica si la cantidad de caracteres de dos strings es par o no.
+    Indica si la cantidad de caracteres de dos strings (`cadena1` y `cadena2`) es par o no.
     Ejemplos:
         cantidad_par_caracteres(cadena1="aaaa", cadena2="aaaa") -> True
         cantidad_par_caracteres(cadena1="aaa", cadena2="aaaa") -> False
@@ -21,7 +21,7 @@ def cantidad_par_caracteres(cadena1, cadena2):
 
 def contar_ocurrencias(cadena, caracter):
     """
-    Cuenta la cantidad de veces que un carácter aparece en un string.
+    Cuenta la cantidad de veces que `caracter` aparece en un `cadena`.
     Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_ocurrencias(cadena="Esto es una frase", caracter="s") -> 3
@@ -36,8 +36,8 @@ def contar_ocurrencias(cadena, caracter):
 
 def contar_vocales_totales(cadena):
     """
-    Cuenta la cantidad de vocales (incluyendo repeticiones) que hay en un string, teniendo en cuenta mayúsculas como
-    minúsculas. Las vocales del idioma español son: a, e, i, o, u.
+    Cuenta la cantidad de vocales (incluyendo repeticiones) que hay en el string `cadena`, teniendo en cuenta 
+    mayúsculas como minúsculas. Las vocales del idioma español son: a, e, i, o, u.
     Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_vocales_totales(cadena="Esto es una frase") -> 7
@@ -51,9 +51,8 @@ def contar_vocales_totales(cadena):
 
 def contar_vocales_unicas(cadena):
     """
-    Cuenta la cantidad de vocales que hay en un string.
-    Las vocales del idioma español son: a, e, i, o, u.
-    Cada vocal debe contarse una única vez, indistintamente en su forma mayúscula o minúscula.
+    Cuenta la cantidad de vocales que hay en el string `cadena`. Cada vocal debe contarse una única vez, 
+    indistintamente en su forma mayúscula o minúscula. Las vocales del idioma español son: a, e, i, o, u.
     Sugerencia didáctica: evitar el uso de count().
     Ejemplo:
         contar_vocales_unicas(cadena="Esto Es Una Frase") -> 4
@@ -67,7 +66,7 @@ def contar_vocales_unicas(cadena):
 
 def reemplazar_caracter_con_asterisco(cadena, caracter):
     """
-    Reemplaza por '*' a todas las ocurrencias del carácter indicado.
+    Dado el string `cadena`, reemplaza por '*' a todas las ocurrencias de `caracter`.
     Sugerencia didáctica: evitar el uso de replace().
     Ejemplos:
         reemplazar_caracter_con_asterisco(cadena="esto es una frase", caracter="a") -> "esto es un* fr*se"
@@ -83,7 +82,7 @@ def reemplazar_caracter_con_asterisco(cadena, caracter):
 
 def invertir_cadena(cadena):
     """
-    Invierte el orden de los caracteres de un string.
+    Invierte el orden de los caracteres del string `cadena`.
     Sugerencia didáctica: evitar usar rebanadas con paso negativo.
     Ejemplo:
         invertir_cadena(cadena="Esto es una frase!") -> "!esarf anu se otsE"
@@ -97,8 +96,8 @@ def invertir_cadena(cadena):
 
 def reemplazar_simbolos(cadena, nuevo_caracter):
     """
-    Reemplaza todos los símbolos de un string por el carácter dado.
-    Se consideran símbolos a los caracteres que no son letras, dígitos ni espacios.
+    Reemplaza todos los símbolos del string `cadena` por el carácter dado en `nuevo_caracter`.
+    Se consideran "símbolos" a los caracteres que no son letras, dígitos ni espacios.
     Ejemplo:
         reemplazar_simbolos(cadena="--Esto es 1 frase donde reemplazaremos con @ cada símbolo", nuevo_caracter="@")
         -> "@@Esto es 1 frase donde reemplazaremos con @ cada símbolo"
@@ -112,9 +111,9 @@ def reemplazar_simbolos(cadena, nuevo_caracter):
 
 def porcentaje_digitos_numericos(cadena):
     """
-    Retorna el porcentaje que representan los dígitos numéricos sobre el total de caracteres de un string.
-    Solo se retorna el número que representa el porcentaje, sin el símbolo % y sin redondear (en caso de
-    tener decimales).
+    Retorna el porcentaje que representan los dígitos numéricos sobre el total de caracteres del string `cadena`.
+    Solo se retorna el número que representa el porcentaje, sin el símbolo % y sin redondear (en caso de tener
+    decimales).
     Ejemplos:
         porcentaje_digitos_numericos(cadena="Tenemos 1 dígito") -> 6.25
         porcentaje_digitos_numericos(cadena="1984") -> 100
@@ -129,39 +128,40 @@ def porcentaje_digitos_numericos(cadena):
 
 def clasificar_cadena_numerica(cadena):
     """
-    Recibe un número en forma de string y retorna un nuevo string, conteniendo los caracteres que representan dígitos
-    múltiplos de 2 y dígitos múltiplos de 3, ambos grupos separados por un '$'. Si un dígito es múltiplo de 2 y de 3
-    al mismo tiempo, aparecerá a ambos lados del símbolo '$'.
+    Recibe un número en forma de string (`cadena`) y retorna un nuevo string, conteniendo los caracteres que
+    representan dígitos múltiplos de 2 y dígitos múltiplos de 3, ambos grupos separados por un '$'. Si un dígito es
+    múltiplo de 2 y de 3 al mismo tiempo, aparecerá a ambos lados del símbolo '$'.
     Ejemplo:
         clasificar_cadena_numerica(cadena="123456") -> "246$36"
         clasificar_cadena_numerica(cadena="2222") -> "2222$"
     -Parámetro:
         -cadena (str): String numérico a procesar. El string solo contendrá dígitos numéricos.
     -Valor retornado:
-        (str) String compuesto por la concatenación de los caracteres del string que son múltiplos de 2 (en su
+        (str) Nuevo string compuesto por la concatenación de los caracteres de `cadena` que son múltiplos de 2 (en su
         representación numérica), seguidos de un '$' a continuación, seguidos de  la concatenación de los caracteres
-        del string que son múltiplos de 3.
+        de `cadena` que son múltiplos de 3.
     """
     pass
 
 
 def caracteres_centrales(cadena):
     """
-    Dado un string de longitud impar, retorna los 3 caracteres centrales. Hay al menos 5 caracteres en el string.
+    Dado un string `cadena` de longitud impar, retorna los 3 caracteres centrales. Hay al menos 5 caracteres en
+    el string `cadena`.
     Ejemplos:
         caracteres_centrales(cadena="AbcDefGhi") -> "Def"
         caracteres_centrales(cadena="A   A") -> "   "
     -Parámetro:
         -cadena (str) String a procesar. Tendrá 5 o más caracteres y su longitud será impar.
     -Valor retornado:
-        (str) String de longitud 3 conteniendo los caracteres ubicados en el medio de `cadena`, pasado por parámetro.
+        (str) String de longitud 3 conteniendo los caracteres ubicados en el medio de `cadena`.
     """    
     pass
 
 
 def es_palindromo(cadena):
     """
-    Verifica si un string es palíndromo, independientemente de mayúsculas y minúsculas.
+    Verifica si un string `cadena` es palíndromo, independientemente de mayúsculas y minúsculas.
     Se incluyen todos los caracteres, sean o no letras.
     Las letras acentuadas se consideran como caracteres diferentes de sus contrapartes no acentuadas.
     El string vacío no se considera palíndromo.
@@ -179,7 +179,7 @@ def es_palindromo(cadena):
 
 def incluye_caracteres(cadena1, cadena2):
     """
-    Indica si `cadena2` incluye todos los caracteres que componen a `cadena1`.
+    Indica si el string `cadena2` incluye todos los caracteres que componen al string `cadena1`.
     El orden de los caracteres no se tiene en cuenta.
     Se considera a la versión mayúscula y minúscula de una misma letra como caracteres diferentes.
     `cadena1` puede contener caracteres repetidos y, en ese caso, cuentan como un único carácter a buscar en `cadena2`.
@@ -230,7 +230,7 @@ def cuantos_eliminar_para_anagrama(cadena1, cadena2):
 
 def invertir_palabras(cadena):
     """
-    Invierte los caracteres de cada palabra en un string.
+    Invierte los caracteres de cada palabra en el string `cadena`.
     Separador de palabras: un único espacio.
     El string no contendrá espacios al principio ni al final. Puede contener símbolos o dígitos y en ese caso se
     considerarán de la misma forma que las letras.
@@ -240,15 +240,15 @@ def invertir_palabras(cadena):
     -Parámetros:
         -cadena (str): String formado por palabras que serán invertidas.
     -Valor retornado:
-        (str) Un nuevo string donde cada palabra se encuentra invertida, sin modificar su posición original dentro de
-        `cadena`.
+        (str) Un nuevo string donde cada palabra de `cadena` se encuentra invertida, sin modificar su posición
+        original dentro de `cadena`.
     """
     pass
 
 
 def longitud_ultima_palabra(cadena):
     """
-    Retorna la longitud de la última palabra de un string.
+    Retorna la longitud de la última palabra de un string `cadena`.
     Separador de palabras: uno o más espacios.
     Ejemplos:
         longitud_ultima_palabra(cadena="esto es una frase") -> 5
@@ -263,7 +263,7 @@ def longitud_ultima_palabra(cadena):
 
 def convertir_a_titulo(cadena):
     """
-    Convierte la primera letra de cada palabra de un string a mayúsculas y el resto a minúsculas.
+    Convierte la primera letra de cada palabra del string `cadena` a mayúsculas y el resto a minúsculas.
     Separador de palabras: cualquier símbolo (excluyendo letras y números), excepto apóstrofos.
     No debe modificarse la cantidad de espacios.
     Sugerencia didáctica: evitar el uso de title().
@@ -281,7 +281,7 @@ def convertir_a_titulo(cadena):
 
 def cifrar_cesar(cadena, n):
     """
-    Reemplaza cada letra de un string por otra del alfabeto, que se encuentre `n` posiciones hacia la derecha.
+    Reemplaza cada letra del string `cadena` por otra del alfabeto, que se encuentre `n` posiciones hacia la derecha.
     Los corrimientos son circulares (si el alfabeto termina antes de poder correr la cantidad de lugares necesarios,
     se vuelve a comenzar desde la letra "a").
     La cadena puede contener letras minúsculas, símbolos y dígitos. El cifrado solo se realizará sobre las letras,
@@ -294,16 +294,16 @@ def cifrar_cesar(cadena, n):
         -cadena (str): String a cifrar.
         -n (int): Cantidad de posiciones que se moverá cada carácter dentro del alfabeto español de 27 letras.
     -Valor retornado:
-        (str) Un nuevo string donde cada letra ha sido reemplazado por otra del alfabeto, ubicada `n` posiciones hacia
-        la derecha.
+        (str) Un nuevo string donde cada letra de `cadena` ha sido reemplazado por otra del alfabeto, ubicada `n`
+        posiciones hacia la derecha.
     """
     pass
 
 
 def rotar_n_posiciones(cadena, n):
     """
-    Dado un string, rota cada carácter `n` posiciones a la derecha, en forma circular (volviendo al principio al llegar
-    al final).
+    Dado un string `cadena`, rota cada carácter `n` posiciones a la derecha, en forma circular (volviendo al principio
+    al llegar al final).
     Los caracteres pueden ser letras, dígitos o símbolos.
     `n` no está necesariamente limitado a la longitud de cadena (puede ser mayor).
     Ejemplos:
@@ -320,7 +320,7 @@ def rotar_n_posiciones(cadena, n):
 
 def comprimir_RLE(cadena):
     """
-    Comprime un string utilizando la codificación RLE ("Run-Length Encoding").
+    Comprime al string `cadena` utilizando la codificación RLE ("Run-Length Encoding").
     RLE: por cada grupo de caracteres consecutivos repetidos, se almacenará una única ocurrencia del carácter,
     seguida del número de ocurrencias en caso de que sea mayor que 1 (ejemplo: 'aaab' se comprime como 'a3b').
     El string solo estará compuesto por letras y/o símbolos.
@@ -330,6 +330,6 @@ def comprimir_RLE(cadena):
     -Parámetro:
         -cadena (str): String a comprimir.
     -Valor retornado:
-        (str) String comprimido mediante RLE.
+        (str) String `cadena` comprimido mediante RLE.
     """
     pass
