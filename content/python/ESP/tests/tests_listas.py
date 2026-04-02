@@ -27,23 +27,23 @@ class TestsFuncionesListas(unittest.TestCase):
 
     def test_mayor_elemento(self):
         pruebas = {
-            "Argumento usado: strings=['x', 'y', 'z']": [
+            "Argumento usado: cadenas=['x', 'y', 'z']": [
                 mayor_elemento(["x", "y", "z"]),
                 "z",
             ],
-            "Argumento usado: strings=['z', 'y', 'x']": [
+            "Argumento usado: cadenas=['z', 'y', 'x']": [
                 mayor_elemento(["z", "y", "z"]),
                 "z",
             ],
-            "Argumento usado: strings=['abc', 'cba', 'cab', 'bca']": [
+            "Argumento usado: cadenas=['abc', 'cba', 'cab', 'bca']": [
                 mayor_elemento(["abc", "cba", "cab", "bca"]),
                 "cba",
             ],
-            "Argumento usado: strings=['abc', 'abc', 'abc']": [
+            "Argumento usado: cadenas=['abc', 'abc', 'abc']": [
                 mayor_elemento(["abc", "abc", "abc"]),
                 "abc",
             ],
-            "Argumento usado: strings=[]": [mayor_elemento([]), None],
+            "Argumento usado: cadenas=[]": [mayor_elemento([]), None],
         }
         for prueba, (a, b) in pruebas.items():
             with self.subTest(prueba=prueba):
