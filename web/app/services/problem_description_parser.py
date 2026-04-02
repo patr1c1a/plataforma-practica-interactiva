@@ -16,6 +16,7 @@ class ProblemDescriptionParser:
             "parameters": re.compile(r"^-Par(?:a|\u00e1)metro[s]?:\s*$", re.IGNORECASE),
             "return_value": re.compile(r"^-?Valor retornado:\s*$", re.IGNORECASE),
         }
+        self._example_input_pattern = re.compile(r"^[A-Za-z_]\w*\s*\(")
         self._suggestion_pattern = re.compile(
             r"^-?Sugerencia did(?:a|\u00e1)ctica:\s*(.*)$",
             re.IGNORECASE,
@@ -106,6 +107,19 @@ class ProblemDescriptionParser:
         flush_suggestion()
 
         examples = []
+        pending_example_input: list[str] = []
+
+        def flush_pending_example() -> None:
+            nonlocal pending_example_input
+            if pending_example_input:
+                examples.append(
+                    {
+                        "input": _normalize_whitespace(" ".join(pending_example_input)),
+                        "output": "",
+                    }
+                )
+                pending_example_input = []
+
         for line in section_lines["examples"]:
             stripped = line.strip()
             if not stripped:
@@ -113,12 +127,33 @@ class ProblemDescriptionParser:
 
             if "->" in stripped:
                 input_part, output_part = stripped.split("->", 1)
+                if input_part.strip():
+                    pending_example_input.append(input_part.strip())
+
+                example_input = _normalize_whitespace(" ".join(pending_example_input))
+                pending_example_input = []
+
+                if not example_input and examples:
+                    examples[-1]["output"] = _normalize_whitespace(
+                        f"{examples[-1]['output']} {output_part.strip()}"
+                    )
+                    continue
+
                 examples.append(
                     {
-                        "input": _normalize_whitespace(input_part.strip()),
+                        "input": example_input,
                         "output": _normalize_whitespace(output_part.strip()),
                     }
                 )
+                continue
+
+            if pending_example_input:
+                pending_example_input.append(stripped)
+                continue
+
+            if self._example_input_pattern.match(stripped):
+                flush_pending_example()
+                pending_example_input = [stripped]
                 continue
 
             if examples:
@@ -126,7 +161,9 @@ class ProblemDescriptionParser:
                     f"{examples[-1]['output']} {stripped}"
                 )
             else:
-                examples.append({"input": _normalize_whitespace(stripped), "output": ""})
+                pending_example_input = [stripped]
+
+        flush_pending_example()
 
         parameters = []
         current_parameter = None

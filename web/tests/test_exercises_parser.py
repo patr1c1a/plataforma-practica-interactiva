@@ -61,5 +61,47 @@ class TestExerciseProblemDescriptionParser(unittest.TestCase):
         self.assertEqual(parsed["return_value"]["type_parts"], ["bool", "None"])
 
 
+    def test_parse_multiline_example_input_as_single_example(self) -> None:
+        docstring = """
+        Busca el destino correspondiente a un boleto.
+        Ejemplos:
+            buscar_destino(boletos=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")],
+                           ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), ("Liverpool", "Inglaterra"),
+                                     ("Madrid", "España")],
+                           numero_boleto=100),
+            -> "Argentina"
+        """
+
+        parsed = parse_problem_description(docstring)
+
+        self.assertEqual(len(parsed["examples"]), 1)
+        self.assertEqual(
+            parsed["examples"][0]["input"],
+            'buscar_destino(boletos=[(100, "Buenos Aires"), (110, "Madrid"), (120, "Glasgow")], ciudades=[("Buenos Aires", "Argentina"), ("Glasgow", "Escocia"), ("Liverpool", "Inglaterra"), ("Madrid", "España")], numero_boleto=100),',
+        )
+        self.assertEqual(parsed["examples"][0]["output"], '"Argentina"')
+
+    def test_parse_example_with_arrow_on_following_line(self) -> None:
+        docstring = """
+        Reemplaza símbolos.
+        Ejemplos:
+            reemplazar_simbolos(cadena="--Esto es 1 frase donde reemplazaremos con @ cada símbolo",
+                                nuevo_caracter="@")
+            -> "@@Esto es 1 frase donde reemplazaremos con @ cada símbolo"
+        """
+
+        parsed = parse_problem_description(docstring)
+
+        self.assertEqual(len(parsed["examples"]), 1)
+        self.assertEqual(
+            parsed["examples"][0]["input"],
+            'reemplazar_simbolos(cadena="--Esto es 1 frase donde reemplazaremos con @ cada símbolo", nuevo_caracter="@")',
+        )
+        self.assertEqual(
+            parsed["examples"][0]["output"],
+            '"@@Esto es 1 frase donde reemplazaremos con @ cada símbolo"',
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
