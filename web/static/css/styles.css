@@ -5,6 +5,7 @@
   --text-primary: #e4e4e4;
   --text-secondary: #a0a0a0;
   --accent: #c00b95;
+  --doc-inline-code: #cda8f7;
   --success: #4caf50;
   --error: #ef5350;
   --warning: #ffb74d;
@@ -18,6 +19,7 @@
   --text-primary: #222831;
   --text-secondary: #5c6773;
   --accent: #c00b95;
+  --doc-inline-code: #6d3aa4;
   --success: #2e7d32;
   --error: #c62828;
   --warning: #ef6c00;
@@ -219,6 +221,7 @@ header {
 }
 
 .doc-inline-code {
+  color: var(--doc-inline-code);
   font-weight: 700;
   font-size: 1.05em;
   font-family: Consolas, "Courier New", monospace;
