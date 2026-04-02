@@ -218,6 +218,12 @@ header {
   white-space: normal;
 }
 
+.doc-inline-code {
+  font-weight: 700;
+  font-size: 1.05em;
+  font-family: Consolas, "Courier New", monospace;
+}
+
 .problem-block + .problem-block {
   margin-top: 1rem;
   padding-top: 1rem;

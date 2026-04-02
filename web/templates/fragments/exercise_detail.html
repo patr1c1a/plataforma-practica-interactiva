@@ -9,7 +9,7 @@
   {%- if problem_sections.description -%}
   <div class="problem-block">
     {%- for paragraph in problem_sections.description -%}
-    <p>{{ paragraph }}</p>
+    <p>{{ paragraph|inline_docstring_code }}</p>
     {%- endfor -%}
   </div>
   {%- endif -%}
@@ -59,7 +59,7 @@
           <strong><code>{{ parameter.name }}</code></strong>
         </header>
         {%- if parameter.description -%}
-        <p>{{ parameter.description }}</p>
+        <p>{{ parameter.description|inline_docstring_code }}</p>
         {%- endif -%}
       </article>
       {%- endfor -%}
@@ -84,7 +84,7 @@
       {%- endif -%}
 
       {%- if problem_sections.return_value.description -%}
-      <p>{{ problem_sections.return_value.description }}</p>
+      <p>{{ problem_sections.return_value.description|inline_docstring_code }}</p>
       {%- endif -%}
     </article>
   </div>

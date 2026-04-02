@@ -7,6 +7,7 @@ from threading import Lock
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from markupsafe import Markup, escape
 
 from web.app.services.execution import run_tests
 from web.app.services.exercise_catalog import (
@@ -37,6 +38,29 @@ TRUSTED_PROXY_IPS = {
     if value.strip()
 }
 SAFE_IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+INLINE_CODE_PATTERN = re.compile(r"`([^`]+)`")
+
+
+def _render_inline_docstring_code(text: str | None) -> Markup:
+    if not text:
+        return Markup("")
+
+    parts: list[str] = []
+    last_index = 0
+
+    for match in INLINE_CODE_PATTERN.finditer(text):
+        start, end = match.span()
+        parts.append(str(escape(text[last_index:start])))
+        parts.append(
+            f'<code class="doc-inline-code">{escape(match.group(1))}</code>'
+        )
+        last_index = end
+
+    parts.append(str(escape(text[last_index:])))
+    return Markup("".join(parts))
+
+
+templates.env.filters["inline_docstring_code"] = _render_inline_docstring_code
 
 
 def _is_production_environment() -> bool:
