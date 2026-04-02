@@ -87,7 +87,7 @@ def agregar_pelicula(peliculas, pelicula):
         -pelicula (tuple; 3 elementos: str, str, int): Tupla con los datos de la película a agregar: nombre,
         director, año de estreno.
     -Valor retornado:
-        (dict; clave: str; valor: list, con 2 elementos: str, int) El diccionario peliculas con el nuevo dato agregado.
+        (dict; clave: str; valor: list, con 2 elementos: str, int) El diccionario `peliculas` con el nuevo dato agregado.
     """
     pass
 
@@ -160,7 +160,7 @@ def contar_ocurrencias(listas):
         contar_ocurrencias(listas=(["i", "%", "u"],
                                    ["^", "%", "^", "s", "i", "i", "u"],
                                    ["a", "u"]))
-        -> {'i':3, '%':2, 'u':3, 's':1, '^':2, 'a':1}
+        -> {"i":3, "%":2, "u":3, "s":1, "^":2, "a":1}
     -Parámetro:
         -listas (tuple; elementos: list, con elementos str): Tupla conteniendo listas cuyos elementos son caracteres
         (strings de longitud 1).

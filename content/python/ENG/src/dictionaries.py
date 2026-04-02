@@ -157,7 +157,7 @@ def count_occurrences(lists_tuple):
         count_occurrences(lists_tuple=(["i", "%", "u"],
                                        ["^", "%", "^", "s", "i", "i", "u"],
                                        ["a", "u"]))
-        ->  {'i': 3, '%': 2, 'u': 3, 's': 1, '^': 2, 'a': 1}
+        ->  {"i": 3, "%": 2, "u": 3, "s": 1, "^": 2, "a": 1}
     -Parameter:
         -lists (tuple; elements: list: containing str) Tuple containing lists where the elements are characters (length 1
         str).
